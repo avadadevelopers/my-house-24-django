@@ -178,7 +178,7 @@ class Transfer(Model):
     payment_made = models.BooleanField()
 
 
-class Receipt(Model):
+class Invoice(Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
 
