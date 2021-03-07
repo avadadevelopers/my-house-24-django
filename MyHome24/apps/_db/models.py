@@ -94,7 +94,7 @@ class User(CustomAbstractUser):
         app_label = '_db'
 
 
-class Telephone(Model):
+class Telephone(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     number = models.IntegerField()
     viber = models.BooleanField(default=False)
@@ -102,7 +102,7 @@ class Telephone(Model):
     telegram = models.BooleanField(default=False)
 
 
-class House(Model):
+class House(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     number = models.IntegerField()
@@ -113,27 +113,27 @@ class House(Model):
     image5 = models.ImageField(upload_to='images/')
 
 
-class Section(Model):
+class Section(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
 
-class Floor(Model):
+class Floor(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
 
-class Measure(Model):
+class Measure(models.Model):
     name = models.CharField(max_length=255)
 
 
-class Service(Model):
+class Service(models.Model):
     measure = models.ForeignKey(Measure, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
 
 
-class Meter(Model):
+class Meter(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     counter = models.IntegerField()
@@ -141,36 +141,36 @@ class Meter(Model):
     status = models.CharField(max_length=255)
 
 
-class Currency(Model):
+class Currency(models.Model):
     name = models.CharField(max_length=255)
 
 
-class Rate(Model):
+class Rate(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
 
-class RateService(Model):
+class RateService(models.Model):
     rate = models.ForeignKey(Rate, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     price = models.FloatField()
 
 
-class Account(Model):
+class Account(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     money = models.FloatField()
     active = models.BooleanField(default=True)
 
 
-class TransferType(Model):
+class TransferType(models.Model):
     name = models.CharField(max_length=255)
     transfer_income = models.BooleanField()
 
 
-class Transfer(Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    manager = models.ForeignKey(User, on_delete=models.CASCADE)
+class Transfer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transfer_user')
+    manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transfer_manager')
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     transfer_type = models.ForeignKey(TransferType, on_delete=models.CASCADE)
     amount = models.IntegerField()
@@ -178,12 +178,12 @@ class Transfer(Model):
     payment_made = models.BooleanField()
 
 
-class Invoice(Model):
+class Invoice(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
 
 
-class SEO(Model):
+class SEO(models.Model):
     title = models.TextField(null=True)
     description = models.TextField(null=True)
     keywords = models.TextField(null=True)
