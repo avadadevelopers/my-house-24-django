@@ -29,6 +29,12 @@ body {
     font-size: 14px;
     color: #555;
 }
+.fa, .fas {
+    font-weight: 900;
+}
+.fa, .far, .fas{
+    font-family: Font-;
+}
 .btn-primary{
     color: #fff;
     background-color: #337ab7;
