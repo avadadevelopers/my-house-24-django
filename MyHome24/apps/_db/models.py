@@ -1,7 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import PermissionsMixin, AbstractUser
-# from solo.models import SingletonModel
+from solo.models import SingletonModel
 # from embed_video.fields import EmbedVideoField
 import os
 from . import services, managers
@@ -187,3 +187,62 @@ class SEO(models.Model):
     title = models.TextField(null=True)
     description = models.TextField(null=True)
     keywords = models.TextField(null=True)
+
+
+class Requisites(SingletonModel):
+    company_name = models.CharField(max_length=255)
+    information = models.TextField(null=True, blank=True)
+
+
+class WebsiteMainPage(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    slide1 = models.ImageField(upload_to='images/', null=True)
+    slide2 = models.ImageField(upload_to='images/', null=True)
+    slide3 = models.ImageField(upload_to='images/', null=True)
+    title = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+
+
+class WebsiteMainPageBlocks(SingletonModel):
+    image = models.ImageField(upload_to='images/', null=True)
+    title = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+
+
+class WebsiteAbout(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    poster = models.ImageField(upload_to='images/', null=True)
+    title = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+
+
+class WebsiteAboutGallery(SingletonModel):
+    image = models.ImageField(upload_to='images/', null=True)
+
+
+class WebsiteService(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+
+
+class WebsiteServiceBlocks(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/', null=True)
+    name = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+
+
+class WebsiteTariffBlocks(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/', null=True)
+    title = models.CharField(max_length=255, null=True)
+
+
+class WebsiteContacts(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+    site = models.URLField(null=True)
+    name = models.CharField(max_length=255, null=True)
+    address = models.CharField(max_length=255, null=True)
+    tel = models.CharField(max_length=255, null=True)
+    email = models.EmailField(null=True)
