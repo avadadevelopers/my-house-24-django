@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('', views.index_view, name='public_index'),
@@ -9,3 +10,4 @@ urlpatterns = [
     path('about', views.about_view, name='public_about'),
     path('error', views.error_view, name='public_error'),
 ]
+
