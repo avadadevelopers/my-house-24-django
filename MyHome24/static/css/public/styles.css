@@ -32,9 +32,7 @@ body {
 .fa, .fas {
     font-weight: 900;
 }
-.fa, .far, .fas{
-    font-family: Font-;
-}
+
 .btn-primary{
     color: #fff;
     background-color: #337ab7;
@@ -61,10 +59,10 @@ body {
     width: 100%;
 }
 .navbar .container{
-    padding: 0px;
+    padding: 0;
 }
 .navbar .logo{
-    padding: 0px;
+    padding: 0;
 
 }
 .navbar li {
