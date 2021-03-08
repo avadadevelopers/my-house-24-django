@@ -7,22 +7,24 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" href="../../static/css/styles.css">
+        <link rel="stylesheet" href="../../static/css/public/styles.css">
         <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
 </head>
 <body>
 <div class="navbar">
     <div class="container d-flex justify-content-between">
         <div class="logo">
-            <a href="#"><img src="{% static 'img/logo/logo.svg' %}" style="width: 145px; max-height: 40px"></a>
+            <a href="/"><img src="{% static 'img/logo/logo.svg' %}" style="width: 145px; max-height: 40px"></a>
         </div>
         <div class="d-flex">
-            <a href="{% url 'public_index' %}">Главная</a>
-            <a href="{% url 'public_about' %}">О нас</a>
-            <a href="{% url 'public_services' %}">Услуги</a>
-            <a href="https://avada-media.ua/myhouse24/">Условия приобретения</a>
-            <a href="{% url 'public_contact' %}">Контакты</a>
-            <a href="{% url 'public_index' %}">Вход</a>
+            <ul class="nav navbar-nav navbar-right"></ul>
+                <a href="{% url 'public_index' %}" {% if request.path == '/' %}class="active"{% endif %}>Главная</a>
+                <a href="{% url 'public_about' %}" {% if request.path == '/about' %}class="active"{% endif %}>О нас</a>
+                <a href="{% url 'public_services' %}" {% if request.path == '/services' %}class="active"{% endif %}>Услуги</a>
+                <a href="https://avada-media.ua/myhouse24/">Условия приобретения</a>
+                <a href="{% url 'public_contact' %}" {% if request.path == '/contact' %}class="active"{% endif %}>Контакты</a>
+                <a href="{% url 'public_index' %}">Вход</a>
+            </ul>
         </div>
     </div>
 </div>
