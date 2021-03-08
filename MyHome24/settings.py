@@ -62,6 +62,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MyHome24.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    '_db.auth.EmailAuthBackend'
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
