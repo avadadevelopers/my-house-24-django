@@ -203,7 +203,7 @@ class WebsiteMainPage(SingletonModel):
     description = models.TextField(null=True)
 
 
-class WebsiteMainPageBlocks(SingletonModel):
+class WebsiteMainPageBlocks(models.Model):
     image = models.ImageField(upload_to='images/', null=True)
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
@@ -216,7 +216,7 @@ class WebsiteAbout(SingletonModel):
     description = models.TextField(null=True)
 
 
-class WebsiteAboutGallery(SingletonModel):
+class WebsiteAboutGallery(models.Model):
     image = models.ImageField(upload_to='images/', null=True)
 
 
@@ -224,14 +224,20 @@ class WebsiteService(SingletonModel):
     seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
 
 
-class WebsiteServiceBlocks(SingletonModel):
+class WebsiteServiceBlocks(models.Model):
     seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', null=True)
     name = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
 
 
-class WebsiteTariffBlocks(SingletonModel):
+class WebsiteTariffs(SingletonModel):
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+
+
+class WebsiteTariffBlocks(models.Model):
     seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', null=True)
     title = models.CharField(max_length=255, null=True)
