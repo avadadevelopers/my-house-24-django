@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'admin.middleware.access_check',
 ]
 
 ROOT_URLCONF = 'MyHome24.urls'
@@ -73,6 +74,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+
+        #############################################################################
+        # Make sure postgres is installed on your local machine before uncommenting #
+        #############################################################################
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'MyHouse24',
+        # 'USER': 'MyHouse24',
+        # 'PASSWORD': 'MyHouse24',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '5432',
     }
 }
 
