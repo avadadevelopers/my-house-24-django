@@ -1,0 +1,61 @@
+.main-sidebar {
+    border-right: 1px solid #d2d6de;
+}
+.navbar {
+    padding: 0;
+}
+.expand {
+    border-right: 1px solid #d2d6de;
+}
+a.nav-link.expand{
+    padding: 15px 15px;
+}
+.top-bar{
+    padding: 15px 15px;
+}
+.sidebar{
+    padding: 0;
+}
+.sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{
+    background-color: #e1f1ea;
+    color: black;
+    font-size: 17px;
+    line-height: 1.42;
+    box-shadow: none;
+
+}
+.nav-link{
+    display: block;
+    padding: 12px 5px 12px 28px;
+}
+.nav-sidebar .nav-item>.nav-link{
+    margin-bottom: 0;
+}
+.nav-pills .nav-link {
+    border-radius: 0;
+}
+.fas, .far, .fal{
+    width: 20px;
+}
+.brand-link .brand-image{
+    max-height: 40px;
+}
+.nav-sidebar .nav-link>.right, .nav-sidebar .nav-link>p>.right {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -8px;
+}
+
+.nav-sidebar>.nav-item .nav-icon{
+    margin-left: 0;
+    margin-right: 0;
+    width: 20px;
+    font-size: 17px;
+}
+ul.nav.nav-treeview li.nav-item a.nav-link, ul.nav.nav-treeview li.nav-item a.nav-link.active{
+    padding: 5px 5px 5px 45px;
+    background-color: #f9f5f5;
+    text-decoration: none;
+    color: #777
+}

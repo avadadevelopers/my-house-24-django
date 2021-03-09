@@ -3,7 +3,7 @@ from _db import models
 
 
 def index_view(request):
-    return render(request, 'index.html')
+    return render(request, 'admin/index.html')
 
 
 def update_me_view(request):
