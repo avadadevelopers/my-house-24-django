@@ -238,7 +238,6 @@ class WebsiteTariffs(SingletonModel):
 
 
 class WebsiteTariffBlocks(models.Model):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', null=True)
     title = models.CharField(max_length=255, null=True)
 
