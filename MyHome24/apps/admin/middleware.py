@@ -1,8 +1,12 @@
 from django.shortcuts import redirect
 
 
-def access_check(get_response):
-    def middleware(request):
+class AccessCheckMiddleware:
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
         user = request.user
         path = request.path
 
@@ -12,5 +16,4 @@ def access_check(get_response):
                     return redirect('admin_login')
             elif 'login' not in path:
                 return redirect('admin_login')
-        return get_response(request)
-    return middleware
+        return self.get_response(request)

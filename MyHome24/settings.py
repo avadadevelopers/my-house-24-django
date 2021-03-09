@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'admin.middleware.access_check',
+    # 'admin.middleware.AccessCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'MyHome24.urls'
