@@ -9,7 +9,7 @@ def access_check(get_response):
         if 'admin' in path:
             if user.is_authenticated:
                 if not user.is_superuser:
-                    return redirect('public_index')
+                    return redirect('admin_login')
             elif 'login' not in path:
                 return redirect('admin_login')
         return get_response(request)
