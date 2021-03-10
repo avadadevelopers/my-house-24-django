@@ -176,6 +176,7 @@ class Transfer(models.Model):
     amount = models.IntegerField()
     comment = models.TextField(null=True, blank=True)
     payment_made = models.BooleanField()
+    created_date = models.DateField(default=timezone.now)
 
 
 class Invoice(models.Model):
