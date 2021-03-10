@@ -111,3 +111,6 @@ span.label.label-warning{
 li.breadcrumb-item>a{
     color: black;
 }
+[class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link{
+    background-color: #e1f1ea;
+}
