@@ -83,6 +83,9 @@ li.dropdown.notifications-menu>a, li.dropdown.user.user-menu>a {
 ul.navbar-nav.ml-auto>div>ul>li>a{
     color: #333
 }
+ul.navbar-nav.ml-auto>div>ul>li>a:hover{
+    color: #777
+}
 span.label.label-warning{
     position: absolute;
     top: 9px;
