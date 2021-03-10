@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from _db import models
+from . import forms
 
 
 def index_view(request):
@@ -23,10 +24,12 @@ def account_transaction_view(request):
 
 
 def account_transaction_create_view(request):
+    # форма уже существует - forms.AccountTransactionForm
     return render(request, 'admin/account-transaction/create.html')
 
 
 def account_transaction_change_view(request):
+    # форма уже существует - forms.AccountTransactionForm
     return render(request, 'admin/account-transaction/change.html')
 
 
