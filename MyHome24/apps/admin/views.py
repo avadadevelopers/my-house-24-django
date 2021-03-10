@@ -7,248 +7,251 @@ def index_view(request):
 
 
 def update_me_view(request):
-    return render(request, 'update-me.html')
+    return render(request, 'admin/update-me.html')
 
 
 def login_view(request):
-    return render(request, 'login.html')
+    return render(request, 'admin/login.html')
 
 
 def logout_view(request):
-    return render(request, 'logout.html')
+    return render(request, 'admin/logout.html')
 
 
 def account_transaction_view(request):
-    return render(request, 'account-transaction/index.html')
+    return render(request, 'admin/account-transaction/index.html')
 
 
 def account_transaction_create_view(request):
-    return render(request, 'account-transaction/create.html')
+    return render(request, 'admin/account-transaction/create.html')
 
 
 def account_transaction_change_view(request):
-    return render(request, 'account-transaction/change.html')
+    return render(request, 'admin/account-transaction/change.html')
 
 
 def account_transaction_delete_view(request):
-    return render(request, 'account-transaction/delete.html')
+    return render(request, 'admin/account-transaction/delete.html')
 
 
 def invoice_view(request):
-    return render(request, 'invoice/index.html')
+    return render(request, 'admin/invoice/index.html')
 
 
 def invoice_create_view(request):
-    return render(request, 'invoice/create.html')
+    return render(request, 'admin/invoice/create.html')
 
 
 def invoice_copy_view(request):
-    return render(request, 'invoice/copy.html')
+    return render(request, 'admin/invoice/copy.html')
 
 
 def invoice_change_view(request):
-    return render(request, 'invoice/change.html')
+    return render(request, 'admin/invoice/change.html')
 
 
 def invoice_delete_view(request):
-    return render(request, 'invoice/delete.html')
+    return render(request, 'admin/invoice/delete.html')
 
 
 def account_view(request):
-    return render(request, 'account/index.html')
+    return render(request, 'admin/account/index.html')
 
 
 def account_create_view(request):
-    return render(request, 'account/create.html')
+    return render(request, 'admin/account/create.html')
 
 
 def account_change_view(request):
-    return render(request, 'account/change.html')
+    return render(request, 'admin/account/change.html')
 
 
 def account_delete_view(request):
-    return render(request, 'account/delete.html')
+    return render(request, 'admin/account/delete.html')
 
 
 def apartment_view(request):
-    return render(request, 'apartment/index.html')
+    return render(request, 'admin/apartment/index.html')
 
 
 def apartment_create_view(request):
-    return render(request, 'apartment/create.html')
+    return render(request, 'admin/apartment/create.html')
 
 
 def apartment_change_view(request):
-    return render(request, 'apartment/change.html')
+    return render(request, 'admin/apartment/change.html')
 
 
 def apartment_delete_view(request):
-    return render(request, 'apartment/delete.html')
+    return render(request, 'admin/apartment/delete.html')
 
 
 def user_view(request):
-    return render(request, 'user/index.html')
+    return render(request, 'admin/user/index.html')
 
 
 def user_create_view(request):
-    return render(request, 'user/create.html')
+    return render(request, 'admin/user/create.html')
 
 
 def user_change_view(request):
-    return render(request, 'user/change.html')
+    return render(request, 'admin/user/change.html')
 
 
 def user_delete_view(request):
-    return render(request, 'user/delete.html')
+    return render(request, 'admin/user/delete.html')
 
 
 def house_view(request):
-    return render(request, 'house/index.html')
+    return render(request, 'admin/house/index.html')
 
 
 def house_create_view(request):
-    return render(request, 'house/create.html')
+    return render(request, 'admin/house/create.html')
 
 
 def house_change_view(request):
-    return render(request, 'house/change.html')
+    return render(request, 'admin/house/change.html')
 
 
 def house_delete_view(request):
-    return render(request, 'house/delete.html')
+    return render(request, 'admin/house/delete.html')
 
 
 def message_view(request):
-    return render(request, 'message/index.html')
+    return render(request, 'admin/message/index.html')
 
 
 def message_create_view(request):
-    return render(request, 'message/create.html')
+    return render(request, 'admin/message/create.html')
 
 
 def message_change_view(request):
-    return render(request, 'message/change.html')
+    return render(request, 'admin/message/change.html')
 
 
 def message_delete_view(request):
-    return render(request, 'message/delete.html')
+    return render(request, 'admin/message/delete.html')
 
 
 def master_request_view(request):
-    return render(request, 'master-request/index.html')
+    return render(request, 'admin/master-request/index.html')
 
 
 def master_request_create_view(request):
-    return render(request, 'master-request/create.html')
+    return render(request, 'admin/master-request/create.html')
 
 
 def master_request_change_view(request):
-    return render(request, 'master-request/change.html')
+    return render(request, 'admin/master-request/change.html')
 
 
 def master_request_delete_view(request):
-    return render(request, 'master-request/delete.html')
+    return render(request, 'admin/master-request/delete.html')
 
 
 def meter_data_view(request):
-    return render(request, 'meter-data/index.html')
+    return render(request, 'admin/meter-data/index.html')
 
 
 def meter_data_create_view(request):
-    return render(request, 'meter-data/create.html')
+    return render(request, 'admin/meter-data/create.html')
 
 
 def meter_data_change_view(request):
-    return render(request, 'meter-data/change.html')
+    return render(request, 'admin/meter-data/change.html')
 
 
 def meter_data_delete_view(request):
-    return render(request, 'meter-data/delete.html')
+    return render(request, 'admin/meter-data/delete.html')
 
 
 def website_main_page_view(request):
-    return render(request, 'website/main-page.html')
+    return render(request, 'admin/website/main-page.html')
 
 
 def website_about_view(request):
-    return render(request, 'website/about.html')
+    return render(request, 'admin/website/about.html')
 
 
 def website_services_view(request):
-    return render(request, 'website/services.html')
+    return render(request, 'admin/website/services.html')
 
 
 def website_tariffs_view(request):
-    return render(request, 'website/tariffs.html')
+    return render(request, 'admin/website/tariffs.html')
 
 
 def website_contact_view(request):
-    return render(request, 'website/contact.html')
+    return render(request, 'admin/website/contact.html')
 
 
 def services_view(request):
-    return render(request, 'services/index.html')
+    return render(request, 'admin/services/index.html')
 
 
 def services_add_view(request):
-    return render(request, 'services/add.html')
+    return render(request, 'admin/services/add.html')
 
 
 def services_delete_view(request):
-    return render(request, 'services/delete.html')
+    return render(request, 'admin/services/delete.html')
 
 
 def tariffs_view(request):
-    return render(request, 'tariffs/index.html')
+    return render(request, 'admin/tariffs/index.html')
 
 
 def tariffs_create_view(request):
-    return render(request, 'tariffs/create.html')
+    return render(request, 'admin/tariffs/create.html')
 
 
 def tariffs_change_view(request):
-    return render(request, 'tariffs/change.html')
+    return render(request, 'admin/tariffs/change.html')
 
 
 def tariffs_copy_view(request):
-    return render(request, 'tariffs/copy.html')
+    return render(request, 'admin/tariffs/copy.html')
 
 
 def tariffs_delete_view(request):
-    return render(request, 'tariffs/delete.html')
+    return render(request, 'admin/tariffs/delete.html')
 
 
 def user_admin_role_view(request):
-    return render(request, 'user-admin/.html')
+    return render(request, 'admin/user-admin/role.html')
+
+def user_admin_users_list(request):
+    return render(request, 'admin/user-admin/list.html')
 
 
 def user_admin_create_view(request):
-    return render(request, 'user-admin/create.html')
+    return render(request, 'admin/user-admin/create.html')
 
 
 def user_admin_change_view(request):
-    return render(request, 'user-admin/change.html')
+    return render(request, 'admin/user-admin/change.html')
 
 
 def user_admin_delete_view(request):
-    return render(request, 'user-admin/delete.html')
+    return render(request, 'admin/user-admin/delete.html')
 
 
 def pay_company_view(request):
-    return render(request, 'pay-company.html')
+    return render(request, 'admin/pay-company.html')
 
 
 def transaction_purpose_view(request):
-    return render(request, 'transaction-purpose/index.html')
+    return render(request, 'admin/transaction-purpose/index.html')
 
 
 def transaction_purpose_create_view(request):
-    return render(request, 'transaction-purpose/create.html')
+    return render(request, 'admin/transaction-purpose/create.html')
 
 
 def transaction_purpose_change_view(request):
-    return render(request, 'transaction-purpose/change.html')
+    return render(request, 'admin/transaction-purpose/change.html')
 
 
 def transaction_purpose_delete_view(request):
-    return render(request, 'transaction-purpose/delete.html')
+    return render(request, 'admin/transaction-purpose/delete.html')
