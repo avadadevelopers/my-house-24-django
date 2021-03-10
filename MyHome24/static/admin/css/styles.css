@@ -114,3 +114,7 @@ li.breadcrumb-item>a{
 [class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link{
     background-color: #e1f1ea;
 }
+
+.panel-content{
+    padding: 1.5rem !important;
+}
