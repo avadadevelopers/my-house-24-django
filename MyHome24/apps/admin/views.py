@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from _db import models
 from . import forms
-
+from django.forms import modelformset_factory
 
 def index_view(request):
     return render(request, 'admin/index.html')
@@ -170,7 +170,89 @@ def meter_data_delete_view(request):
 
 
 def website_main_page_view(request):
-    return render(request, 'admin/website/main-page.html')
+
+    ########################
+    # Empty initialization #
+    ########################
+
+    form = None
+    formset = []
+    seo_form = None
+    alerts = None
+
+    ##################
+    # Models initial #
+    ##################
+
+    # Main page instance
+    form_instance: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+
+    # Seo instance
+    if not form_instance.seo:
+        form_instance.seo = models.SEO.objects.create()
+        form_instance.save()
+
+    # Main page blocks instance
+    if models.WebsiteMainPageBlocks.objects.count() == 0:
+        models.WebsiteMainPageBlocks.objects.bulk_create(
+            [models.WebsiteMainPageBlocks() for i in range(6)]
+        )
+
+    formset_instances = models.WebsiteMainPageBlocks.objects.all()
+
+    ###########################
+    # Form initial & handling #
+    ###########################
+
+    formset = modelformset_factory(
+        model=models.WebsiteMainPageBlocks,
+        form=forms.WebsiteMainPageBlocksForm,
+        fields=['image', 'title', 'description'],
+        extra=0,
+    )
+
+    if request.method == 'GET':
+        form = forms.WebsiteMainPageForm(
+            instance=form_instance
+        )
+        seo_form = forms.SEOForm(
+            instance=form_instance.seo
+        )
+        formset = formset(
+            queryset=formset_instances
+        )
+    elif request.method == 'POST':
+        seo_form = forms.SEOForm(request.POST)
+        if seo_form.is_valid():
+            print(seo_form.is_valid())
+            seo_form.save()
+
+        form = forms.WebsiteMainPageForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.is_valid())
+            form.save()
+
+        formset = formset(data=request.POST)
+        print(len(formset)) #
+        for block in formset:
+            print(f"{block.is_valid()}")
+            if block.is_valid():
+                block.save()
+
+        # return redirect(redirect_url_name) # with pk
+        alerts = ['Запись была сохранена успешно!', ]
+
+    #############
+    # Packaging #
+    #############
+
+    context = {
+        'form': form,
+        'formset': formset,
+        'seo_form': seo_form,
+        'alerts': alerts,
+    }
+    return render(request, 'admin/website/main-page.html', context)
 
 
 def website_about_view(request):

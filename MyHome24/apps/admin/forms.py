@@ -29,6 +29,58 @@ class SEOForm(forms.ModelForm):
         }
 
 
+class WebsiteMainPageForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteMainPage
+        fields = ['slide1', 'slide2', 'slide3', 'title', 'description']
+        widgets = {
+            'slide1': forms.FileInput(attrs={
+                'class': 'upload',
+                'id': 'File1Input',
+            }),
+            'slide2': forms.FileInput(attrs={
+                'class': 'upload',
+                'id': 'File2Input',
+            }),
+            'slide3': forms.FileInput(attrs={
+                'class': 'upload',
+                'id': 'File3Input',
+            }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'id': 'DescriptionInput',
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+        }
+
+
+class WebsiteMainPageBlocksForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteMainPageBlocks
+        fields = ['image', 'title', 'description']
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+        }
+
+
 class AccountTransactionForm(forms.ModelForm):
     class Meta:
         model = models.Transfer

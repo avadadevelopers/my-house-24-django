@@ -196,7 +196,7 @@ class Requisites(SingletonModel):
 
 
 class WebsiteMainPage(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
     slide1 = models.ImageField(upload_to='images/', null=True)
     slide2 = models.ImageField(upload_to='images/', null=True)
     slide3 = models.ImageField(upload_to='images/', null=True)
