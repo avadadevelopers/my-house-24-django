@@ -224,18 +224,14 @@ def website_main_page_view(request):
     elif request.method == 'POST':
         seo_form = forms.SEOForm(request.POST)
         if seo_form.is_valid():
-            print(seo_form.is_valid())
             seo_form.save()
 
         form = forms.WebsiteMainPageForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.is_valid())
             form.save()
 
         formset = formset(data=request.POST)
-        print(len(formset)) #
         for block in formset:
-            print(f"{block.is_valid()}")
             if block.is_valid():
                 block.save()
 
@@ -251,6 +247,7 @@ def website_main_page_view(request):
         'formset': formset,
         'seo_form': seo_form,
         'alerts': alerts,
+        'form_instance': form_instance,
     }
     return render(request, 'admin/website/main-page.html', context)
 

@@ -205,9 +205,9 @@ class WebsiteMainPage(SingletonModel):
 
 
 class WebsiteMainPageBlocks(models.Model):
-    image = models.ImageField(upload_to='images/', null=True)
-    title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class WebsiteAbout(SingletonModel):
