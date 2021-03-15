@@ -23,14 +23,17 @@ def account_transaction_view(request):
     return render(request, 'admin/account-transaction/index.html')
 
 
-def account_transaction_create_view(request):
+def account_transaction_create_in_view(request):
     # форма уже существует - forms.AccountTransactionForm
-    return render(request, 'admin/account-transaction/create.html')
+    return render(request, 'admin/account-transaction/create/create_in.html')
 
+def account_transaction_create_out_view(request):
+    # форма уже существует - forms.AccountTransactionForm
+    return render(request, 'admin/account-transaction/create/create_out.html')
 
 def account_transaction_change_view(request):
     # форма уже существует - forms.AccountTransactionForm
-    return render(request, 'admin/account-transaction/change.html')
+    return render(request, 'admin/account-transaction/update.html')
 
 
 def account_transaction_delete_view(request):
