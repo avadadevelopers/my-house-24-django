@@ -242,6 +242,8 @@ def website_main_page_view(request):
     # Packaging #
     #############
 
+    print(form_instance.photo.url)
+
     context = {
         'form': form,
         'formset': formset,
