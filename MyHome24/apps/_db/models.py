@@ -180,8 +180,19 @@ class Transfer(models.Model):
 
 
 class Invoice(models.Model):
+    TYPE = (
+        ('Оплачена', 'Оплачена'),
+        ('Частично оплачена', 'Частично оплачена'),
+        ('неоплачена', 'неоплачена')
+    )
+
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    type = models.CharField('Статус квитанции', choices=TYPE, max_length=55, null=True)
     house = models.ForeignKey(House, on_delete=models.CASCADE)
-    paid = models.BooleanField(default=False)
+    period_from = models.DateField("Дата с", null=True)
+    period_to = models.DateField("Дата по", null=True)
+
+
 
 
 class SEO(models.Model):
