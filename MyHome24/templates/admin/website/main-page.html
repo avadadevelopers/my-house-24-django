@@ -19,7 +19,14 @@
             </div> <!-- /.card-body -->
             <div class="card-body">
                 <h3>Слайдер</h3>
-                Слайд 1
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ formset.management_form }}
+                    {{ formset.as_p }}
+                    {{ seo_form.as_p }}
+                    <input type="submit" value="Submit">
+                </form>
             </div><!-- /.card-body -->
         </div>
     </div><!-- /.container-fluid -->
