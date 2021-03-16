@@ -231,12 +231,19 @@ def website_main_page_view(request):
             print(f.is_valid())
             print(f.errors)
 
-        if seo_form.is_valid() and form.is_valid() and formset.is_valid():
+        alerts = []
+
+        if form.is_valid():
             form.save()
+            alerts.append('Слайдер и краткая информация сохранены успешно!')
+
+        if formset.is_valid():
+            form.save()
+            alerts.append('Блоки сохранены успешно!')
+
+        if seo_form.is_valid():
             seo_form.save()
-            for f in formset:
-                f.save()
-            alerts = ['Запись была сохранена успешно!', ]
+            alerts.append('Настройки SEO сохранены успешно!')
 
     #############
     # Packaging #
