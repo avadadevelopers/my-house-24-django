@@ -15,52 +15,109 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<section class="content panel-content">
+<section>
+    {% if alerts %}
+    {% for alert in alerts %}
+    <div class="alert alert-success" role="alert">
+        {{ alert }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</section>
+<section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
             <div class="card-header">
                 <h3 class="card-title">Редактирование страницы "Главная"</h3>
             </div> <!-- /.card-body -->
-            <div class="card-body">
+
 
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <h4>Слайдер</h4>
-                    <div class="row align-items-center">
-                        <div class="col-sm slides">
-                            <img src="{{ form_instance.photo.url }}"
-                                 alt=""
-                                 class="img-responsive margin-bottom-15">
-                            Рекомендуемый размер: (1920x800)
-                            {{ form.slide1 }}
+                    <section>
+                        <h4>Слайдер</h4>
+                        <hr/>
+                        <div class="row align-items-center">
+                            <div class="col-sm slides">
+                                <div>Слайд 1</div>
+                                <div><img src="{% if form_instance.slide1 %}{{ form_instance.slide1.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
+                                          class="img-responsive margin-bottom-15" width="300"></div>
+                                <div><b>Рекомендуемый размер: (1920x800)</b></div>
+                                <div>{{ form.slide1 }}</div>
+                            </div>
+                            <div class="col-sm slides">
+                                <div>Слайд 2</div>
+                                <div><img src="{% if form_instance.slide2 %}{{ form_instance.slide2.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
+                                          class="img-responsive margin-bottom-15" width="300"></div>
+                                <div><b>Рекомендуемый размер: (1920x800)</b></div>
+                                <div>{{ form.slide2 }}</div>
+                            </div>
+                            <div class="col-sm slides">
+                                <div>Слайд 3</div>
+                                <div><img src="{% if form.instance.slide3 %}{{ form_instance.slide3.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
+                                          width="300"></div>
+                                <div><b>Рекомендуемый размер: (1920x800)</b></div>
+                                <div>{{ form.slide3 }}</div>
+                            </div>
                         </div>
-                        <div class="col-sm slides">
-                            Рекомендуемый размер: (1920x800)
-                            {{ form.slide2 }}
+                    </section>
+                    <section>
+                        <h4>Краткая информация</h4>
+                        <hr/>
+                        <div>
+                            Заголовок
+                            {{ form.title }}
                         </div>
-                        <div class="col-sm slides">
-                            Рекомендуемый размер: (1920x800)
-                            {{ form.slide3 }}
+                        <div>
+                            Краткий текст
+                            {{ form.description }}
                         </div>
-                    </div>
-                    <h4>Краткая информация</h4>
-                    {{ form.title }}
-                    {{ form.description }}
-
-                    {{ formset.management_form }}
-                    {% for form in formset %}
-                        {{ form.image }}
-                        {{ form.title }}
-                        {{ form.description }}
-                    {% endfor %}
-
-                    {{ seo_form.title }}
-                    {{ seo_form.keywords }}
-                    {{ seo_form.description }}
-
+                    </section>
+                    <section>
+                        <h4>Рядом с нами</h4>
+                        <hr/>
+                        <div class="row align-items-center">
+                            {{ formset.management_form }}
+                            {% for form in formset %}
+                            <div class="col-sm-4">
+                                Блок {{ forloop.counter }}
+                                <div><img src="{% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
+                                          width="300"></div>
+                                <div>
+                                    <b>Рекомендуемый размер: (1000x600)</b>
+                                    {{ form.image }}
+                                </div>
+                                <div>
+                                    Заголовок блока
+                                    {{ form.title }}
+                                </div>
+                                <div>
+                                    Описание
+                                    {{ form.description }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    <section>
+                        <h4>Настройки SEO</h4>
+                        <hr/>
+                        <div>
+                            Title
+                            {{ seo_form.title }}
+                        </div>
+                        <div>
+                            Keywords
+                            {{ seo_form.keywords }}
+                        </div>
+                        <div>
+                            Description
+                            {{ seo_form.description }}
+                        </div>
+                    </section>
                     <input type="submit" value="Submit">
                 </form>
-            </div><!-- /.card-body -->
+
         </div>
     </div><!-- /.container-fluid -->
 </section>

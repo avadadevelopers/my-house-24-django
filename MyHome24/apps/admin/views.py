@@ -216,13 +216,14 @@ def website_main_page_view(request):
 
     if request.method == 'GET':
         form = forms.WebsiteMainPageForm(
-            instance=form_instance
+            instance=form_instance,
         )
         seo_form = forms.SEOForm(
-            instance=form_instance.seo
+            instance=form_instance.seo,
         )
         formset = formset(
-            queryset=formset_instances
+            queryset=formset_instances,
+            prefix='block_form',
         )
     elif request.method == 'POST':
         seo_form = forms.SEOForm(request.POST)
@@ -233,8 +234,9 @@ def website_main_page_view(request):
         if form.is_valid():
             form.save()
 
-        formset = formset(data=request.POST)
+        formset = formset(data=request.POST, prefix='block_form')
         for block in formset:
+            print(block.errors)
             if block.is_valid():
                 block.save()
 
@@ -245,14 +247,13 @@ def website_main_page_view(request):
     # Packaging #
     #############
 
-    print(form_instance.photo.url)
-
     context = {
         'form': form,
         'formset': formset,
         'seo_form': seo_form,
         'alerts': alerts,
         'form_instance': form_instance,
+        'formset_instances': formset_instances,
     }
     return render(request, 'admin/website/main-page.html', context)
 
