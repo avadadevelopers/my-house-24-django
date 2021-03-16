@@ -182,6 +182,7 @@ def website_main_page_view(request):
     main_page_form = forms.WebsiteMainPageForm(
         request.POST or None, request.FILES or None,
         instance=website_main_page,
+        prefix='main_page_form',
     )
 
     # Main page block instances & forms
@@ -196,13 +197,13 @@ def website_main_page_view(request):
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
-        fields=['image', 'title', 'description', ],
+        fields=('image', 'title', 'description'),
         extra=0,
     )
     main_page_block_formset = MainPageBlockFormset(
-        request.POST or None,
+        request.POST or None, request.FILES or None,
         queryset=formset_instances,
-        prefix='block_form',
+        prefix='main_page_block_form',
     )
 
     # Main page SEO instance & form
@@ -214,6 +215,7 @@ def website_main_page_view(request):
     main_page_seo_form = forms.SEOForm(
         request.POST or None,
         instance=website_main_page.seo,
+        prefix='main_page_seo_form',
     )
 
     # Method POST & form-save
