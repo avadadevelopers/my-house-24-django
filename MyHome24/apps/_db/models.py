@@ -196,9 +196,9 @@ class Invoice(models.Model):
 
 
 class SEO(models.Model):
-    title = models.TextField(null=True)
-    description = models.TextField(null=True)
-    keywords = models.TextField(null=True)
+    title = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    keywords = models.TextField(null=True, blank=True)
 
 
 class Requisites(SingletonModel):
@@ -207,12 +207,12 @@ class Requisites(SingletonModel):
 
 
 class WebsiteMainPage(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
-    slide1 = models.ImageField(upload_to='images/', null=True)
-    slide2 = models.ImageField(upload_to='images/', null=True)
-    slide3 = models.ImageField(upload_to='images/', null=True)
-    title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    slide1 = models.ImageField(upload_to='images/', null=True, blank=True)
+    slide2 = models.ImageField(upload_to='images/', null=True, blank=True)
+    slide3 = models.ImageField(upload_to='images/', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class WebsiteMainPageBlocks(models.Model):

@@ -24,6 +24,7 @@
     {% endfor %}
     {% endif %}
 </section>
+
 <section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
@@ -32,91 +33,89 @@
             </div> <!-- /.card-body -->
 
 
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <section>
-                        <h4>Слайдер</h4>
-                        <hr/>
-                        <div class="row align-items-center">
-                            <div class="col-sm slides">
-                                <div>Слайд 1</div>
-                                <div><img src="{% if form_instance.slide1 %}{{ form_instance.slide1.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
-                                          class="img-responsive margin-bottom-15" width="300"></div>
-                                <div><b>Рекомендуемый размер: (1920x800)</b></div>
-                                <div>{{ form.slide1 }}</div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <section>
+                    <h4>Слайдер</h4>
+                    <hr/>
+                    <div class="row align-items-center">
+                        <div class="col-sm slides">
+                            <div>Слайд 1</div>
+                            <div class="blocks-image" style="background: url({% if form.instance.slide1 %}{{ form.instance.slide1.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div><b>Рекомендуемый размер: (1920x800)</b></div>
+                            <div>{{ form.slide1 }}</div>
+                        </div>
+                        <div class="col-sm slides">
+                            <div>Слайд 2</div>
+                            <div class="blocks-image" style="background: url({% if form.instance.slide2 %}{{ form.instance.slide2.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div><b>Рекомендуемый размер: (1920x800)</b></div>
+                            <div>{{ form.slide2 }}</div>
+                        </div>
+                        <div class="col-sm slides">
+                            <div>Слайд 3</div>
+                            <div class="blocks-image" style="background: url({% if form.instance.slide3 %}{{ form.instance.slide3.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div><b>Рекомендуемый размер: (1920x800)</b></div>
+                            <div>{{ form.slide3 }}</div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h4>Краткая информация</h4>
+                    <hr/>
+                    <div>
+                        Заголовок
+                        {{ form.title }}
+                    </div>
+                    <div>
+                        Краткий текст
+                        {{ form.description }}
+                    </div>
+                </section>
+                <section>
+                    <h4>Рядом с нами</h4>
+                    <hr/>
+                    {{ formset.management_form }}
+                    <div class="row align-items-center">
+                        {% for form in formset %}
+                        <div class="col-md-4">
+                            Блок {{ forloop.counter }}
+                            <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div>
+                                <b>Рекомендуемый размер: (1000x600)</b>
+                                {{ form.image }}
                             </div>
-                            <div class="col-sm slides">
-                                <div>Слайд 2</div>
-                                <div><img src="{% if form_instance.slide2 %}{{ form_instance.slide2.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
-                                          class="img-responsive margin-bottom-15" width="300"></div>
-                                <div><b>Рекомендуемый размер: (1920x800)</b></div>
-                                <div>{{ form.slide2 }}</div>
+                            <div>
+                                Заголовок блока
+                                {{ form.title }}
                             </div>
-                            <div class="col-sm slides">
-                                <div>Слайд 3</div>
-                                <div><img src="{% if form.instance.slide3 %}{{ form_instance.slide3.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
-                                          width="300"></div>
-                                <div><b>Рекомендуемый размер: (1920x800)</b></div>
-                                <div>{{ form.slide3 }}</div>
+                            <div>
+                                Описание
+                                {{ form.description }}
                             </div>
                         </div>
-                    </section>
-                    <section>
-                        <h4>Краткая информация</h4>
-                        <hr/>
-                        <div>
-                            Заголовок
-                            {{ form.title }}
-                        </div>
-                        <div>
-                            Краткий текст
-                            {{ form.description }}
-                        </div>
-                    </section>
-                    <section>
-                        <h4>Рядом с нами</h4>
-                        <hr/>
-                        <div class="row align-items-center">
-                            {{ formset.management_form }}
-                            {% for form in formset %}
-                            <div class="col-sm-4">
-                                Блок {{ forloop.counter }}
-                                <div><img src="{% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}"
-                                          width="300"></div>
-                                <div>
-                                    <b>Рекомендуемый размер: (1000x600)</b>
-                                    {{ form.image }}
-                                </div>
-                                <div>
-                                    Заголовок блока
-                                    {{ form.title }}
-                                </div>
-                                <div>
-                                    Описание
-                                    {{ form.description }}
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </section>
-                    <section>
-                        <h4>Настройки SEO</h4>
-                        <hr/>
-                        <div>
-                            Title
-                            {{ seo_form.title }}
-                        </div>
-                        <div>
-                            Keywords
-                            {{ seo_form.keywords }}
-                        </div>
-                        <div>
-                            Description
-                            {{ seo_form.description }}
-                        </div>
-                    </section>
+                        {% endfor %}
+                    </div>
+                </section>
+                <section>
+                    <h4>Настройки SEO</h4>
+                    <hr/>
+                    <div>
+                        Title
+                        {{ seo_form.title }}
+                    </div>
+                    <div>
+                        Keywords
+                        {{ seo_form.keywords }}
+                    </div>
+                    <div>
+                        Description
+                        {{ seo_form.description }}
+                    </div>
+                </section>
+                <section>
                     <input type="submit" value="Submit">
-                </form>
+                </section>
+            </form>
 
         </div>
     </div><!-- /.container-fluid -->

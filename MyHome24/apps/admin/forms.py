@@ -67,16 +67,19 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
         widgets = {
             'image': forms.FileInput(attrs={
                 'class': 'form-control-file',
+                'required': False,
             }),
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите заголовок',
                 'rows': '3',
+                'required': False,
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': '3',
                 'placeholder': 'Введите описание',
+                'required': False,
             }),
         }
 
