@@ -8,22 +8,19 @@ class SEOForm(forms.ModelForm):
         model = models.SEO
         fields = ['title', 'keywords', 'description']
         widgets = {
-            'title': forms.Textarea(attrs={
+            'title': forms.TextInput(attrs={
                 'id': 'SEOTitleInput',
                 'class': 'form-control',
                 'placeholder': 'Введите заголовок',
-                'rows': '3',
             }),
-            'keywords': forms.Textarea(attrs={
+            'keywords': forms.TextInput(attrs={
                 'id': 'SEOKeywordsInput',
                 'class': 'form-control',
                 'placeholder': 'Введите ключевые слова',
-                'rows': '3',
             }),
-            'description': forms.Textarea(attrs={
+            'description': forms.TextInput(attrs={
                 'id': 'SEODescriptionInput',
                 'class': 'form-control',
-                'rows': '3',
                 'placeholder': 'Введите описание',
             }),
         }

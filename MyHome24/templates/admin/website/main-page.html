@@ -74,7 +74,6 @@
                 <section>
                     <h4>Рядом с нами</h4>
                     <hr/>
-                    {{ formset.management_form }}
                     <div class="row align-items-center">
                         {% for form in formset %}
                         <div class="col-md-4">
@@ -94,6 +93,7 @@
                             </div>
                         </div>
                         {% endfor %}
+                        {{ formset.management_form }}
                     </div>
                 </section>
                 <section>
@@ -113,11 +113,14 @@
                     </div>
                 </section>
                 <section>
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Сохранить">
                 </section>
             </form>
-
         </div>
     </div><!-- /.container-fluid -->
 </section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>tinymce.init({selector:'textarea'});</script>
 {% endblock %}

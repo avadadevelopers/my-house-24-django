@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from _db import models
+from django.shortcuts import render
+from _db import models, utils
 from . import forms
 from django.forms import modelformset_factory
 
@@ -175,85 +175,73 @@ def meter_data_delete_view(request):
 
 def website_main_page_view(request):
 
-    ########################
-    # Empty initialization #
-    ########################
+    # Main page instance & form
 
-    form = None
-    formset = []
-    seo_form = None
-    alerts = None
+    website_main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
 
-    ##################
-    # Models initial #
-    ##################
-
-    ###########################
-    # Form initial & handling #
-    ###########################
-
-    formset = modelformset_factory(
-        model=models.WebsiteMainPageBlocks,
-        form=forms.WebsiteMainPageBlocksForm,
-        fields=['image', 'title', 'description'],
-        extra=0,
+    main_page_form = forms.WebsiteMainPageForm(
+        request.POST or None, request.FILES or None,
+        instance=website_main_page,
     )
 
-    if request.method == 'GET':
-        form_instance: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+    # Main page block instances & forms
 
-        if not form_instance.seo:
-            form_instance.seo = models.SEO.objects.create()
-            form_instance.save()
-
-        if models.WebsiteMainPageBlocks.objects.count() == 0:
-            models.WebsiteMainPageBlocks.objects.bulk_create(
-                [models.WebsiteMainPageBlocks() for i in range(6)]
-            )
-
-        formset_instances = models.WebsiteMainPageBlocks.objects.all()
-
-        form = forms.WebsiteMainPageForm(
-            instance=form_instance,
+    if models.WebsiteMainPageBlocks.objects.count() == 0:
+        models.WebsiteMainPageBlocks.objects.bulk_create(
+            [models.WebsiteMainPageBlocks() for i in range(6)]
         )
-        seo_form = forms.SEOForm(
-            instance=form_instance.seo,
-        )
-        formset = formset(
-            queryset=formset_instances,
-            prefix='block_form',
-        )
-    elif request.method == 'POST':
-        seo_form = forms.SEOForm(request.POST)
-        form = forms.WebsiteMainPageForm(request.POST, request.FILES)
-        formset = formset(data=request.POST, prefix='block_form')
 
-        for f in formset:
-            print(f.is_valid())
-            print(f.errors)
+    formset_instances = models.WebsiteMainPageBlocks.objects.all()
 
-        alerts = []
+    MainPageBlockFormset = modelformset_factory(
+        model=models.WebsiteMainPageBlocks,
+        form=forms.WebsiteMainPageBlocksForm,
+        fields=['image', 'title', 'description', ],
+        extra=0,
+    )
+    main_page_block_formset = MainPageBlockFormset(
+        request.POST or None,
+        queryset=formset_instances,
+        prefix='block_form',
+    )
 
-        if form.is_valid():
-            form.save()
+    # Main page SEO instance & form
+
+    if website_main_page.seo is None:
+        website_main_page.seo = models.SEO.objects.create()
+        website_main_page.save()
+
+    main_page_seo_form = forms.SEOForm(
+        request.POST or None,
+        instance=website_main_page.seo,
+    )
+
+    # Method POST & form-save
+
+    alerts = []
+    if request.method == 'POST':
+
+        # utils.form_save(form, alerts, 'Слайдер и краткая информация сохранены успешно!')
+
+        if main_page_form.is_valid():
+            main_page_form.save()
             alerts.append('Слайдер и краткая информация сохранены успешно!')
 
-        if formset.is_valid():
-            form.save()
+        if main_page_block_formset.is_valid():
+            main_page_block_formset.save()
             alerts.append('Блоки сохранены успешно!')
+        print(main_page_block_formset.errors)
 
-        if seo_form.is_valid():
-            seo_form.save()
+        if main_page_seo_form.is_valid():
+            main_page_seo_form.save()
             alerts.append('Настройки SEO сохранены успешно!')
 
-    #############
-    # Packaging #
-    #############
+    # Context packing & render
 
     context = {
-        'form': form,
-        'formset': formset,
-        'seo_form': seo_form,
+        'form': main_page_form,
+        'formset': main_page_block_formset,
+        'seo_form': main_page_seo_form,
         'alerts': alerts,
     }
     return render(request, 'admin/website/main-page.html', context)

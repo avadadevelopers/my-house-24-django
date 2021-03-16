@@ -193,12 +193,10 @@ class Invoice(models.Model):
     period_to = models.DateField("Дата по", null=True)
 
 
-
-
 class SEO(models.Model):
-    title = models.TextField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    keywords = models.TextField(null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
+    keywords = models.CharField(max_length=255, null=True, blank=True)
 
 
 class Requisites(SingletonModel):
