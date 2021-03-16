@@ -3,6 +3,7 @@ from _db import models
 from . import forms
 from django.forms import modelformset_factory
 
+
 def index_view(request):
     return render(request, 'admin/index.html')
 
