@@ -74,8 +74,8 @@ body{
 .navbar-nav>li>a{
     padding: 18px 15px;
 }
-.dropdown-toggle::after {
-    content: none;
+button.dropdown-toggle::after {
+    content: "";
 }
 li.dropdown.notifications-menu>a, li.dropdown.user.user-menu>a {
     border-left: 1px solid #d2d6de;
@@ -198,7 +198,7 @@ section div {
     display: inline-block;
     margin-left: .255em;
     vertical-align: .255em;
-    content: "";
+    content: none;
     border-top: .3em solid;
     border-right: .3em solid transparent;
     border-bottom: 0;
