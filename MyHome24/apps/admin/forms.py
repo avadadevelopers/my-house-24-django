@@ -82,11 +82,11 @@ class AccountTransactionForm(forms.ModelForm):
     class Meta:
         model = models.Transfer
         user = forms.ModelChoiceField(
-            queryset=models.User.objects.filter(Q(is_superuser=False)),
+            queryset=models.User.objects.filter(is_superuser=False),
             empty_label=None,
         )
         manager = forms.ModelChoiceField(
-            queryset=models.User.objects.filter(Q(is_superuser=True)),
+            queryset=models.User.objects.filter(is_superuser=True),
             empty_label=None,
         )
         account = forms.ModelChoiceField(
@@ -97,6 +97,7 @@ class AccountTransactionForm(forms.ModelForm):
             queryset=models.TransferType.objects.all(),
             empty_label=None,
         )
+        print(user.queryset)
         fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made']
         widgets = {
             'amount': forms.NumberInput(attrs={
@@ -115,3 +116,16 @@ class AccountTransactionForm(forms.ModelForm):
                 'class': 'form-control',
             }),
         }
+
+
+class InvoiceIDCreateForm(forms.ModelForm):
+
+    pass
+
+
+class InvoiceTitleCreateForm(forms.ModelForm):
+    pass
+
+
+class InvoiceServicesCreateForm(forms.ModelForm):
+    pass

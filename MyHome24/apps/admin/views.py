@@ -2,6 +2,7 @@ from django.shortcuts import render
 from _db import models, utils
 from . import forms
 from django.forms import modelformset_factory
+from _db import managers
 
 
 def index_view(request):
@@ -25,12 +26,27 @@ def account_transaction_view(request):
 
 
 def account_transaction_create_in_view(request):
-    # форма уже существует - forms.AccountTransactionForm
-    return render(request, 'admin/account-transaction/create/create_in.html')
+    form = forms.AccountTransactionForm(request.POST)
+    alerts = []
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        alerts.append('Запись была успешно добавлена!')
+
+    return render(request, 'admin/account-transaction/create_in.html', {'form': form,
+                                                                        'alerts': alerts
+                                                                        })
+
 
 def account_transaction_create_out_view(request):
-    # форма уже существует - forms.AccountTransactionForm
-    return render(request, 'admin/account-transaction/create/create_out.html')
+    form = forms.AccountTransactionForm(request.POST)
+    alerts = []
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        alerts.append('Запись была успешно добавлена!')
+
+    return render(request, 'admin/account-transaction/create_out.html', {'form': form,
+                                                                        'alerts': alerts
+                                                                        })
 
 def account_transaction_change_view(request):
     # форма уже существует - forms.AccountTransactionForm
@@ -66,7 +82,7 @@ def account_view(request):
 
 
 def account_create_view(request):
-    return render(request, 'admin/account/create.html')
+    return render(request, 'admin/account/create_in.html')
 
 
 def account_change_view(request):
