@@ -178,6 +178,7 @@ def meter_data_delete_view(request):
 def website_main_page_view(request):
 
     # Main page instance & form
+    main_page_block_formset = []
 
     website_main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
 
@@ -194,14 +195,15 @@ def website_main_page_view(request):
             [models.WebsiteMainPageBlocks() for i in range(6)]
         )
     formset_instances = models.WebsiteMainPageBlocks.objects.all()
+    print([f.id for f in formset_instances])
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
         fields=('image', 'title', 'description'),
         extra=0,
     )
+
     main_page_block_formset = MainPageBlockFormset(
-        request.POST or None, request.FILES or None,
         queryset=formset_instances,
         prefix='main_page_block_form',
     )
@@ -239,7 +241,8 @@ def website_main_page_view(request):
 
         if main_page_block_formset.is_valid():
             for main_page_block_form in main_page_block_formset:
-                instance = main_page_block_form.save()
+                instance = main_page_block_form.save(commit=False)
+                print(instance.id)
                 print(f"Formset instance - {instance}")
             # main_page_block_formset.save()
             alerts.append('Блоки сохранены успешно!')

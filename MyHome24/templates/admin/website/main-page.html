@@ -77,7 +77,7 @@
                     <div class="row align-items-center">
                         {% for form in formset %}
                         <div class="col-md-4">
-                            Блок {{ forloop.counter }}
+                            Блок {{ forloop.counter }} with db_id_{{ form.instance.id }}
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (1000x600)</b>
