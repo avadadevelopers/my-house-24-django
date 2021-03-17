@@ -28,9 +28,11 @@ def account_transaction_create_in_view(request):
     # форма уже существует - forms.AccountTransactionForm
     return render(request, 'admin/account-transaction/create/create_in.html')
 
+
 def account_transaction_create_out_view(request):
     # форма уже существует - forms.AccountTransactionForm
     return render(request, 'admin/account-transaction/create/create_out.html')
+
 
 def account_transaction_change_view(request):
     # форма уже существует - forms.AccountTransactionForm
@@ -297,6 +299,7 @@ def tariffs_delete_view(request):
 
 def user_admin_role_view(request):
     return render(request, 'admin/user-admin/role.html')
+
 
 def user_admin_users_list(request):
     return render(request, 'admin/user-admin/list.html')
