@@ -191,7 +191,7 @@ def website_main_page_view(request):
 
     print(not models.WebsiteMainPageBlocks.objects.count() > 0)
 
-    if not models.WebsiteMainPageBlocks.objects.count() > 0:
+    if models.WebsiteMainPageBlocks.objects.count() == 0:
         models.WebsiteMainPageBlocks.objects.bulk_create(
             [models.WebsiteMainPageBlocks() for i in range(6)]
         )
@@ -234,7 +234,10 @@ def website_main_page_view(request):
     alerts = []
     if request.method == 'POST':
         utils.form_save(main_page_form, alerts, 'Слайдер и краткая информация сохранены успешно!')
-        utils.form_save(main_page_block_formset, alerts, 'Блоки сохранены успешно!')
+        # utils.form_save(main_page_block_formset, alerts, 'Блоки сохранены успешно!')
+        if main_page_block_formset.is_valid():
+            main_page_block_formset.save()
+            alerts.append('Блоки сохранены успешно!')
         utils.form_save(main_page_seo_form, alerts, 'Настройки SEO сохранены успешно!')
 
     # Context packing & render
