@@ -233,7 +233,6 @@ def website_main_page_view(request):
 
     alerts = []
     if request.method == 'POST':
-
         utils.form_save(main_page_form, alerts, 'Слайдер и краткая информация сохранены успешно!')
         utils.form_save(main_page_block_formset, alerts, 'Блоки сохранены успешно!')
         utils.form_save(main_page_seo_form, alerts, 'Настройки SEO сохранены успешно!')
