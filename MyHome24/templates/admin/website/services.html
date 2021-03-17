@@ -1,4 +1,8 @@
 {% extends 'admin/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin/css/website/services.css' %}">
+{% endblock %}
 {% block page_title %}
     <h1 class="m-0">Редактирование страницы</h1>
 {% endblock %}
@@ -11,4 +15,80 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
+<section>
+    {% if alerts %}
+    {% for alert in alerts %}
+    <div class="alert alert-success" role="alert">
+        {{ alert }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Редактирование страницы "Услуги"</h3>
+            </div> <!-- /.card-body -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <section>
+                    <h4>Услуги</h4>
+                    <hr/>
+                    <div class="row align-items-center">
+                        {% for form in formset %}
+                        <div class="block-form col-md-4">
+                            Услуга {{ forloop.counter }} with db_id_{{ form.instance.id }}
+                            <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div>
+                                <b>Рекомендуемый размер: (650x300)</b>
+                                {{ form.image }}
+                            </div>
+                            <div>
+                                Название услуги
+                                {{ form.name }}
+                            </div>
+                            <div>
+                                Описание услуги
+                                {{ form.description }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {{ formset.management_form }}
+                    </div>
+                </section>
+                <section>
+                    <h4>Настройки SEO</h4>
+                    <hr/>
+                    <div>
+                        Title
+                        {{ seo_form.title }}
+                    </div>
+                    <div>
+                        Keywords
+                        {{ seo_form.keywords }}
+                    </div>
+                    <div>
+                        Description
+                        {{ seo_form.description }}
+                    </div>
+                </section>
+                <section>
+                    <input type="button" value="Add More" id="add_more">
+                    <input type="submit" value="Сохранить">
+                </section>
+            </form>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+tinymce.init({selector:'textarea'});
+$('#add_more').click(function() {
+    cloneMore('.block-form:last', 'service');
+});
+</script>
 {% endblock %}

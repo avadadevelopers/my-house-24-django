@@ -270,7 +270,71 @@ def website_about_view(request):
 
 
 def website_services_view(request):
-    return render(request, 'admin/website/services.html')
+
+    # Main page block instances & forms
+
+    formset_instances = models.WebsiteServiceBlocks.objects.all()
+
+    MainPageServiceBlocksFormset = modelformset_factory(
+        model=models.WebsiteServiceBlocks,
+        form=forms.WebsiteServiceBlocksForm,
+        fields=('image', 'name', 'description'),
+        extra=0,
+    )
+
+    if not models.WebsiteServiceBlocks.objects.count() > 0:
+        models.WebsiteServiceBlocks.objects.bulk_create(
+            [models.WebsiteServiceBlocks() for i in range(3)]
+        )
+
+    block_formset = MainPageServiceBlocksFormset(
+        request.POST or None, request.FILES or None,
+        queryset=formset_instances,
+        prefix='service_blocks_form',
+    )
+
+    for form in block_formset:
+        form.fields['id'].required = False
+
+    # Main page SEO instance & form
+
+    website_service: models.WebsiteService = models.WebsiteService.get_solo()
+
+    if website_service.seo is None:
+        website_service.seo = models.SEO.objects.create()
+        website_service.save()
+
+    seo_form = forms.SEOForm(
+        request.POST or None,
+        instance=website_service.seo,
+        prefix='service_seo_form',
+    )
+
+    # Method POST & form-save
+
+    alerts = []
+    if request.method == 'POST':
+        if block_formset.is_valid():
+            for service_blocks_form in block_formset:
+                instance = service_blocks_form.save(commit=False)
+                print(f"Formset instance - {instance}")
+            # main_page_block_formset.save()
+            alerts.append('Услуги сохранены успешно!')
+
+        print('#' * 10)
+        print('#' * 10)
+        print('#' * 10)
+
+        utils.form_save(seo_form, alerts, 'Настройки SEO сохранены успешно!')
+
+    # Context packing & render
+
+    context = {
+        'formset': block_formset,
+        'seo_form': seo_form,
+        'alerts': alerts,
+    }
+    return render(request, 'admin/website/services.html', context)
 
 
 def website_tariffs_view(request):
