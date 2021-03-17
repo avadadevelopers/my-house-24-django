@@ -78,6 +78,27 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
         }
 
 
+class WebsiteServiceBlocksForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteServiceBlocks
+        fields = ['image', 'name', 'description']
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите название услуги',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание услуги',
+            }),
+        }
+
+
 class AccountTransactionForm(forms.ModelForm):
     class Meta:
         model = models.Transfer

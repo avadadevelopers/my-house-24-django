@@ -37,6 +37,7 @@ def account_transaction_create_in_view(request):
                                                                         })
 
 
+
 def account_transaction_create_out_view(request):
     form = forms.AccountTransactionForm(request.POST)
     alerts = []
@@ -47,6 +48,7 @@ def account_transaction_create_out_view(request):
     return render(request, 'admin/account-transaction/create_out.html', {'form': form,
                                                                         'alerts': alerts
                                                                         })
+
 
 def account_transaction_change_view(request):
     # форма уже существует - forms.AccountTransactionForm
@@ -192,6 +194,7 @@ def meter_data_delete_view(request):
 def website_main_page_view(request):
 
     # Main page instance & form
+    main_page_block_formset = []
 
     website_main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
 
@@ -203,24 +206,27 @@ def website_main_page_view(request):
 
     # Main page block instances & forms
 
-    if models.WebsiteMainPageBlocks.objects.count() == 0:
+    if not models.WebsiteMainPageBlocks.objects.count() > 0:
         models.WebsiteMainPageBlocks.objects.bulk_create(
             [models.WebsiteMainPageBlocks() for i in range(6)]
         )
-
     formset_instances = models.WebsiteMainPageBlocks.objects.all()
-
+    print([f.id for f in formset_instances])
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
         fields=('image', 'title', 'description'),
         extra=0,
     )
+
     main_page_block_formset = MainPageBlockFormset(
         request.POST or None, request.FILES or None,
         queryset=formset_instances,
         prefix='main_page_block_form',
     )
+
+    for form in main_page_block_formset:
+        form.fields['id'].required = False
 
     # Main page SEO instance & form
 
@@ -239,20 +245,30 @@ def website_main_page_view(request):
     alerts = []
     if request.method == 'POST':
 
-        # utils.form_save(form, alerts, 'Слайдер и краткая информация сохранены успешно!')
+        utils.form_save(main_page_form, alerts, 'Слайдер и краткая информация сохранены успешно!')
+        # utils.form_save(main_page_block_formset, alerts, 'Блоки сохранены успешно!')
 
-        if main_page_form.is_valid():
-            main_page_form.save()
-            alerts.append('Слайдер и краткая информация сохранены успешно!')
+        print('#' * 10)
+        print('#' * 10)
+        print('#' * 10)
+        print(' ')
+
+        print(f"Formset validation - {main_page_block_formset.is_valid()}")
+        print(f"Count - {models.WebsiteMainPageBlocks.objects.count()}")
 
         if main_page_block_formset.is_valid():
-            main_page_block_formset.save()
+            for main_page_block_form in main_page_block_formset:
+                instance = main_page_block_form.save(commit=False)
+                print(f"Formset instance - {instance}")
+            # main_page_block_formset.save()
             alerts.append('Блоки сохранены успешно!')
-        print(main_page_block_formset.errors)
 
-        if main_page_seo_form.is_valid():
-            main_page_seo_form.save()
-            alerts.append('Настройки SEO сохранены успешно!')
+        print(' ')
+        print('#' * 10)
+        print('#' * 10)
+        print('#' * 10)
+
+        utils.form_save(main_page_seo_form, alerts, 'Настройки SEO сохранены успешно!')
 
     # Context packing & render
 
@@ -270,7 +286,71 @@ def website_about_view(request):
 
 
 def website_services_view(request):
-    return render(request, 'admin/website/services.html')
+
+    # Main page block instances & forms
+
+    formset_instances = models.WebsiteServiceBlocks.objects.all()
+
+    MainPageServiceBlocksFormset = modelformset_factory(
+        model=models.WebsiteServiceBlocks,
+        form=forms.WebsiteServiceBlocksForm,
+        fields=('image', 'name', 'description'),
+        extra=0,
+    )
+
+    if not models.WebsiteServiceBlocks.objects.count() > 0:
+        models.WebsiteServiceBlocks.objects.bulk_create(
+            [models.WebsiteServiceBlocks() for i in range(3)]
+        )
+
+    block_formset = MainPageServiceBlocksFormset(
+        request.POST or None, request.FILES or None,
+        queryset=formset_instances,
+        prefix='service_blocks_form',
+    )
+
+    for form in block_formset:
+        form.fields['id'].required = False
+
+    # Main page SEO instance & form
+
+    website_service: models.WebsiteService = models.WebsiteService.get_solo()
+
+    if website_service.seo is None:
+        website_service.seo = models.SEO.objects.create()
+        website_service.save()
+
+    seo_form = forms.SEOForm(
+        request.POST or None,
+        instance=website_service.seo,
+        prefix='service_seo_form',
+    )
+
+    # Method POST & form-save
+
+    alerts = []
+    if request.method == 'POST':
+        if block_formset.is_valid():
+            for service_blocks_form in block_formset:
+                instance = service_blocks_form.save(commit=False)
+                print(f"Formset instance - {instance}")
+            # main_page_block_formset.save()
+            alerts.append('Услуги сохранены успешно!')
+
+        print('#' * 10)
+        print('#' * 10)
+        print('#' * 10)
+
+        utils.form_save(seo_form, alerts, 'Настройки SEO сохранены успешно!')
+
+    # Context packing & render
+
+    context = {
+        'formset': block_formset,
+        'seo_form': seo_form,
+        'alerts': alerts,
+    }
+    return render(request, 'admin/website/services.html', context)
 
 
 def website_tariffs_view(request):
@@ -315,6 +395,7 @@ def tariffs_delete_view(request):
 
 def user_admin_role_view(request):
     return render(request, 'admin/user-admin/role.html')
+
 
 def user_admin_users_list(request):
     return render(request, 'admin/user-admin/list.html')

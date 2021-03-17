@@ -239,14 +239,13 @@ class WebsiteAboutGallery(models.Model):
 
 
 class WebsiteService(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
 
 
 class WebsiteServiceBlocks(models.Model):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/', null=True)
-    name = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class WebsiteTariffs(SingletonModel):
