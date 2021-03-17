@@ -189,19 +189,11 @@ def website_main_page_view(request):
 
     # Main page block instances & forms
 
-    print(not models.WebsiteMainPageBlocks.objects.count() > 0)
-
-    if models.WebsiteMainPageBlocks.objects.count() == 0:
+    if not models.WebsiteMainPageBlocks.objects.count() > 0:
         models.WebsiteMainPageBlocks.objects.bulk_create(
             [models.WebsiteMainPageBlocks() for i in range(6)]
         )
-
     formset_instances = models.WebsiteMainPageBlocks.objects.all()
-
-    print(request.POST)
-    print(len(formset_instances))
-    print(formset_instances)
-
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
@@ -233,11 +225,30 @@ def website_main_page_view(request):
 
     alerts = []
     if request.method == 'POST':
+
         utils.form_save(main_page_form, alerts, 'Слайдер и краткая информация сохранены успешно!')
         # utils.form_save(main_page_block_formset, alerts, 'Блоки сохранены успешно!')
+
+        print('#' * 10)
+        print('#' * 10)
+        print('#' * 10)
+        print(' ')
+
+        print(f"Formset validation - {main_page_block_formset.is_valid()}")
+        print(f"Count - {models.WebsiteMainPageBlocks.objects.count()}")
+
         if main_page_block_formset.is_valid():
-            main_page_block_formset.save()
+            for main_page_block_form in main_page_block_formset:
+                instance = main_page_block_form.save()
+                print(f"Formset instance - {instance}")
+            # main_page_block_formset.save()
             alerts.append('Блоки сохранены успешно!')
+
+        print(' ')
+        print('#' * 10)
+        print('#' * 10)
+        print('#' * 10)
+
         utils.form_save(main_page_seo_form, alerts, 'Настройки SEO сохранены успешно!')
 
     # Context packing & render
