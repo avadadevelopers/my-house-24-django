@@ -204,6 +204,7 @@ def website_main_page_view(request):
     )
 
     main_page_block_formset = MainPageBlockFormset(
+        request.POST or None, request.FILES or None,
         queryset=formset_instances,
         prefix='main_page_block_form',
     )
@@ -242,7 +243,6 @@ def website_main_page_view(request):
         if main_page_block_formset.is_valid():
             for main_page_block_form in main_page_block_formset:
                 instance = main_page_block_form.save(commit=False)
-                print(instance.id)
                 print(f"Formset instance - {instance}")
             # main_page_block_formset.save()
             alerts.append('Блоки сохранены успешно!')
