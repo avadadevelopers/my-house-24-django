@@ -193,6 +193,12 @@ def meter_data_delete_view(request):
 
 def website_main_page_view(request):
     alerts = []
+
+    main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+    if main_page.seo is None:
+        main_page.seo = models.SEO.objects.create()
+        main_page.save()
+
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
@@ -223,12 +229,6 @@ def website_main_page_view(request):
             alerts.append('Данные сохранены успешно!')
 
     else:
-
-        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
-
-        if main_page.seo is None:
-            main_page.seo = models.SEO.objects.create()
-            main_page.save()
 
         main_page_block_formset = MainPageBlockFormset(
             prefix='main_page_block_form',
