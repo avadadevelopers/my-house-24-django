@@ -41,41 +41,42 @@
                     <div class="row align-items-center">
                         <div class="col-sm slides">
                             <div>Слайд 1</div>
-                            <div class="blocks-image" style="background: url({% if form.instance.slide1 %}{{ form.instance.slide1.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div class="blocks-image" style="background: url({% if main_page_form.instance.slide1 %}{{ main_page_form.instance.slide1.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div><b>Рекомендуемый размер: (1920x800)</b></div>
-                            <div>{{ form.slide1 }}</div>
+                            <div>{{ main_page_form.slide1 }}</div>
                         </div>
                         <div class="col-sm slides">
                             <div>Слайд 2</div>
-                            <div class="blocks-image" style="background: url({% if form.instance.slide2 %}{{ form.instance.slide2.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div class="blocks-image" style="background: url({% if main_page_form.instance.slide2 %}{{ main_page_form.instance.slide2.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div><b>Рекомендуемый размер: (1920x800)</b></div>
-                            <div>{{ form.slide2 }}</div>
+                            <div>{{ main_page_form.slide2 }}</div>
                         </div>
                         <div class="col-sm slides">
                             <div>Слайд 3</div>
-                            <div class="blocks-image" style="background: url({% if form.instance.slide3 %}{{ form.instance.slide3.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div class="blocks-image" style="background: url({% if main_page_form.instance.slide3 %}{{ main_page_form.instance.slide3.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div><b>Рекомендуемый размер: (1920x800)</b></div>
-                            <div>{{ form.slide3 }}</div>
+                            <div>{{ main_page_form.slide3 }}</div>
                         </div>
                     </div>
                 </section>
                 <section>
-                    <h4>Краткая информация</h4>
+                    <h4>Краткая информация db_seo_id_{{ main_page_form.instance.seo }}</h4>
                     <hr/>
                     <div>
                         Заголовок
-                        {{ form.title }}
+                        {{ main_page_form.title }}
                     </div>
                     <div>
                         Краткий текст
-                        {{ form.description }}
+                        {{ main_page_form.description }}
                     </div>
                 </section>
                 <section>
                     <h4>Рядом с нами</h4>
                     <hr/>
                     <div class="row align-items-center">
-                        {% for form in formset %}
+                        {% for form in main_page_block_formset %}
+                        {{ form.id }}
                         <div class="col-md-4">
                             Блок {{ forloop.counter }} with db_id_{{ form.instance.id }}
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
@@ -93,23 +94,23 @@
                             </div>
                         </div>
                         {% endfor %}
-                        {{ formset.management_form }}
+                        {{ main_page_block_formset.management_form }}
                     </div>
                 </section>
                 <section>
-                    <h4>Настройки SEO</h4>
+                    <h4>Настройки SEO with db_id_{{ main_page_seo_form.instance.id }}</h4>
                     <hr/>
                     <div>
                         Title
-                        {{ seo_form.title }}
+                        {{ main_page_seo_form.title }}
                     </div>
                     <div>
                         Keywords
-                        {{ seo_form.keywords }}
+                        {{ main_page_seo_form.keywords }}
                     </div>
                     <div>
                         Description
-                        {{ seo_form.description }}
+                        {{ main_page_seo_form.description }}
                     </div>
                 </section>
                 <section>

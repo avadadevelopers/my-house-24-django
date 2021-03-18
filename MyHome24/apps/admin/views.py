@@ -176,91 +176,63 @@ def meter_data_delete_view(request):
 
 
 def website_main_page_view(request):
-
-    # Main page instance & form
-    main_page_block_formset = []
-
-    website_main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
-
-    main_page_form = forms.WebsiteMainPageForm(
-        request.POST or None, request.FILES or None,
-        instance=website_main_page,
-        prefix='main_page_form',
-    )
-
-    # Main page block instances & forms
-
-    if not models.WebsiteMainPageBlocks.objects.count() > 0:
-        models.WebsiteMainPageBlocks.objects.bulk_create(
-            [models.WebsiteMainPageBlocks() for i in range(6)]
-        )
-    formset_instances = models.WebsiteMainPageBlocks.objects.all()
-    print([f.id for f in formset_instances])
+    alerts = []
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
-        fields=('image', 'title', 'description'),
-        extra=0,
+        max_num=6,
+        min_num=6
     )
 
-    main_page_block_formset = MainPageBlockFormset(
-        request.POST or None, request.FILES or None,
-        queryset=formset_instances,
-        prefix='main_page_block_form',
-    )
-
-    for form in main_page_block_formset:
-        form.fields['id'].required = False
-
-    # Main page SEO instance & form
-
-    if website_main_page.seo is None:
-        website_main_page.seo = models.SEO.objects.create()
-        website_main_page.save()
-
-    main_page_seo_form = forms.SEOForm(
-        request.POST or None,
-        instance=website_main_page.seo,
-        prefix='main_page_seo_form',
-    )
-
-    # Method POST & form-save
-
-    alerts = []
     if request.method == 'POST':
 
-        utils.form_save(main_page_form, alerts, 'Слайдер и краткая информация сохранены успешно!')
-        # utils.form_save(main_page_block_formset, alerts, 'Блоки сохранены успешно!')
+        main_page_form = forms.WebsiteMainPageForm(
+            request.POST, request.FILES,
+            prefix='main_page_form',
+        )
+        main_page_block_formset = MainPageBlockFormset(
+            request.POST, request.FILES,
+            prefix='main_page_block_form',
+        )
+        main_page_seo_form = forms.SEOForm(
+            request.POST,
+            prefix='main_page_seo_form',
+        )
 
-        print('#' * 10)
-        print('#' * 10)
-        print('#' * 10)
-        print(' ')
+        if utils.forms_save([
+            main_page_seo_form,
+            main_page_form,
+            main_page_block_formset,
+        ]):
+            alerts.append('Данные сохранены успешно!')
 
-        print(f"Formset validation - {main_page_block_formset.is_valid()}")
-        print(f"Count - {models.WebsiteMainPageBlocks.objects.count()}")
+    else:
 
-        if main_page_block_formset.is_valid():
-            for main_page_block_form in main_page_block_formset:
-                instance = main_page_block_form.save(commit=False)
-                print(f"Formset instance - {instance}")
-            # main_page_block_formset.save()
-            alerts.append('Блоки сохранены успешно!')
+        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
 
-        print(' ')
-        print('#' * 10)
-        print('#' * 10)
-        print('#' * 10)
+        if main_page.seo is None:
+            main_page.seo = models.SEO.objects.create()
+            main_page.save()
 
-        utils.form_save(main_page_seo_form, alerts, 'Настройки SEO сохранены успешно!')
+        main_page_block_formset = MainPageBlockFormset(
+            prefix='main_page_block_form',
+        )
 
-    # Context packing & render
+        main_page_seo_form = forms.SEOForm(
+            instance=main_page.seo,
+            prefix='main_page_seo_form',
+        )
+
+        main_page_form = forms.WebsiteMainPageForm(
+            instance=main_page,
+            prefix='main_page_form',
+        )
 
     context = {
-        'form': main_page_form,
-        'formset': main_page_block_formset,
-        'seo_form': main_page_seo_form,
         'alerts': alerts,
+        'main_page_form': main_page_form,
+        'main_page_block_formset': main_page_block_formset,
+        'main_page_seo_form': main_page_seo_form,
     }
     return render(request, 'admin/website/main-page.html', context)
 
@@ -270,7 +242,6 @@ def website_about_view(request):
 
 
 def website_services_view(request):
-
     # Main page block instances & forms
 
     formset_instances = models.WebsiteServiceBlocks.objects.all()
