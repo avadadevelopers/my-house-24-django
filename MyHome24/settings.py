@@ -23,12 +23,15 @@ INSTALLED_APPS = [
     'public.apps.PublicConfig',
     'admin.apps.AdminConfig',
     'cabinet.apps.CabinetConfig',
+    'crispy_forms',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = '_db.User'
 

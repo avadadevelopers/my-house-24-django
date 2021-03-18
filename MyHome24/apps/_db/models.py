@@ -88,7 +88,7 @@ class User(CustomAbstractUser):
     about = models.TextField()
 
     def __str__(self):
-        return self.email
+        return self.first_name + self.last_name
 
     class Meta:
         app_label = '_db'
@@ -103,6 +103,7 @@ class Telephone(models.Model):
 
 
 class House(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     number = models.IntegerField()
@@ -169,23 +170,30 @@ class TransferType(models.Model):
 
 
 class Transfer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transfer_user')
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transfer_manager')
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    transfer_type = models.ForeignKey(TransferType, on_delete=models.CASCADE)
-    amount = models.IntegerField()
-    comment = models.TextField(null=True, blank=True)
-    payment_made = models.BooleanField()
-    created_date = models.DateField(default=timezone.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_user', verbose_name='')
+    manager = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_manager', verbose_name='')
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True,  verbose_name='')
+    transfer_type = models.ForeignKey(TransferType, on_delete=models.CASCADE, blank=True, verbose_name='', null=True)
+    amount = models.IntegerField(verbose_name='', blank=True)
+    comment = models.TextField('', null=True, blank=True)
+    payment_made = models.BooleanField(verbose_name='', null=True)
+    created_date = models.DateField(default=timezone.now, null=True)
 
 
 class Invoice(models.Model):
     TYPE = (
         ('Оплачена', 'Оплачена'),
         ('Частично оплачена', 'Частично оплачена'),
-        ('неоплачена', 'неоплачена')
+        ('Неоплачена', 'Неоплачена')
+    )
+    TARIFF = (
+        ('Основной', 'Основной'),
+        ('Пенсионный', 'Пенсионный'),
+        ('Дополнительный', 'Дополнительный')
     )
 
+    # Добавить модель Тарифа и сделать связь
+    tariff = models.CharField('', choices=TARIFF, null=True, max_length=55)
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     type = models.CharField('Статус квитанции', choices=TYPE, max_length=55, null=True)
     house = models.ForeignKey(House, on_delete=models.CASCADE)
