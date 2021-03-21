@@ -56,7 +56,7 @@
                         </div>
                         {% endfor %}
                         {{ formset.management_form }}
-                        <button type="button" class="btn btn-secondary btn-lg btn-block">Добавить услугу</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="add-service-block">Добавить услугу</button>
                     </div>
                 </div>
                 <div class="default-area">
@@ -76,7 +76,6 @@
                     </div>
                 </div>
                 <div class="default-area">
-                    <input type="button" value="Add More" id="add_more">
                     <input type="submit" value="Сохранить">
                 </div>
             </form>
@@ -94,7 +93,7 @@ let prefix = "service_blocks_form";
 let form = "form-area";
 let counter = "";
 
-$('#add-form').click(function() { addForm(prefix, form, counter); });
+$('#add-service-block').click(function() { addForm(prefix, form, counter); });
 $('.del-form').click(function() { delForm(this, prefix, form, counter); });
 </script>
 {% endblock %}
