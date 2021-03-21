@@ -15,7 +15,7 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<section>
+<div class="default-area">
     {% if alerts %}
     {% for alert in alerts %}
     <div class="alert alert-success" role="alert">
@@ -23,7 +23,7 @@
     </div>
     {% endfor %}
     {% endif %}
-</section>
+</div>
 
 <section class="content">
     <div class="container-fluid">
@@ -33,12 +33,12 @@
             </div> <!-- /.card-body -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <section>
+                <div class="default-area">
                     <h4>Услуги</h4>
                     <hr/>
                     <div class="row align-items-center">
                         {% for form in formset %}
-                        <div class="block-form col-md-4">
+                        <div class="form-area col-md-4">
                             Услуга {{ forloop.counter }} with db_id_{{ form.instance.id }}
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
@@ -56,9 +56,10 @@
                         </div>
                         {% endfor %}
                         {{ formset.management_form }}
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">Добавить услугу</button>
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <h4>Настройки SEO</h4>
                     <hr/>
                     <div>
@@ -73,11 +74,11 @@
                         Description
                         {{ seo_form.description }}
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <input type="button" value="Add More" id="add_more">
                     <input type="submit" value="Сохранить">
-                </section>
+                </div>
             </form>
         </div>
     </div><!-- /.container-fluid -->
@@ -85,10 +86,15 @@
 {% endblock %}
 {% block scripts %}
 <script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="{% static 'base/js/dynamicforms.js' %}"></script>
 <script>
 tinymce.init({selector:'textarea'});
-$('#add_more').click(function() {
-    cloneMore('.block-form:last', 'service');
-});
+
+let prefix = "service_blocks_form";
+let form = "form-area";
+let counter = "";
+
+$('#add-form').click(function() { addForm(prefix, form, counter); });
+$('.del-form').click(function() { delForm(this, prefix, form, counter); });
 </script>
 {% endblock %}

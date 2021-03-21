@@ -114,10 +114,10 @@ li.breadcrumb-item>a{
 [class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-light-] .nav-sidebar>.nav-item:hover>.nav-link{
     background-color: #e1f1ea;
 }
-section {
+.default-area {
     margin: 0 1.5rem 1.5rem 1.5rem
 }
-section div {
+.default-area div {
     margin: 0.5rem 0;
 }
 .content-wrapper>.content {
