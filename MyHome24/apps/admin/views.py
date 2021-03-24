@@ -315,7 +315,7 @@ def website_services_view(request):
         print('#' * 10)
         print('#' * 10)
 
-        utils.form_save(seo_form, alerts, 'Настройки SEO сохранены успешно!')
+        utils.form_save(seo_form)
 
     # Context packing & render
 

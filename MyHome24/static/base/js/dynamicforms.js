@@ -1,6 +1,6 @@
 function updateFormIndex(element, prefix, index) {
     let id_regex = new RegExp('(' + prefix + '-\\d+)');
-	let replacement = prefix + '-' + i;
+	let replacement = prefix + '-' + index;
 	let name = $(this).attr('name').replace(id_regex,replacement);
 	let id = 'id_' + name;
     $(this).attr({'name': name, 'id': id}).val('');
@@ -21,11 +21,11 @@ function delForm(btn, prefix, form, counter) {
     return false;
 }
 
-function addForm(prefix, form, counter, deleter) {
+function addForm(prefix, form, counter) {
     let selector = form + ":last";
     let newElement = $(selector).clone(true);
     let total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-
+    let i = 0;
     newElement.find(':input').each(function() {
         let name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
         let id = 'id_' + name;
@@ -36,7 +36,4 @@ function addForm(prefix, form, counter, deleter) {
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
     if (counter) newElement.find(counter).each(function() { $(this).text(total); });
     $(selector).after(newElement);
-
-    height = document.body.scrollHeight;
-    window.scrollTo(0, height);
 }
