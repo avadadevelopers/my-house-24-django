@@ -21,7 +21,7 @@ function delForm(btn, prefix, form, counter) {
     return false;
 }
 
-function addForm(prefix, form, counter) {
+function addForm(prefix, form, counter, default_image_url) {
     let selector = form + ":last";
     let newElement = $(selector).clone(true);
     let total = $('#id_' + prefix + '-TOTAL_FORMS').val();
@@ -30,6 +30,9 @@ function addForm(prefix, form, counter) {
         let name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
         let id = 'id_' + name;
         $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('.blocks-image').each(function() {
+        $(this).css('background', 'url(' + default_image_url + ') no-repeat')
     });
 
     total++;

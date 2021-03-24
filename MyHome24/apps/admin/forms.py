@@ -82,8 +82,9 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
 class WebsiteServiceBlocksForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteServiceBlocks
-        fields = ['image', 'name', 'description']
+        fields = ['id', 'image', 'name', 'description']
         widgets = {
+            'id': forms.HiddenInput(),
             'image': forms.FileInput(attrs={
                 'class': 'form-control-file',
             }),

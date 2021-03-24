@@ -43,7 +43,7 @@
                                 <h4>Услуга <b class="form-counter">{{ forloop.counter }}</b></h4>
                                 <div class="btn btn-danger del-form">DEL</div>
                             </div>
-
+                            {{ form.id }}
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (650x300)</b>
@@ -93,11 +93,11 @@
 <script>
 // tinymce.init({selector:'textarea'}); // Включить по необходиомости (может не работать динамическое добавление форм)
 
-let prefix = "service_blocks_form";
-let form = ".form-area";
-let counter = ".form-counter";
-
-$('#add-service-block').click(function() { addForm(prefix, form, counter); });
+let prefix = 'service';
+let form = '.form-area';
+let counter = '.form-counter';
+let default_image_url = '{% static 'no_icon.png' %}';
+$('#add-service-block').click(function() { addForm(prefix, form, counter, default_image_url); });
 $('.del-form').click(function() { delForm(this, prefix, form, counter); });
 </script>
 {% endblock %}
