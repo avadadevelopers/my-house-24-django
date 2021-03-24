@@ -84,7 +84,15 @@ def account_view(request):
 
 
 def account_create_view(request):
-    return render(request, 'admin/account/create_in.html')
+    form = forms.AccountForm(request.POST)
+    alerts = []
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        alerts.append('Запись была успешно добавлена!')
+
+    return render(request, 'admin/account/create.html', {'form': form,
+                                                         'alerts': alerts
+                                                         })
 
 
 def account_change_view(request):

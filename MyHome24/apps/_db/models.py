@@ -10,6 +10,8 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.utils.timezone import datetime
+from datetime import datetime
 from abc import ABC, abstractmethod
 
 
@@ -113,6 +115,9 @@ class House(models.Model):
     image4 = models.ImageField(upload_to='images/')
     image5 = models.ImageField(upload_to='images/')
 
+    def __str__(self):
+        return f'ул. {self.address}, дом {self.number}'
+
 
 class Section(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
@@ -159,25 +164,47 @@ class RateService(models.Model):
 
 
 class Account(models.Model):
-    house = models.ForeignKey(House, on_delete=models.CASCADE)
-    money = models.FloatField()
-    active = models.BooleanField(default=True)
+    STATUS = (
+        ('Active', 'Активен'),
+        ('Inactive','Неактивен')
+    )
+    wallet = models.CharField('Номер лицевого счёта', max_length=255)
+    house = models.ForeignKey(House, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
+    floor = models.ForeignKey(Floor, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
+    money = models.FloatField(default=0)
+    status = models.CharField('',choices=STATUS, max_length=55, blank=True)
+
+    def __str__(self):
+        return self.wallet
 
 
 class TransferType(models.Model):
+    TYPE_OF_TRANSFER = (
+        ('Income', 'Приход'),
+        ('Outcome', 'Расход')
+    )
     name = models.CharField(max_length=255)
-    transfer_income = models.BooleanField()
+    transfer_income = models.CharField('', max_length=55, choices=TYPE_OF_TRANSFER)
+
+    def __str__(self):
+        return self.name
 
 
 class Transfer(models.Model):
+
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_user', verbose_name='')
     manager = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_manager', verbose_name='')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True,  verbose_name='')
     transfer_type = models.ForeignKey(TransferType, on_delete=models.CASCADE, blank=True, verbose_name='', null=True)
     amount = models.IntegerField(verbose_name='', blank=True)
     comment = models.TextField('', null=True, blank=True)
+    #статус платежа
     payment_made = models.BooleanField(verbose_name='', null=True)
+    #
     created_date = models.DateField(default=timezone.now, null=True)
+
 
 
 class Invoice(models.Model):
