@@ -272,14 +272,22 @@ def website_services_view(request):
     if request.method == "POST":
         service_formset = MainPageServiceBlocksFormset(request.POST, request.FILES, prefix='service')
         utils.form_save(service_formset)
+        seo_form = forms.SEOForm(request.POST, prefix='SEO')
+        utils.form_save(seo_form)
         alerts.append('Услуги сохранены успешно!')
     else:
         service_formset = MainPageServiceBlocksFormset(prefix='service')
+        service_instance = models.WebsiteService.get_solo()
+        if not service_instance.seo:
+            service_instance.seo = models.SEO.objects.create()
+            service_instance.save()
+        seo_form = forms.SEOForm(instance=service_instance.seo, prefix='SEO')
 
     return render(
         request, 'admin/website/services.html',
         context={
             'formset': service_formset,
+            'seo_form': seo_form,
             'alerts': alerts,
         })
 
