@@ -15,7 +15,7 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<section>
+<div class="default-area">
     {% if alerts %}
     {% for alert in alerts %}
     <div class="alert alert-success" role="alert">
@@ -23,7 +23,7 @@
     </div>
     {% endfor %}
     {% endif %}
-</section>
+</div>
 
 <section class="content">
     <div class="container-fluid">
@@ -31,11 +31,9 @@
             <div class="card-header">
                 <h3 class="card-title">Редактирование страницы "Главная"</h3>
             </div> <!-- /.card-body -->
-
-
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <section>
+                <div class="default-area">
                     <h4>Слайдер</h4>
                     <hr/>
                     <div class="row align-items-center">
@@ -58,8 +56,8 @@
                             <div>{{ main_page_form.slide3 }}</div>
                         </div>
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <h4>Краткая информация db_seo_id_{{ main_page_form.instance.seo }}</h4>
                     <hr/>
                     <div>
@@ -70,8 +68,8 @@
                         Краткий текст
                         {{ main_page_form.description }}
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <h4>Рядом с нами</h4>
                     <hr/>
                     <div class="row align-items-center">
@@ -96,8 +94,8 @@
                         {% endfor %}
                         {{ main_page_block_formset.management_form }}
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <h4>Настройки SEO with db_id_{{ main_page_seo_form.instance.id }}</h4>
                     <hr/>
                     <div>
@@ -112,10 +110,10 @@
                         Description
                         {{ main_page_seo_form.description }}
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <input type="submit" value="Сохранить">
-                </section>
+                </div>
             </form>
         </div>
     </div><!-- /.container-fluid -->

@@ -192,8 +192,8 @@ def meter_data_delete_view(request):
 
 
 def website_main_page_view(request):
-    alerts = []
 
+    alerts = []
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
@@ -216,21 +216,32 @@ def website_main_page_view(request):
             prefix='main_page_seo_form',
         )
 
+        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+
+        print(main_page.seo)
+        print(main_page_seo_form.instance.id)
         if utils.forms_save([
-            main_page_seo_form,
             main_page_form,
+            main_page_seo_form,
             main_page_block_formset,
         ]):
             alerts.append('Данные сохранены успешно!')
 
+        print(main_page_seo_form.instance.id)
+
     else:
 
         main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+        print(main_page.seo)
+
         if not main_page.seo:
             main_page.seo = models.SEO.objects.create()
             main_page.save()
 
-        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+        main_page_form = forms.WebsiteMainPageForm(
+            instance=main_page,
+            prefix='main_page_form',
+        )
 
         main_page_block_formset = MainPageBlockFormset(
             prefix='main_page_block_form',
@@ -239,11 +250,6 @@ def website_main_page_view(request):
         main_page_seo_form = forms.SEOForm(
             instance=main_page.seo,
             prefix='main_page_seo_form',
-        )
-
-        main_page_form = forms.WebsiteMainPageForm(
-            instance=main_page,
-            prefix='main_page_form',
         )
 
     context = {
