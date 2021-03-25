@@ -9,7 +9,8 @@ function updateFormIndex(element, prefix, index) {
 function delForm(btn, prefix, form, counter) {
     $(btn).parents(form).remove();
     let forms = $(form);
-    $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+    total = $('#id_' + prefix + '-TOTAL_FORMS').val() - 1
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
 
     for (var i=1, formCount=forms.length; i<formCount; i++) {
         element = $(forms.get(i));
