@@ -82,7 +82,7 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
 
 class WebsiteTariffsForm(forms.ModelForm):
     class Meta:
-        model = models.WebsiteMainPage
+        model = models.WebsiteTariffs
         fields = ['title', 'description']
         widgets = {
             'title': forms.TextInput(attrs={
@@ -101,7 +101,7 @@ class WebsiteTariffsForm(forms.ModelForm):
 
 class WebsiteTariffsBlocksForm(forms.ModelForm):
     class Meta:
-        model = models.WebsiteMainPageBlocks
+        model = models.WebsiteTariffBlocks
         fields = ['id', 'image', 'title']
         widgets = {
             'id': forms.HiddenInput(),

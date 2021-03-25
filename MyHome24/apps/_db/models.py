@@ -228,7 +228,7 @@ class WebsiteMainPageBlocks(models.Model):
 
 
 class WebsiteAbout(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
     poster = models.ImageField(upload_to='images/', null=True)
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
@@ -239,7 +239,7 @@ class WebsiteAboutGallery(models.Model):
 
 
 class WebsiteService(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class WebsiteServiceBlocks(models.Model):
@@ -249,7 +249,7 @@ class WebsiteServiceBlocks(models.Model):
 
 
 class WebsiteTariffs(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
 
@@ -260,7 +260,7 @@ class WebsiteTariffBlocks(models.Model):
 
 
 class WebsiteContacts(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
     site = models.URLField(null=True)

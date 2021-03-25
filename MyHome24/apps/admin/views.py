@@ -309,14 +309,14 @@ def website_tariffs_view(request):
     alerts = []
     TariffsBlockFormset = modelformset_factory(
         model=models.WebsiteTariffs,
-        form=forms.WebsiteTariffsBlocksForm,
+        form=forms.WebsiteTariffsForm,
         max_num=6,
         min_num=6
     )
 
     if request.method == 'POST':
 
-        tariffs_form = forms.WebsiteMainPageForm(
+        tariffs_form = forms.WebsiteTariffsForm(
             request.POST, request.FILES,
             prefix='tariffs_form',
         )
@@ -344,18 +344,18 @@ def website_tariffs_view(request):
             tariffs.seo = models.SEO.objects.create()
             tariffs.save()
 
-        tariffs_form = forms.WebsiteMainPageForm(
+        tariffs_form = forms.WebsiteTariffsForm(
             instance=tariffs,
             prefix='tariffs_form',
         )
 
         tariffs_block_formset = TariffsBlockFormset(
-            prefix='main_page_block_form',
+            prefix='tariffs_block_form',
         )
 
         tariffs_seo_form = forms.SEOForm(
             instance=tariffs.seo,
-            prefix='main_page_seo_form',
+            prefix='tariffs_seo_form',
         )
 
     context = {
