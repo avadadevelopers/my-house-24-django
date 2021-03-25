@@ -6,8 +6,9 @@ from _db import models
 class SEOForm(forms.ModelForm):
     class Meta:
         model = models.SEO
-        fields = ['title', 'keywords', 'description']
+        fields = ['id', 'title', 'keywords', 'description']
         widgets = {
+            'id': forms.HiddenInput(),
             'title': forms.TextInput(attrs={
                 'id': 'SEOTitleInput',
                 'class': 'form-control',

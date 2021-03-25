@@ -273,14 +273,20 @@ def website_services_view(request):
         service_formset = MainPageServiceBlocksFormset(request.POST, request.FILES, prefix='service')
         utils.form_save(service_formset)
         seo_form = forms.SEOForm(request.POST, prefix='SEO')
-        utils.form_save(seo_form)
+        print(f'Instance ID BEFORE- {seo_form.instance.id}')
+        instance = utils.form_save(seo_form)
+        print(f'Instance ID AFTER - {instance.id}')
         alerts.append('Услуги сохранены успешно!')
     else:
         service_formset = MainPageServiceBlocksFormset(prefix='service')
         service_instance = models.WebsiteService.get_solo()
+        print(f'service_instance.seo BEFORE - {service_instance.seo}')
         if not service_instance.seo:
-            service_instance.seo = models.SEO.objects.create()
+            seo = models.SEO.objects.create()
+            print(f'seo CREATED - {seo}')
+            service_instance.seo = seo
             service_instance.save()
+        print(f'service_instance.seo AFTER - {service_instance.seo}')
         seo_form = forms.SEOForm(instance=service_instance.seo, prefix='SEO')
 
     return render(
