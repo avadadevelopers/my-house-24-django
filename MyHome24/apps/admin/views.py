@@ -304,9 +304,67 @@ def website_services_view(request):
         })
 
 
-
 def website_tariffs_view(request):
-    return render(request, 'admin/website/tariffs.html')
+
+    alerts = []
+    TariffsBlockFormset = modelformset_factory(
+        model=models.WebsiteTariffs,
+        form=forms.WebsiteTariffsBlocksForm,
+        max_num=6,
+        min_num=6
+    )
+
+    if request.method == 'POST':
+
+        tariffs_form = forms.WebsiteMainPageForm(
+            request.POST, request.FILES,
+            prefix='tariffs_form',
+        )
+        tariffs_block_formset = TariffsBlockFormset(
+            request.POST, request.FILES,
+            prefix='tariffs_block_form',
+        )
+        tariffs_seo_form = forms.SEOForm(
+            request.POST,
+            prefix='tariffs_seo_form',
+        )
+
+        if utils.forms_save([
+            tariffs_form,
+            tariffs_block_formset,
+            tariffs_seo_form,
+        ]):
+            alerts.append('Данные сохранены успешно!')
+
+    else:
+
+        tariffs: models.WebsiteTariffs = models.WebsiteTariffs.get_solo()
+
+        if not tariffs.seo:
+            tariffs.seo = models.SEO.objects.create()
+            tariffs.save()
+
+        tariffs_form = forms.WebsiteMainPageForm(
+            instance=tariffs,
+            prefix='tariffs_form',
+        )
+
+        tariffs_block_formset = TariffsBlockFormset(
+            prefix='main_page_block_form',
+        )
+
+        tariffs_seo_form = forms.SEOForm(
+            instance=tariffs.seo,
+            prefix='main_page_seo_form',
+        )
+
+    context = {
+        'alerts': alerts,
+        'tariffs_form': tariffs_form,
+        'tariffs_block_formset': tariffs_block_formset,
+        'tariffs_seo_form': tariffs_seo_form,
+    }
+    return render(request, 'admin/website/tariffs.html', context)
 
 
 def website_contact_view(request):

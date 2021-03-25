@@ -80,6 +80,42 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
         }
 
 
+class WebsiteTariffsForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteMainPage
+        fields = ['title', 'description']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'id': 'DescriptionInput',
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+        }
+
+
+class WebsiteTariffsBlocksForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteMainPageBlocks
+        fields = ['id', 'image', 'title']
+        widgets = {
+            'id': forms.HiddenInput(),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+        }
+
+
 class WebsiteServiceBlocksForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteServiceBlocks

@@ -1,4 +1,8 @@
 {% extends 'admin/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin/css/website/main-page.css' %}">
+{% endblock %}
 {% block page_title %}
     <h1 class="m-0">Редактирование страницы</h1>
 {% endblock %}
@@ -11,4 +15,83 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
+<div class="default-area">
+    {% if alerts %}
+    {% for alert in alerts %}
+    <div class="alert alert-success" role="alert">
+        {{ alert }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Редактирование страницы "Тарифы"</h3>
+            </div> <!-- /.card-body -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="default-area">
+                    <h4>Информация</h4>
+                    <hr/>
+                    <div>
+                        Заголовок
+                        {{ main_page_form.title }}
+                    </div>
+                    <div>
+                        Краткий текст
+                        {{ main_page_form.description }}
+                    </div>
+                </div>
+                <div class="default-area">
+                    <h4>Изображения</h4>
+                    <hr/>
+                    <div class="row align-items-center">
+                        {% for form in tariffs_block_formset %}
+                        {{ form.id }}
+                        <div class="col-md-4">
+                            Тариф {{ forloop.counter }}
+                            <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div>
+                                <b>Рекомендуемый размер: (1000x600)</b>
+                                {{ form.image }}
+                            </div>
+                            <div>
+                                Заголовок блока
+                                {{ form.title }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {{ tariffs_block_formset.management_form }}
+                    </div>
+                </div>
+                <div class="default-area">
+                    <h4>Настройки SEO</h4>
+                    <hr/>
+                    <div>
+                        Title
+                        {{ main_page_seo_form.title }}
+                    </div>
+                    <div>
+                        Keywords
+                        {{ main_page_seo_form.keywords }}
+                    </div>
+                    <div>
+                        Description
+                        {{ main_page_seo_form.description }}
+                    </div>
+                </div>
+                <div class="default-area">
+                    <input type="submit" value="Сохранить">
+                </div>
+            </form>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>tinymce.init({selector:'textarea'});</script>
 {% endblock %}
