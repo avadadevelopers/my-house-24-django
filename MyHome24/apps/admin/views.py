@@ -368,7 +368,37 @@ def website_tariffs_view(request):
 
 
 def website_contact_view(request):
-    return render(request, 'admin/website/contact.html')
+
+    alerts = []
+    if request.method == "POST":
+        contact_form = forms.WebsiteContactsForm(request.POST, prefix='contacts')
+        contact_seo_form = forms.SEOForm(request.POST, prefix='SEO')
+        if utils.forms_save([
+            contact_form,
+            contact_seo_form,
+        ]):
+            alerts.append('Данные сохранены успешно!')
+
+    else:
+        contacts: models.WebsiteContacts = models.WebsiteContacts.get_solo()
+        if not contacts.seo:
+            contacts.seo = models.SEO.objects.create()
+            contacts.save()
+        contact_form = forms.WebsiteContactsForm(
+            instance=contacts,
+            prefix='contacts',
+        )
+        contact_seo_form = forms.SEOForm(
+            instance=contacts.seo,
+            prefix='SEO',
+        )
+
+    return render(request, 'admin/website/contact.html',
+                  context={
+                      'contact_form': contact_form,
+                      'contact_seo_form': contact_seo_form,
+                      'alerts': alerts,
+                  })
 
 
 def services_view(request):

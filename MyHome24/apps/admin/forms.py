@@ -122,9 +122,6 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
         fields = ['id', 'image', 'name', 'description']
         widgets = {
             'id': forms.HiddenInput(),
-            'image': forms.FileInput(attrs={
-                'class': 'form-control-file',
-            }),
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите название услуги',
@@ -134,6 +131,44 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
                 'class': 'form-control',
                 'rows': '3',
                 'placeholder': 'Введите описание услуги',
+            }),
+        }
+
+
+class WebsiteContactsForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteContacts
+        fields = ['id', 'title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
+        widgets = {
+            'id': forms.HiddenInput(),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+            'site': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите ссылку',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите адрес',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите адрес',
+            }),
+            'tel': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите номер телефона',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите электронную почту',
             }),
         }
 
