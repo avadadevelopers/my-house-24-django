@@ -274,7 +274,7 @@ def website_about_view(request):
 
 
 def website_services_view(request):
-    service_count = models.Service.objects.count()
+    service_count = models.WebsiteServiceBlocks.objects.count()
     MainPageServiceBlocksFormset = modelformset_factory(
         model=models.WebsiteServiceBlocks,
         form=forms.WebsiteServiceBlocksForm,
@@ -287,20 +287,13 @@ def website_services_view(request):
         service_formset = MainPageServiceBlocksFormset(request.POST, request.FILES, prefix='service')
         utils.form_save(service_formset)
         seo_form = forms.SEOForm(request.POST, prefix='SEO')
-        print(f'Instance ID BEFORE- {seo_form.instance.id}')
-        instance = utils.form_save(seo_form)
-        print(f'Instance ID AFTER - {instance.id}')
         alerts.append('Услуги сохранены успешно!')
     else:
         service_formset = MainPageServiceBlocksFormset(prefix='service')
         service_instance = models.WebsiteService.get_solo()
-        print(f'service_instance.seo BEFORE - {service_instance.seo}')
         if not service_instance.seo:
-            seo = models.SEO.objects.create()
-            print(f'seo CREATED - {seo}')
-            service_instance.seo = seo
+            service_instance.seo = models.SEO.objects.create()
             service_instance.save()
-        print(f'service_instance.seo AFTER - {service_instance.seo}')
         seo_form = forms.SEOForm(instance=service_instance.seo, prefix='SEO')
 
     return render(
@@ -313,15 +306,14 @@ def website_services_view(request):
 
 
 def website_tariffs_view(request):
-
-    alerts = []
+    tariffs_count = models.WebsiteTariffBlocks.objects.count()
     TariffsBlockFormset = modelformset_factory(
         model=models.WebsiteTariffBlocks,
         form=forms.WebsiteTariffsBlocksForm,
-        max_num=6,
-        min_num=6
+        max_num=tariffs_count if tariffs_count > 0 else 1,
     )
 
+    alerts = []
     if request.method == 'POST':
 
         tariffs_form = forms.WebsiteTariffsForm(
