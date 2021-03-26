@@ -36,6 +36,7 @@
                             {{ form.id }}
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
+                                <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                                 <b>Рекомендуемый размер: (650x300)</b>
                                 {{ form.image }}
                             </div>

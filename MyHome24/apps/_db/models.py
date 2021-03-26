@@ -257,12 +257,12 @@ class WebsiteMainPageBlocks(models.Model):
 class WebsiteAbout(SingletonModel):
     seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
     poster = models.ImageField(upload_to='images/', null=True)
-    title = models.CharField(max_length=255, null=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True)
 
 
 class WebsiteAboutGallery(models.Model):
-    image = models.ImageField(upload_to='images/', null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
 
 class WebsiteService(SingletonModel):

@@ -51,6 +51,7 @@
                                  style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (1000x600)</b>
+                                <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                                 {{ form.image }}
                             </div>
                             <div>

@@ -81,6 +81,39 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
         }
 
 
+class WebsiteAboutForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteAbout
+        fields = ['poster', 'title', 'description']
+        widgets = {
+            'poster': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+        }
+
+
+class WebsiteAboutGalleryForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteMainPageBlocks
+        fields = ['id', 'image']
+        widgets = {
+            'id': forms.HiddenInput(),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+        }
+
+
 class WebsiteTariffsForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteTariffs
