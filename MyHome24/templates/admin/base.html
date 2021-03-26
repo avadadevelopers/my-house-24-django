@@ -320,6 +320,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.content-header -->
 
+    <div class="default-area">
+      {% if alerts %}
+      {% for alert in alerts %}
+      <div class="alert alert-success" role="alert">
+        {{ alert }}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
     <!-- Main content -->
       {% block main_content %}
       {% endblock %}

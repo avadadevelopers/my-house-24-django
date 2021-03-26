@@ -224,10 +224,6 @@ def website_main_page_view(request):
             prefix='main_page_seo_form',
         )
 
-        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
-
-        print(main_page.seo)
-        print(main_page_seo_form.instance.id)
         if utils.forms_save([
             main_page_form,
             main_page_seo_form,
@@ -235,13 +231,8 @@ def website_main_page_view(request):
         ]):
             alerts.append('Данные сохранены успешно!')
 
-        print(main_page_seo_form.instance.id)
-
     else:
-
         main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
-        print(main_page.seo)
-
         if not main_page.seo:
             main_page.seo = models.SEO.objects.create()
             main_page.save()
@@ -284,10 +275,13 @@ def website_services_view(request):
 
     alerts = []
     if request.method == "POST":
-        service_formset = MainPageServiceBlocksFormset(request.POST, request.FILES, prefix='service')
+        service_formset = MainPageServiceBlocksFormset(
+            request.POST, request.FILES,
+            prefix='service')
         utils.form_save(service_formset)
         seo_form = forms.SEOForm(request.POST, prefix='SEO')
         alerts.append('Услуги сохранены успешно!')
+
     else:
         service_formset = MainPageServiceBlocksFormset(prefix='service')
         service_instance = models.WebsiteService.get_solo()
@@ -337,7 +331,6 @@ def website_tariffs_view(request):
             alerts.append('Данные сохранены успешно!')
 
     else:
-
         tariffs: models.WebsiteTariffs = models.WebsiteTariffs.get_solo()
 
         if not tariffs.seo:

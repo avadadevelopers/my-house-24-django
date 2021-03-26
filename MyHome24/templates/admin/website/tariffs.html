@@ -16,15 +16,6 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<div class="default-area">
-    {% if alerts %}
-    {% for alert in alerts %}
-    <div class="alert alert-success" role="alert">
-        {{ alert }}
-    </div>
-    {% endfor %}
-    {% endif %}
-</div>
 <section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">

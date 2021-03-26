@@ -16,3 +16,4 @@ def forms_save(forms):
     for form in forms:
         print(f'Save - {form.prefix}')
         form.save()
+    return True

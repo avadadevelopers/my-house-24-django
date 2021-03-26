@@ -240,7 +240,7 @@ class Requisites(SingletonModel):
 
 
 class WebsiteMainPage(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
     slide1 = models.ImageField(upload_to='images/', null=True, blank=True)
     slide2 = models.ImageField(upload_to='images/', null=True, blank=True)
     slide3 = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -287,9 +287,9 @@ class WebsiteTariffBlocks(models.Model):
 
 
 class WebsiteContacts(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     site = models.URLField(null=True)
     name = models.CharField(max_length=255, null=True)
     address = models.CharField(max_length=255, null=True)
