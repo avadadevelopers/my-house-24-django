@@ -288,10 +288,10 @@ class WebsiteTariffBlocks(models.Model):
 
 class WebsiteContacts(SingletonModel):
     seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=255, null=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    site = models.URLField(null=True)
-    name = models.CharField(max_length=255, null=True)
-    address = models.CharField(max_length=255, null=True)
-    tel = models.CharField(max_length=255, null=True)
-    email = models.EmailField(null=True)
+    site = models.URLField(null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    tel = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)

@@ -139,9 +139,8 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
 class WebsiteContactsForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteContacts
-        fields = ['id', 'title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
+        fields = ['title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
         widgets = {
-            'id': forms.HiddenInput(),
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите заголовок',
