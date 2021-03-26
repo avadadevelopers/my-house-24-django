@@ -7,8 +7,9 @@ from datetime import datetime
 class SEOForm(forms.ModelForm):
     class Meta:
         model = models.SEO
-        fields = ['title', 'keywords', 'description']
+        fields = ['id', 'title', 'keywords', 'description']
         widgets = {
+            'id': forms.HiddenInput(),
             'title': forms.TextInput(attrs={
                 'id': 'SEOTitleInput',
                 'class': 'form-control',
@@ -80,14 +81,48 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
         }
 
 
-class WebsiteServiceBlocksForm(forms.ModelForm):
+class WebsiteTariffsForm(forms.ModelForm):
     class Meta:
-        model = models.WebsiteServiceBlocks
-        fields = ['image', 'name', 'description']
+        model = models.WebsiteTariffs
+        fields = ['title', 'description']
         widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'id': 'DescriptionInput',
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+        }
+
+
+class WebsiteTariffsBlocksForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteTariffBlocks
+        fields = ['id', 'image', 'title']
+        widgets = {
+            'id': forms.HiddenInput(),
             'image': forms.FileInput(attrs={
                 'class': 'form-control-file',
             }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+        }
+
+
+class WebsiteServiceBlocksForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteServiceBlocks
+        fields = ['id', 'image', 'name', 'description']
+        widgets = {
+            'id': forms.HiddenInput(),
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите название услуги',
@@ -97,6 +132,44 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
                 'class': 'form-control',
                 'rows': '3',
                 'placeholder': 'Введите описание услуги',
+            }),
+        }
+
+
+class WebsiteContactsForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteContacts
+        fields = ['id', 'title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
+        widgets = {
+            'id': forms.HiddenInput(),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+            'site': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите ссылку',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите адрес',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите адрес',
+            }),
+            'tel': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите номер телефона',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите электронную почту',
             }),
         }
 

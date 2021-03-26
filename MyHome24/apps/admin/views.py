@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from _db import models, utils
 from . import forms
 from django.forms import modelformset_factory
@@ -200,8 +200,8 @@ def meter_data_delete_view(request):
 
 
 def website_main_page_view(request):
-    alerts = []
 
+    alerts = []
     MainPageBlockFormset = modelformset_factory(
         model=models.WebsiteMainPageBlocks,
         form=forms.WebsiteMainPageBlocksForm,
@@ -224,22 +224,32 @@ def website_main_page_view(request):
             prefix='main_page_seo_form',
         )
 
+        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+
+        print(main_page.seo)
+        print(main_page_seo_form.instance.id)
         if utils.forms_save([
-            main_page_seo_form,
             main_page_form,
+            main_page_seo_form,
             main_page_block_formset,
         ]):
             alerts.append('Данные сохранены успешно!')
 
+        print(main_page_seo_form.instance.id)
+
     else:
 
         main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
+        print(main_page.seo)
+
         if not main_page.seo:
             main_page.seo = models.SEO.objects.create()
             main_page.save()
 
-        main_page: models.WebsiteMainPage = models.WebsiteMainPage.get_solo()
-        print(main_page.seo)
+        main_page_form = forms.WebsiteMainPageForm(
+            instance=main_page,
+            prefix='main_page_form',
+        )
 
         main_page_block_formset = MainPageBlockFormset(
             prefix='main_page_block_form',
@@ -248,11 +258,6 @@ def website_main_page_view(request):
         main_page_seo_form = forms.SEOForm(
             instance=main_page.seo,
             prefix='main_page_seo_form',
-        )
-
-        main_page_form = forms.WebsiteMainPageForm(
-            instance=main_page,
-            prefix='main_page_form',
         )
 
     context = {
@@ -269,78 +274,139 @@ def website_about_view(request):
 
 
 def website_services_view(request):
-    # Main page block instances & forms
-
-    formset_instances = models.WebsiteServiceBlocks.objects.all()
-
+    service_count = models.Service.objects.count()
     MainPageServiceBlocksFormset = modelformset_factory(
         model=models.WebsiteServiceBlocks,
         form=forms.WebsiteServiceBlocksForm,
         fields=('image', 'name', 'description'),
-        extra=0,
+        max_num=service_count if service_count > 0 else 1,
     )
-
-    if not models.WebsiteServiceBlocks.objects.count() > 0:
-        models.WebsiteServiceBlocks.objects.bulk_create(
-            [models.WebsiteServiceBlocks() for i in range(3)]
-        )
-
-    block_formset = MainPageServiceBlocksFormset(
-        request.POST or None, request.FILES or None,
-        queryset=formset_instances,
-        prefix='service_blocks_form',
-    )
-
-    for form in block_formset:
-        form.fields['id'].required = False
-
-    # Main page SEO instance & form
-
-    website_service: models.WebsiteService = models.WebsiteService.get_solo()
-
-    if website_service.seo is None:
-        website_service.seo = models.SEO.objects.create()
-        website_service.save()
-
-    seo_form = forms.SEOForm(
-        request.POST or None,
-        instance=website_service.seo,
-        prefix='service_seo_form',
-    )
-
-    # Method POST & form-save
 
     alerts = []
-    if request.method == 'POST':
-        if block_formset.is_valid():
-            for service_blocks_form in block_formset:
-                instance = service_blocks_form.save(commit=False)
-                print(f"Formset instance - {instance}")
-            # main_page_block_formset.save()
-            alerts.append('Услуги сохранены успешно!')
+    if request.method == "POST":
+        service_formset = MainPageServiceBlocksFormset(request.POST, request.FILES, prefix='service')
+        utils.form_save(service_formset)
+        seo_form = forms.SEOForm(request.POST, prefix='SEO')
+        print(f'Instance ID BEFORE- {seo_form.instance.id}')
+        instance = utils.form_save(seo_form)
+        print(f'Instance ID AFTER - {instance.id}')
+        alerts.append('Услуги сохранены успешно!')
+    else:
+        service_formset = MainPageServiceBlocksFormset(prefix='service')
+        service_instance = models.WebsiteService.get_solo()
+        print(f'service_instance.seo BEFORE - {service_instance.seo}')
+        if not service_instance.seo:
+            seo = models.SEO.objects.create()
+            print(f'seo CREATED - {seo}')
+            service_instance.seo = seo
+            service_instance.save()
+        print(f'service_instance.seo AFTER - {service_instance.seo}')
+        seo_form = forms.SEOForm(instance=service_instance.seo, prefix='SEO')
 
-        print('#' * 10)
-        print('#' * 10)
-        print('#' * 10)
-
-        utils.form_save(seo_form)
-
-    # Context packing & render
-
-    context = {
-        'formset': block_formset,
-        'seo_form': seo_form,
-        'alerts': alerts,
-    }
-    return render(request, 'admin/website/services.html', context)
+    return render(
+        request, 'admin/website/services.html',
+        context={
+            'formset': service_formset,
+            'seo_form': seo_form,
+            'alerts': alerts,
+        })
 
 
 def website_tariffs_view(request):
-    return render(request, 'admin/website/tariffs.html')
+
+    alerts = []
+    TariffsBlockFormset = modelformset_factory(
+        model=models.WebsiteTariffs,
+        form=forms.WebsiteTariffsForm,
+        max_num=6,
+        min_num=6
+    )
+
+    if request.method == 'POST':
+
+        tariffs_form = forms.WebsiteTariffsForm(
+            request.POST, request.FILES,
+            prefix='tariffs_form',
+        )
+        tariffs_block_formset = TariffsBlockFormset(
+            request.POST, request.FILES,
+            prefix='tariffs_block_form',
+        )
+        tariffs_seo_form = forms.SEOForm(
+            request.POST,
+            prefix='tariffs_seo_form',
+        )
+
+        if utils.forms_save([
+            tariffs_form,
+            tariffs_block_formset,
+            tariffs_seo_form,
+        ]):
+            alerts.append('Данные сохранены успешно!')
+
+    else:
+
+        tariffs: models.WebsiteTariffs = models.WebsiteTariffs.get_solo()
+
+        if not tariffs.seo:
+            tariffs.seo = models.SEO.objects.create()
+            tariffs.save()
+
+        tariffs_form = forms.WebsiteTariffsForm(
+            instance=tariffs,
+            prefix='tariffs_form',
+        )
+
+        tariffs_block_formset = TariffsBlockFormset(
+            prefix='tariffs_block_form',
+        )
+
+        tariffs_seo_form = forms.SEOForm(
+            instance=tariffs.seo,
+            prefix='tariffs_seo_form',
+        )
+
+    context = {
+        'alerts': alerts,
+        'tariffs_form': tariffs_form,
+        'tariffs_block_formset': tariffs_block_formset,
+        'tariffs_seo_form': tariffs_seo_form,
+    }
+    return render(request, 'admin/website/tariffs.html', context)
 
 
 def website_contact_view(request):
-    return render(request, 'admin/website/contact.html')
+
+    alerts = []
+    if request.method == "POST":
+        contact_form = forms.WebsiteContactsForm(request.POST, prefix='contacts')
+        contact_seo_form = forms.SEOForm(request.POST, prefix='SEO')
+        if utils.forms_save([
+            contact_form,
+            contact_seo_form,
+        ]):
+            alerts.append('Данные сохранены успешно!')
+
+    else:
+        contacts: models.WebsiteContacts = models.WebsiteContacts.get_solo()
+        if not contacts.seo:
+            contacts.seo = models.SEO.objects.create()
+            contacts.save()
+        contact_form = forms.WebsiteContactsForm(
+            instance=contacts,
+            prefix='contacts',
+        )
+        contact_seo_form = forms.SEOForm(
+            instance=contacts.seo,
+            prefix='SEO',
+        )
+
+    return render(request, 'admin/website/contact.html',
+                  context={
+                      'contact_form': contact_form,
+                      'contact_seo_form': contact_seo_form,
+                      'alerts': alerts,
+                  })
 
 
 def services_view(request):
