@@ -316,8 +316,8 @@ def website_tariffs_view(request):
 
     alerts = []
     TariffsBlockFormset = modelformset_factory(
-        model=models.WebsiteTariffs,
-        form=forms.WebsiteTariffsForm,
+        model=models.WebsiteTariffBlocks,
+        form=forms.WebsiteTariffsBlocksForm,
         max_num=6,
         min_num=6
     )

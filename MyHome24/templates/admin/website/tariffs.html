@@ -1,5 +1,6 @@
 {% extends 'admin/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin/css/website/main-page.css' %}">
 {% endblock %}
@@ -52,7 +53,8 @@
                         {{ form.id }}
                         <div class="col-md-4">
                             Тариф {{ forloop.counter }}
-                            <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
+                            <div class="blocks-image"
+                                 style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (1000x600)</b>
                                 {{ form.image }}
@@ -83,7 +85,9 @@
                     </div>
                 </div>
                 <div class="default-area">
-                    <input type="submit" value="Сохранить">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </div>
                 </div>
             </form>
         </div>

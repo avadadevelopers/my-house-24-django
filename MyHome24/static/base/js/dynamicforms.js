@@ -41,3 +41,19 @@ function addForm(prefix, form, counter) {
     if (counter) newElement.find(counter).each(function() { $(this).text(total); });
     $(selector_last).after(newElement);
 }
+
+function addHiddenForm(prefix, form_class, image_class, default_image_url){
+    let selector = form_class + ":first";
+    let element = $(selector).clone(true);
+
+    element.find(':input').each(function() {
+        let name = $(this).attr('name').replace(prefix + '-0-','');
+        let id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    if (default_image_url) element.find(image_class).each(function() {
+        $(this).css('background', 'url(' + default_image_url + ') no-repeat')
+    });
+    element.css('display', 'none');
+    $(selector).before(element);
+}

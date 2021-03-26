@@ -168,7 +168,7 @@ class Account(models.Model):
         ('Active', 'Активен'),
         ('Inactive','Неактивен')
     )
-    wallet = models.CharField('Номер лицевого счёта', max_length=255)
+    wallet = models.CharField('Номер лицевого счёта', max_length=255, null=True)
     house = models.ForeignKey(House, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
     section = models.ForeignKey(Section, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
@@ -240,7 +240,7 @@ class Requisites(SingletonModel):
 
 
 class WebsiteMainPage(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
     slide1 = models.ImageField(upload_to='images/', null=True, blank=True)
     slide2 = models.ImageField(upload_to='images/', null=True, blank=True)
     slide3 = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -255,7 +255,7 @@ class WebsiteMainPageBlocks(models.Model):
 
 
 class WebsiteAbout(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
     poster = models.ImageField(upload_to='images/', null=True)
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
@@ -266,7 +266,7 @@ class WebsiteAboutGallery(models.Model):
 
 
 class WebsiteService(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
 
 
 class WebsiteServiceBlocks(models.Model):
@@ -276,14 +276,14 @@ class WebsiteServiceBlocks(models.Model):
 
 
 class WebsiteTariffs(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class WebsiteTariffBlocks(models.Model):
-    image = models.ImageField(upload_to='images/', null=True)
-    title = models.CharField(max_length=255, null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
 
 
 class WebsiteContacts(SingletonModel):

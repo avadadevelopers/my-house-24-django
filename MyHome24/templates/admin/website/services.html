@@ -99,25 +99,7 @@ let form = '.form-area';
 let counter = '.form-counter';
 let default_image_url = '{% static 'no_icon.png' %}';
 
-////////////////////////////////////////////
-
-let selector = form + ":first";
-let element = $(selector).clone(true);
-
-element.find(':input').each(function() {
-        let name = $(this).attr('name').replace(prefix + '-0-','');
-        let id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-    });
-element.find('.blocks-image').each(function() {
-        $(this).css('background', 'url(' + default_image_url + ') no-repeat')
-    });
-element.css('display', 'none');
-$(selector).before(element);
-
-
-////////////////////////////////////////////
-
+document.addEventListener('DOMContentLoaded', function(){ addHiddenForm(prefix, form, default_image_url) }, false);
 $('#add-service-block').click(function() { addForm(prefix, form, counter); });
 $('.del-form').click(function() { delForm(this, prefix, form, counter); });
 </script>
