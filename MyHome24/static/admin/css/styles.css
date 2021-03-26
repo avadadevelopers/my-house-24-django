@@ -115,7 +115,7 @@ li.breadcrumb-item>a{
     background-color: #e1f1ea;
 }
 .default-area {
-    margin: 0 1.5rem 1.5rem 1.5rem
+    margin: 1rem 1.5rem 1.5rem
 }
 .default-area div {
     margin: 0.5rem 0;
@@ -217,8 +217,9 @@ li.breadcrumb-item>a{
     align-items: center;
     margin-bottom: 15px;
 }
-section.content.input-form .col{
-    margin-bottom: 7.5px;
+section.content.input-form div{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .form-control{
     border-radius: 0px;
@@ -241,18 +242,8 @@ input#PaymentMadeInput{
     padding: 0px;
     height: 25px;
 }
-.card.card-secondary.card-outline>section:first-child{
-    padding: 10px;
-}
-.card.card-secondary.card-outline.col{
-    margin: 0;
-}
-.page-header-spec {
+.form-title-line {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px!important;
-}
-.form-group{
-    margin-bottom: 0;
 }
