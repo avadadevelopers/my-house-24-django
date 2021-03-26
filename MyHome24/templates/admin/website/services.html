@@ -28,13 +28,12 @@
                     <hr/>
                     <div class="row align-items-center">
                         {% for form in formset %}
+                        {{ form.id }}
                         <div class="form-area col-md-4">
                             <div class="form-title-line">
-                                <h4>Услуга <b class="form-counter">{{ forloop.counter }}</b></h4>
+                                <div>Услуга <b class="form-counter">{{ forloop.counter }}</b></div>
                                 <div class="btn btn-danger del-form">DEL</div>
                             </div>
-                            {{ form.id }}
-                            <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                                 <b>Рекомендуемый размер: (650x300)</b>

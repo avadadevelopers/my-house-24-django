@@ -66,7 +66,7 @@
                         {% for form in main_page_block_formset %}
                         {{ form.id }}
                         <div class="col-md-4">
-                            Блок {{ forloop.counter }}
+                            <div> Блок {{ forloop.counter }}</div>
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (1000x600)</b>
