@@ -120,7 +120,6 @@ class AccountTransactionForm(forms.ModelForm):
             queryset=models.TransferType.objects.all(),
             empty_label=None,
         )
-        print(user.queryset)
         fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made']
         widgets = {
             'amount': forms.NumberInput(attrs={
