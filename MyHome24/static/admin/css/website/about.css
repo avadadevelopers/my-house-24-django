@@ -1,0 +1,8 @@
+.slides{
+    display: flex;
+    flex-direction: column;
+}
+
+.blocks-image{
+    background-size: 100%; height: 300px;
+}

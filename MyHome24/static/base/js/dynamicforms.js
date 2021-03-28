@@ -9,7 +9,8 @@ function updateFormIndex(element, prefix, index) {
 function delForm(btn, prefix, form, counter) {
     $(btn).parents(form).remove();
     let forms = $(form);
-    $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+    total = $('#id_' + prefix + '-TOTAL_FORMS').val() - 1
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
 
     for (var i=1, formCount=forms.length; i<formCount; i++) {
         element = $(forms.get(i));
@@ -39,4 +40,20 @@ function addForm(prefix, form, counter) {
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
     if (counter) newElement.find(counter).each(function() { $(this).text(total); });
     $(selector_last).after(newElement);
+}
+
+function addHiddenForm(prefix, form_class, image_class, default_image_url){
+    let selector = form_class + ":first";
+    let element = $(selector).clone(true);
+
+    element.find(':input').each(function() {
+        let name = $(this).attr('name').replace(prefix + '-0-','');
+        let id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    if (default_image_url) element.find(image_class).each(function() {
+        $(this).css('background', 'url(' + default_image_url + ') no-repeat')
+    });
+    element.css('display', 'none');
+    $(selector).before(element);
 }

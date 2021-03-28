@@ -1,4 +1,5 @@
 {% extends 'admin/base.html' %}
+{% load static %}
 {% block page_title %}
     <h1 class="m-0">Редактирование страницы</h1>
 {% endblock %}
@@ -11,4 +12,81 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Редактирование страницы "Тарифы"</h3>
+            </div> <!-- /.card-body -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                        <div class="default-area">
+                            <h4>Информация</h4>
+                            <hr/>
+                            <div>
+                                Заголовок
+                                {{ contact_form.title }}
+                            </div>
+                            <div>
+                                Краткий текст
+                                {{ contact_form.description }}
+                            </div>
+                            <div>
+                                Ссылка на коммерческий сайт
+                                {{ contact_form.site }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="default-area">
+                            <h4>Контакты</h4>
+                            <hr/>
+                            <div>
+                                ФИО
+                                {{ contact_form.name }}
+                            </div>
+                            <div>
+                                Адрес
+                                {{ contact_form.address }}
+                            </div>
+                            <div>
+                                Телефон
+                                {{ contact_form.tel }}
+                            </div>
+                            <div>
+                                E-mail
+                                {{ contact_form.email }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="default-area">
+                    <h4>Настройки SEO</h4>
+                    <hr/>
+                    <div>
+                        Title
+                        {{ contact_seo_form.title }}
+                    </div>
+                    <div>
+                        Keywords
+                        {{ contact_seo_form.keywords }}
+                    </div>
+                    <div>
+                        Description
+                        {{ contact_seo_form.description }}
+                    </div>
+                </div>
+                <div class="default-area text-center">
+                    <button type="submit" class="btn btn-success">Сохранить контакты и настройки SEO</button>
+                </div>
+            </form>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>tinymce.init({selector:'textarea'});</script>
 {% endblock %}

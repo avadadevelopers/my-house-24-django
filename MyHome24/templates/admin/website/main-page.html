@@ -15,27 +15,15 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<section>
-    {% if alerts %}
-    {% for alert in alerts %}
-    <div class="alert alert-success" role="alert">
-        {{ alert }}
-    </div>
-    {% endfor %}
-    {% endif %}
-</section>
-
 <section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
             <div class="card-header">
                 <h3 class="card-title">Редактирование страницы "Главная"</h3>
             </div> <!-- /.card-body -->
-
-
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <section>
+                <div class="default-area">
                     <h4>Слайдер</h4>
                     <hr/>
                     <div class="row align-items-center">
@@ -58,9 +46,9 @@
                             <div>{{ main_page_form.slide3 }}</div>
                         </div>
                     </div>
-                </section>
-                <section>
-                    <h4>Краткая информация db_seo_id_{{ main_page_form.instance.seo }}</h4>
+                </div>
+                <div class="default-area">
+                    <h4>Краткая информация</h4>
                     <hr/>
                     <div>
                         Заголовок
@@ -70,15 +58,15 @@
                         Краткий текст
                         {{ main_page_form.description }}
                     </div>
-                </section>
-                <section>
+                </div>
+                <div class="default-area">
                     <h4>Рядом с нами</h4>
                     <hr/>
                     <div class="row align-items-center">
                         {% for form in main_page_block_formset %}
                         {{ form.id }}
                         <div class="col-md-4">
-                            Блок {{ forloop.counter }} with db_id_{{ form.instance.id }}
+                            <div> Блок {{ forloop.counter }}</div>
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (1000x600)</b>
@@ -96,9 +84,9 @@
                         {% endfor %}
                         {{ main_page_block_formset.management_form }}
                     </div>
-                </section>
-                <section>
-                    <h4>Настройки SEO with db_id_{{ main_page_seo_form.instance.id }}</h4>
+                </div>
+                <div class="default-area">
+                    <h4>Настройки SEO</h4>
                     <hr/>
                     <div>
                         Title
@@ -112,10 +100,10 @@
                         Description
                         {{ main_page_seo_form.description }}
                     </div>
-                </section>
-                <section>
-                    <input type="submit" value="Сохранить">
-                </section>
+                </div>
+                <div class="default-area text-center">
+                    <button type="submit" class="btn btn-success">Сохранить главную страницу и настройки SEO</button>
+                </div>
             </form>
         </div>
     </div><!-- /.container-fluid -->
@@ -123,5 +111,5 @@
 {% endblock %}
 {% block scripts %}
 <script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script>tinymce.init({selector:'textarea'});</script>
+<script>// tinymce.init({selector:'textarea'});</script>
 {% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'admin/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block page_title %}
+    <h1 class="m-0">Новый лицевой счёт</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fa fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_account' %}">
+            Лицевые счета
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Новый лицевой счёт</li>
+{% endblock %}
+{% block main_content %}
+    {% if alerts %}
+        {% for alert in alerts %}
+        <div class="alert alert-success" role="alert">
+            {{ alert }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+<section class="content input-form">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="page-header-spec">
+            <div class="form-group field-account-uid required">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        №
+                    </div>
+                    {{ form.wallet }}
+                </div>
+            </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <section>
+                    <div class="row">
+                        <div class="col">
+                            Статус
+                            {{ form.status|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Дом
+                            {{ form.house|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Секция
+                            {{ form.section|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Квартира
+                            {{ form.floor|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                        <a href="{% url 'admin_account-transaction' %}" type="button" class="btn btn-default margin-bottom-15">Отмена</a>
+                        <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
+                    </div>
+            </section>
+        </div>
+    </div><!-- /.container-fluid -->
+</form>
+</section>
+{% endblock %}

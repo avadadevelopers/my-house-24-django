@@ -1,11 +1,10 @@
 def form_save(form):
     if form.is_valid():
-        form.save()
-        return True
+        return form.save()
     else:
         print(form)
         print(form.errors)
-        return False
+        return None
 
 
 def forms_save(forms):
@@ -17,3 +16,4 @@ def forms_save(forms):
     for form in forms:
         print(f'Save - {form.prefix}')
         form.save()
+    return True
