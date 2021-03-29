@@ -115,7 +115,7 @@ li.breadcrumb-item>a{
     background-color: #e1f1ea;
 }
 .default-area {
-    margin: 1rem 1.5rem 1.5rem
+    padding: 10px
 }
 .default-area div {
     margin: 0.5rem 0;
@@ -235,7 +235,7 @@ input#PaymentMadeInput{
     margin-right: 5px;
 }
 .checkbox-input{
-    margin-left: 50%;
+    margin-left: 50%!important;
     margin-bottom: 0!important;
 }
 .input-form-height-20{
