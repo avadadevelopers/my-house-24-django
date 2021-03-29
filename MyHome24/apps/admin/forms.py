@@ -81,6 +81,39 @@ class WebsiteMainPageBlocksForm(forms.ModelForm):
         }
 
 
+class WebsiteAboutForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteAbout
+        fields = ['poster', 'title', 'description']
+        widgets = {
+            'poster': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок',
+                'rows': '3',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '3',
+                'placeholder': 'Введите описание',
+            }),
+        }
+
+
+class WebsiteAboutGalleryForm(forms.ModelForm):
+    class Meta:
+        model = models.WebsiteMainPageBlocks
+        fields = ['id', 'image']
+        widgets = {
+            'id': forms.HiddenInput(),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+        }
+
+
 class WebsiteTariffsForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteTariffs
@@ -139,9 +172,8 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
 class WebsiteContactsForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteContacts
-        fields = ['id', 'title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
+        fields = ['title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
         widgets = {
-            'id': forms.HiddenInput(),
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите заголовок',
@@ -193,7 +225,7 @@ class AccountTransactionForm(forms.ModelForm):
             queryset=models.TransferType.objects.all(),
             empty_label=None,
         )
-        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date']
+        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made']
         widgets = {
             'amount': forms.NumberInput(attrs={
                 'id': 'AmountInput',
@@ -209,11 +241,6 @@ class AccountTransactionForm(forms.ModelForm):
             'payment_made': forms.CheckboxInput(attrs={
                 'id': 'PaymentMadeInput',
                 'class': 'form-control',
-            }),
-            'created_date': forms.DateInput(format=('%Y-%m-%d'), attrs={
-                'value': datetime.now().strftime("%Y-%m-%d"),
-                'type': "date",
-                'class': "form-control",
             }),
         }
 
@@ -240,6 +267,7 @@ class AccountForm(forms.ModelForm):
             last_order = models.Account.objects.all().last()
             if last_order.wallet[0:8] == date:
                 num = last_order.wallet[8::]
+                print(num)
             else:
                 num = 1
             date = f'{date}{num}'
@@ -254,8 +282,9 @@ class AccountForm(forms.ModelForm):
                 'class': 'form-control',
                 'value': date,
                 'aria-required': 'true'
-            }),
+            })
         }
+    pass
 
 
 class InvoiceIDCreateForm(forms.ModelForm):
