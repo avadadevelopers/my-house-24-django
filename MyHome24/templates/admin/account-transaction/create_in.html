@@ -32,60 +32,62 @@
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
             <section>
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                        <div class="col-md-6 checkbox-input">
-                            <div class="form-check d-flex justify-content-start input-form-height-20">
-                                {{ form.payment_made }}
-                                <label>Проведён</label>
+                <div class="default-area">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <div class="col-md-6 checkbox-input">
+                                <div class="form-check d-flex justify-content-start input-form-height-20">
+                                    {{ form.payment_made }}
+                                    <label>Проведён</label>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col">
+                                Владелец квартиры
+                                {{ form.user|as_crispy_field }}
+                                {{ form.created_date }}
+                            </div>
+                            <div class="col">
+                                Менеджер
+                                {{ form.manager|as_crispy_field }}
                             </div>
                         </div>
-                    <div class="row">
-                        <div class="col">
-                            Владелец квартиры
-                            {{ form.user|as_crispy_field }}
-                        </div>
-                        <div class="col">
-                            Менеджер
-                            {{ form.manager|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            Лицевой счёт
-                            {{ form.account|as_crispy_field }}
-                        </div>
-                        <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                Лицевой счёт
+                                {{ form.account|as_crispy_field }}
+                            </div>
+                            <div class="col">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            Статья
-                            {{ form.transfer_type|as_crispy_field }}
-                        </div>
-                        <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                Статья
+                                {{ form.transfer_type|as_crispy_field }}
+                            </div>
+                            <div class="col">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            Сумма
-                            {{ form.amount|as_crispy_field }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                Сумма
+                                {{ form.amount|as_crispy_field }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row d-flex justify-content-end">
-                        <a href="{% url 'admin_account-transaction' %}" type="button" class="btn btn-default margin-bottom-15">Отмена</a>
-                        <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
-                    </div>
-                    <div class="row">
-                       <div class="col">
-                           <label>Комментарий</label>
-                           {{ form.comment|as_crispy_field }}
-                       </div>
-                    </div>
-                </form>
+                        <div class="row d-flex justify-content-end">
+                            <a href="{% url 'admin_account-transaction' %}" type="button" class="btn btn-default margin-bottom-15">Отмена</a>
+                            <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                               <label>Комментарий</label>
+                               {{ form.comment|as_crispy_field }}
+                           </div>
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
     </div><!-- /.container-fluid -->
