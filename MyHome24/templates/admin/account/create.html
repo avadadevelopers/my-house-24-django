@@ -44,6 +44,7 @@
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
             <section>
+                <div class="default-area">
                     <div class="row">
                         <div class="col">
                             Статус
@@ -72,9 +73,11 @@
                         <a href="{% url 'admin_account-transaction' %}" type="button" class="btn btn-default margin-bottom-15">Отмена</a>
                         <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
                     </div>
+                </div>
             </section>
         </div>
     </div><!-- /.container-fluid -->
 </form>
+
 </section>
 {% endblock %}
