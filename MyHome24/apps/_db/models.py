@@ -168,7 +168,7 @@ class Account(models.Model):
         ('Active', 'Активен'),
         ('Inactive','Неактивен')
     )
-    wallet = models.CharField('Номер лицевого счёта', max_length=255)
+    wallet = models.CharField('Номер лицевого счёта', max_length=255, null=True)
     house = models.ForeignKey(House, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
     section = models.ForeignKey(Section, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, null=True, blank=True, verbose_name='')
