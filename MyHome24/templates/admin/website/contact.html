@@ -12,15 +12,6 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<div class="default-area">
-    {% if alerts %}
-    {% for alert in alerts %}
-    <div class="alert alert-success" role="alert">
-        {{ alert }}
-    </div>
-    {% endfor %}
-    {% endif %}
-</div>
 <section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
@@ -76,19 +67,19 @@
                     <hr/>
                     <div>
                         Title
-                        {{ tariffs_seo_form.title }}
+                        {{ contact_seo_form.title }}
                     </div>
                     <div>
                         Keywords
-                        {{ tariffs_seo_form.keywords }}
+                        {{ contact_seo_form.keywords }}
                     </div>
                     <div>
                         Description
-                        {{ tariffs_seo_form.description }}
+                        {{ contact_seo_form.description }}
                     </div>
                 </div>
-                <div class="default-area">
-                    <input type="submit" value="Сохранить">
+                <div class="default-area text-center">
+                    <button type="submit" class="btn btn-success">Сохранить контакты и настройки SEO</button>
                 </div>
             </form>
         </div>

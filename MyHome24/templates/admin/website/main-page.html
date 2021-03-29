@@ -15,16 +15,6 @@
     <li class="breadcrumb-item active">Редактирование страницы</li>
 {% endblock %}
 {% block main_content %}
-<div class="default-area">
-    {% if alerts %}
-    {% for alert in alerts %}
-    <div class="alert alert-success" role="alert">
-        {{ alert }}
-    </div>
-    {% endfor %}
-    {% endif %}
-</div>
-
 <section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
@@ -58,7 +48,7 @@
                     </div>
                 </div>
                 <div class="default-area">
-                    <h4>Краткая информация db_seo_id_{{ main_page_form.instance.seo }}</h4>
+                    <h4>Краткая информация</h4>
                     <hr/>
                     <div>
                         Заголовок
@@ -76,7 +66,7 @@
                         {% for form in main_page_block_formset %}
                         {{ form.id }}
                         <div class="col-md-4">
-                            Блок {{ forloop.counter }} with db_id_{{ form.instance.id }}
+                            <div> Блок {{ forloop.counter }}</div>
                             <div class="blocks-image" style="background: url({% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'no_icon.png' %}{% endif %}) no-repeat;"></div>
                             <div>
                                 <b>Рекомендуемый размер: (1000x600)</b>
@@ -96,7 +86,7 @@
                     </div>
                 </div>
                 <div class="default-area">
-                    <h4>Настройки SEO with db_id_{{ main_page_seo_form.instance.id }}</h4>
+                    <h4>Настройки SEO</h4>
                     <hr/>
                     <div>
                         Title
@@ -111,8 +101,8 @@
                         {{ main_page_seo_form.description }}
                     </div>
                 </div>
-                <div class="default-area">
-                    <input type="submit" value="Сохранить">
+                <div class="default-area text-center">
+                    <button type="submit" class="btn btn-success">Сохранить главную страницу и настройки SEO</button>
                 </div>
             </form>
         </div>
@@ -121,5 +111,5 @@
 {% endblock %}
 {% block scripts %}
 <script src="https://cdn.tiny.cloud/1/kra6rmqrjhsjtzn537eqbc98zd4itnaxx3en34fmphnfe00h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script>tinymce.init({selector:'textarea'});</script>
+<script>// tinymce.init({selector:'textarea'});</script>
 {% endblock %}

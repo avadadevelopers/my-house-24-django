@@ -255,18 +255,18 @@ class WebsiteMainPageBlocks(models.Model):
 
 
 class WebsiteAbout(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
-    poster = models.ImageField(upload_to='images/', null=True)
-    title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
+    poster = models.ImageField(upload_to='images/', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class WebsiteAboutGallery(models.Model):
-    image = models.ImageField(upload_to='images/', null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
 
 class WebsiteService(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
 
 
 class WebsiteServiceBlocks(models.Model):
@@ -276,22 +276,22 @@ class WebsiteServiceBlocks(models.Model):
 
 
 class WebsiteTariffs(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class WebsiteTariffBlocks(models.Model):
-    image = models.ImageField(upload_to='images/', null=True)
-    title = models.CharField(max_length=255, null=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
 
 
 class WebsiteContacts(SingletonModel):
-    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
-    site = models.URLField(null=True)
-    name = models.CharField(max_length=255, null=True)
-    address = models.CharField(max_length=255, null=True)
-    tel = models.CharField(max_length=255, null=True)
-    email = models.EmailField(null=True)
+    seo = models.ForeignKey(SEO, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    site = models.URLField(null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    tel = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
