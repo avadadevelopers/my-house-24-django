@@ -193,8 +193,7 @@ class AccountTransactionForm(forms.ModelForm):
             queryset=models.TransferType.objects.all(),
             empty_label=None,
         )
-        print(user.queryset)
-        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made']
+        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date']
         widgets = {
             'amount': forms.NumberInput(attrs={
                 'id': 'AmountInput',
@@ -210,6 +209,11 @@ class AccountTransactionForm(forms.ModelForm):
             'payment_made': forms.CheckboxInput(attrs={
                 'id': 'PaymentMadeInput',
                 'class': 'form-control',
+            }),
+            'created_date': forms.DateInput(format=('%Y-%m-%d'), attrs={
+                'value': datetime.now().strftime("%Y-%m-%d"),
+                'type': "date",
+                'class': "form-control",
             }),
         }
 
@@ -236,7 +240,6 @@ class AccountForm(forms.ModelForm):
             last_order = models.Account.objects.all().last()
             if last_order.wallet[0:8] == date:
                 num = last_order.wallet[8::]
-                print(num)
             else:
                 num = 1
             date = f'{date}{num}'
@@ -251,9 +254,8 @@ class AccountForm(forms.ModelForm):
                 'class': 'form-control',
                 'value': date,
                 'aria-required': 'true'
-            })
+            }),
         }
-    pass
 
 
 class InvoiceIDCreateForm(forms.ModelForm):
