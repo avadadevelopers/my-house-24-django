@@ -2,6 +2,7 @@ from django import forms
 from django.db.models import Q
 from _db import models
 from datetime import datetime
+from .utils import serial_number_account, serial_number_transfer
 
 
 class SEOForm(forms.ModelForm):
@@ -211,21 +212,20 @@ class AccountTransactionForm(forms.ModelForm):
         model = models.Transfer
         user = forms.ModelChoiceField(
             queryset=models.User.objects.filter(is_superuser=False),
+            to_field_name="user",
             empty_label=None,
         )
         manager = forms.ModelChoiceField(
             queryset=models.User.objects.filter(is_superuser=True),
+            to_field_name="manager",
             empty_label=None,
         )
         account = forms.ModelChoiceField(
             queryset=models.Account.objects.all(),
+            to_field_name="account",
             empty_label=None,
         )
-        transfer_type = forms.ModelChoiceField(
-            queryset=models.TransferType.objects.all(),
-            empty_label=None,
-        )
-        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made']
+        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date', 'number']
         widgets = {
             'amount': forms.NumberInput(attrs={
                 'id': 'AmountInput',
@@ -241,6 +241,17 @@ class AccountTransactionForm(forms.ModelForm):
             'payment_made': forms.CheckboxInput(attrs={
                 'id': 'PaymentMadeInput',
                 'class': 'form-control',
+            }),
+            'created_date': forms.DateInput(format=('%Y-%m-%d'), attrs={
+                'type': "date",
+                'value': datetime.now().strftime('%Y-%m-%d'),
+                'class': "form-control",
+            }),
+            'number': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'value': serial_number_transfer(),
+                'aria-required': 'true'
             }),
         }
 
@@ -262,17 +273,6 @@ class AccountForm(forms.ModelForm):
             queryset=models.Floor.objects.all(),
             empty_label=None,
         )
-        date = datetime.now().strftime('%Y%m%d')
-        if models.Account.objects.all().last():
-            last_order = models.Account.objects.all().last()
-            if last_order.wallet[0:8] == date:
-                num = last_order.wallet[8::]
-                print(num)
-            else:
-                num = 1
-            date = f'{date}{num}'
-        else:
-            date = f'{date}1'
 
 
         fields = ['status', 'section', 'house', 'floor', 'wallet']
@@ -280,7 +280,7 @@ class AccountForm(forms.ModelForm):
             'wallet': forms.TextInput(attrs={
                 'input_type': 'text',
                 'class': 'form-control',
-                'value': date,
+                'value': serial_number_account(),
                 'aria-required': 'true'
             })
         }
