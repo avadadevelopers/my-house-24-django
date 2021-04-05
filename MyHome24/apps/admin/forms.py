@@ -244,13 +244,13 @@ class AccountTransactionForm(forms.ModelForm):
             }),
             'created_date': forms.DateInput(format=('%Y-%m-%d'), attrs={
                 'type': "date",
-                'value': datetime.now().strftime('%Y-%m-%d'),
+                # 'value': datetime.now().strftime('%Y-%m-%d'),
                 'class': "form-control",
             }),
             'number': forms.TextInput(attrs={
                 'input_type': 'text',
                 'class': 'form-control',
-                'value': serial_number_transfer(),
+                # 'value': serial_number_transfer(),
                 'aria-required': 'true'
             }),
         }
