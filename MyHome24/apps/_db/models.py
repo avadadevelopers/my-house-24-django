@@ -108,7 +108,7 @@ class House(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    number = models.IntegerField()
+    number = models.IntegerField('', null=True)
     image1 = models.ImageField(upload_to='images/')
     image2 = models.ImageField(upload_to='images/')
     image3 = models.ImageField(upload_to='images/')
@@ -180,12 +180,9 @@ class Account(models.Model):
 
 
 class TransferType(models.Model):
-    TYPE_OF_TRANSFER = (
-        ('Income', 'Приход'),
-        ('Outcome', 'Расход')
-    )
+
+    status = models.BooleanField(default=0)
     name = models.CharField(max_length=255)
-    transfer_income = models.CharField('', max_length=55, choices=TYPE_OF_TRANSFER)
 
     def __str__(self):
         return self.name
@@ -194,9 +191,10 @@ class TransferType(models.Model):
 class Transfer(models.Model):
 
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_user', verbose_name='')
+    number = models.CharField('Номер транзакции', max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_user', verbose_name='', null=True)
     manager = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='transfer_manager', verbose_name='')
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True,  verbose_name='')
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True,  verbose_name='', null=True)
     transfer_type = models.ForeignKey(TransferType, on_delete=models.CASCADE, blank=True, verbose_name='', null=True)
     amount = models.IntegerField(verbose_name='', blank=True)
     comment = models.TextField('', null=True, blank=True)

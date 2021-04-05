@@ -22,31 +22,37 @@ def logout_view(request):
 
 
 def account_transaction_view(request):
-    return render(request, 'admin/account-transaction/index.html')
+    accounts = models.Transfer.objects.all()
+    return render(request, 'admin/account-transaction/index.html', {'accounts':accounts})
 
 
 def account_transaction_create_in_view(request):
     form = forms.AccountTransactionForm(request.POST)
     alerts = []
     if request.method == 'POST' and form.is_valid():
+        form.transfer_type = 1
         form.save()
         alerts.append('Запись была успешно добавлена!')
 
     return render(request, 'admin/account-transaction/create_in.html', {'form': form,
-                                                                        'alerts': alerts
+                                                                        'alerts': alerts,
                                                                         })
 
 
 
 def account_transaction_create_out_view(request):
     form = forms.AccountTransactionForm(request.POST)
+    form.transfer_type = 0
+    print(form.transfer_type)
     alerts = []
     if request.method == 'POST' and form.is_valid():
+        form.type = 0
+        print(form.is_valid())
         form.save()
         alerts.append('Запись была успешно добавлена!')
 
     return render(request, 'admin/account-transaction/create_out.html', {'form': form,
-                                                                        'alerts': alerts
+                                                                        'alerts': alerts,
                                                                         })
 
 
