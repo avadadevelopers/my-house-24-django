@@ -107,9 +107,10 @@ tinymce.init({selector:'textarea'});
 let prefix = 'about_gallery_form';
 let form = '.form-area';
 let counter = '.form-counter';
+let image = '.blocks-image'
 let default_image_url = '{% static 'no_icon.png' %}';
 
-document.addEventListener('DOMContentLoaded', function(){ addHiddenForm(prefix, form, default_image_url) }, false);
+document.addEventListener('DOMContentLoaded', function(){ addHiddenForm(prefix, form, image, default_image_url) }, false);
 $('#add-about-block').click(function() { addForm(prefix, form, counter); });
 $('.del-form').click(function() { delForm(this, prefix, form, counter); });
 </script>
