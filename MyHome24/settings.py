@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'admin.apps.AdminConfig',
     'cabinet.apps.CabinetConfig',
     'crispy_forms',
+    'easy_maps',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -132,3 +133,8 @@ STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 
 MEDIA_ROOT = PROJECT_ROOT / 'media'
 MEDIA_URL = '/media/'
+
+
+# Google API
+
+EASY_MAPS_GOOGLE_KEY = 'AIzaSyAMPq6gbs7dfX-AMgFtCvTpjK8ltHErwcY'

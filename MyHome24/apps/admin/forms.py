@@ -3,7 +3,7 @@ from django.db.models import Q
 from _db import models
 from datetime import datetime
 from .utils import serial_number_account, serial_number_transfer
-
+from easy_maps.widgets import AddressWithMapWidget
 
 class SEOForm(forms.ModelForm):
     class Meta:
@@ -173,7 +173,7 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
 class WebsiteContactsForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteContacts
-        fields = ['title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
+        fields = ['title', 'description', 'site', 'name', 'address', 'tel', 'email', 'map']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -203,6 +203,10 @@ class WebsiteContactsForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите электронную почту',
+            }),
+            'map': AddressWithMapWidget(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите координаты местности',
             }),
         }
 
