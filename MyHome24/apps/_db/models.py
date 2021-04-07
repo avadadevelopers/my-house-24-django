@@ -128,6 +128,9 @@ class Floor(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 
 class Measure(models.Model):
     name = models.CharField(max_length=255)
@@ -187,7 +190,7 @@ class Apartment(models.Model):
     name = models.CharField('Номер квартиры', max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, verbose_name='')
     apartment_area = models.FloatField('Площадь квартиры', max_length=255)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, verbose_name='')
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, verbose_name='', null=True)
     self_account = models.CharField('собственный аккаунт', max_length=255, null=True)
 
     def __str__(self):

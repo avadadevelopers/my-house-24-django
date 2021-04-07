@@ -135,7 +135,8 @@ def account_delete_view(request):
 
 
 def apartment_view(request):
-    return render(request, 'admin/apartment/index.html')
+    apartment = models.Apartment.objects.all()
+    return render(request, 'admin/apartment/index.html',{'apartment': apartment})
 
 
 def apartment_create_view(request):
@@ -149,12 +150,25 @@ def apartment_create_view(request):
                                                            'alerts': alerts})
 
 
-def apartment_change_view(request):
-    return render(request, 'admin/apartment/change.html')
+def apartment_change_view(request, pk):
+    alerts = []
+    if request.method == 'POST':
+        form = forms.ApartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно редактирована!')
+    else:
+        form = forms.ApartmentForm(instance=get_object_or_404(models.Apartment, id=pk))
+    return render(request, 'admin/apartment/create.html', {'form': form,
+                                                           'alerts': alerts,})
 
 
-def apartment_delete_view(request):
-    return render(request, 'admin/apartment/delete.html')
+def apartment_delete_view(request, pk):
+    alert = []
+    apartment = get_object_or_404(models.Apartment, id=pk)
+    apartment.delete()
+    alert.append('Запись успешно удалена')
+    return render(request, 'admin/apartment/delete.html',)
 
 
 def user_view(request):

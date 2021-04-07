@@ -252,7 +252,7 @@ class AccountTransactionForm(forms.ModelForm):
                 'input_type': 'text',
                 'value': serial_number_transfer(),
                 'class': 'form-control',
-                'aria-required': 'true'
+                'required': 'false'
             }),
         }
 
