@@ -87,6 +87,9 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(CustomAbstractUser):
+    middle_name = models.CharField('Отчество', max_length=150, null=True)
+    date_of_birth = models.DateField(null=True) #убрать перед деплоем!1
+    viber = models.CharField('Вайбер', max_length=150, null=True)
     about = models.TextField()
 
     def __str__(self):
@@ -122,6 +125,9 @@ class House(models.Model):
 class Section(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 
 class Floor(models.Model):

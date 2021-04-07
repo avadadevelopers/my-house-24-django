@@ -74,10 +74,15 @@ def account_transaction_in_change_view(request, pk):
             alerts.append('Запись была успешно редактирована!')
     else:
         form = forms.AccountTransactionForm(instance=get_object_or_404(models.Transfer, id=pk))
-    return render(request, 'admin/account-transaction/create_in.html', {'form': form,
-                                                                        'alerts': alerts,
-                                                                        })
-
+    transfer = get_object_or_404(models.Transfer, id=pk)
+    if transfer.transfer_type.status == 0:
+        return render(request, 'admin/account-transaction/create_in.html', {'form': form,
+                                                                            'alerts': alerts,
+                                                                            })
+    else:
+        return render(request, 'admin/account-transaction/create_out.html', {'form': form,
+                                                                             'alerts': alerts,
+                                                                             })
 
 def account_transaction_delete_view(request):
     return render(request, 'admin/account-transaction/delete.html')
@@ -127,7 +132,16 @@ def account_create_view(request):
 
 
 def account_change_view(request, pk):
-    return render(request, 'admin/account/change.html')
+    alerts = []
+    if request.method == 'POST':
+        form = forms.AccountForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно редактирована!')
+    else:
+        form = forms.AccountForm(instance=get_object_or_404(models.Account, id=pk))
+    return render(request, 'admin/account/create.html', {'form': form,
+                                                         'alerts': alerts})
 
 
 def account_delete_view(request):
