@@ -1,4 +1,5 @@
 {% extends 'public/base.html' %}
+{% load easy_maps_tags %}
 {% block content %}
 <div class="breadcrumbs">
         <div class="container">
@@ -13,7 +14,7 @@
         </div>
 </div>
 <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2749.8611266486014!2d30.713265815873395!3d46.43163207638925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c633a651e3fd09%3A0x9331380952bbfd2c!2z0LLRg9C70LjRhtGPINCa0L7RgdC80L7QvdCw0LLRgtGW0LIsIDMyLCDQntC00LXRgdCwLCDQntC00LXRgdGM0LrQsCDQvtCx0LvQsNGB0YLRjCwgNjUwMDA!5e0!3m2!1suk!2sua!4v1524221669656" width="100%" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
+        {% easy_map page.map 2000 600 %}
     </div>
 <div class="container">
     <div class="row">

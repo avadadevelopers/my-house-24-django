@@ -307,3 +307,4 @@ class WebsiteContacts(SingletonModel):
     address = models.CharField(max_length=255, null=True, blank=True)
     tel = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
+    map = models.CharField(max_length=255)
