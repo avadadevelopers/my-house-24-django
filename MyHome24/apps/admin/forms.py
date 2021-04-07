@@ -225,7 +225,8 @@ class AccountTransactionForm(forms.ModelForm):
             to_field_name="account",
             empty_label=None,
         )
-        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date', 'number']
+        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date',
+                  'number']
         widgets = {
             'amount': forms.NumberInput(attrs={
                 'id': 'AmountInput',
@@ -249,12 +250,13 @@ class AccountTransactionForm(forms.ModelForm):
             }),
             'number': forms.TextInput(attrs={
                 'input_type': 'text',
-                'class': 'form-control',
                 'value': serial_number_transfer(),
+                'class': 'form-control',
                 'aria-required': 'true'
             }),
         }
 
+        
 class AccountForm(forms.ModelForm):
 
     class Meta:
@@ -274,7 +276,6 @@ class AccountForm(forms.ModelForm):
             empty_label=None,
         )
 
-
         fields = ['status', 'section', 'house', 'floor', 'wallet']
         widgets = {
             'wallet': forms.TextInput(attrs={
@@ -283,6 +284,29 @@ class AccountForm(forms.ModelForm):
                 'value': serial_number_account(),
                 'aria-required': 'true'
             })
+        }
+
+
+class ApartmentForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Apartment
+        fields = ['apartment_area', 'name', 'house', 'floor', 'section', 'user', 'account', 'self_account']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'apartment_area': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+            'self_account': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
         }
     pass
 

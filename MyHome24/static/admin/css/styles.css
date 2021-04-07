@@ -247,3 +247,15 @@ input#PaymentMadeInput{
     justify-content: space-between;
     align-items: center;
 }
+.label{
+    background-color: #00a65a;
+    border-radius: .25em;
+    color: white;
+    padding: .2em .6em .3em;
+}
+.label-success{
+    background-color: #00a65a!important;
+}
+.label-danger{
+    background-color: #ff0c0c!important;
+}

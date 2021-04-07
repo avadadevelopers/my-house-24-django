@@ -1,0 +1,86 @@
+{% extends 'admin/base.html' %}
+{% block page_title %}
+    <h1 class="m-0">{% for el in transaction %}
+        {% if el.transfer_type.status == 1%}
+        Расходная ведомость
+        {% else %}
+        Приходная ведомость
+        {% endif %}
+    {% endfor %}
+    </h1>
+{% endblock %}
+{% block main_content %}
+{% for el in transaction %}
+<section class="content input-form">
+    <div class="row">
+        <div class="col-md-6 d-flex justify-content-center">
+            <div class="col-md-6">
+                {{ el.number }}
+            </div>
+            <div class="col-md-6">
+                {{ el.created_date}}
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <section>
+                <div class="default-area">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <td>Владелец квартиры</td>
+                            <td>
+                                {% if el.user == None %}
+                                    Не указан
+                                    {% else %}
+                                    {{ el.user.first_name }} {{ el.user.last_name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Лицевой счёт</td>
+                            <td>
+                                {% if el.account == None %}
+                                    Не указан
+                                    {% else %}
+                                    {{ el.account }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Статья</td>
+                            <td>{{ el.transfer_type.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Квитанция</td>
+                            <td>Не указано</td>
+                        </tr>
+                        <tr>
+                            <td>Услуга</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Менеджер</td>
+                            <td>{{ el.manager.first_name}} {{ el.manager.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Сумма</td>
+                            {% if el.transfer_type.status == 0 %}
+                                <td style="color: #00ba13">{{ el.amount }}.00</td>
+                            {% else %}
+                                <td style="color: #c62232">-{{ el.amount }}.00</td>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Комментарий</td>
+                            <td>{{ el.comment }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock %}
