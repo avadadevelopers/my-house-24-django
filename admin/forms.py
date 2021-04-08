@@ -249,7 +249,7 @@ class AccountTransactionForm(forms.ModelForm):
             }),
             'number': forms.TextInput(attrs={
                 'input_type': 'text',
-                'value': serial_number_transfer(),
+                # 'value': serial_number_transfer(),
                 'class': 'form-control',
                 'required': 'false'
             }),
