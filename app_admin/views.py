@@ -6,29 +6,29 @@ from .utils import serial_number_transfer
 
 
 def index_view(request):
-    return render(request, 'app_admin/index.html')
+    return render(request, 'admin/index.html')
 
 
 def update_me_view(request):
-    return render(request, 'app_admin/update-me.html')
+    return render(request, 'admin/update-me.html')
 
 
 def login_view(request):
-    return render(request, 'app_admin/login.html')
+    return render(request, 'admin/login.html')
 
 
 def logout_view(request):
-    return render(request, 'app_admin/logout.html')
+    return render(request, 'admin/logout.html')
 
 
 def account_transaction_view(request):
     accounts = models.Transfer.objects.all()
-    return render(request, 'app_admin/account-transaction/index.html', {'accounts':accounts})
+    return render(request, 'admin/account-transaction/index.html', {'accounts':accounts})
 
 
 def account_transaction_detail_view(request, pk):
     transaction = models.Transfer.objects.filter(id=pk)
-    return render(request, 'app_admin/account-transaction/detail.html', {'transaction':transaction})
+    return render(request, 'admin/account-transaction/detail.html', {'transaction':transaction})
 
 
 def account_transaction_create_in_view(request):
@@ -41,7 +41,7 @@ def account_transaction_create_in_view(request):
         form.save()
         alerts.append('Запись была успешно добавлена!')
 
-    return render(request, 'app_admin/account-transaction/create_in.html', {'form': form,
+    return render(request, 'admin/account-transaction/create_in.html', {'form': form,
                                                                         'serial_number': serial_number,
                                                                         'alerts': alerts,
                                                                         })
@@ -59,7 +59,7 @@ def account_transaction_create_out_view(request):
         form.save()
         alerts.append('Запись была успешно добавлена!')
 
-    return render(request, 'app_admin/account-transaction/create_out.html', {'form': form,
+    return render(request, 'admin/account-transaction/create_out.html', {'form': form,
                                                                          'alerts': alerts,
                                                                           })
 
@@ -75,47 +75,47 @@ def account_transaction_in_change_view(request, pk):
         form = forms.AccountTransactionForm(instance=get_object_or_404(models.Transfer, id=pk))
     transfer = get_object_or_404(models.Transfer, id=pk)
     if transfer.transfer_type.status == 0:
-        return render(request, 'app_admin/account-transaction/create_in.html', {'form': form,
+        return render(request, 'admin/account-transaction/create_in.html', {'form': form,
                                                                             'alerts': alerts,
                                                                             })
     else:
-        return render(request, 'app_admin/account-transaction/create_out.html', {'form': form,
+        return render(request, 'admin/account-transaction/create_out.html', {'form': form,
                                                                              'alerts': alerts,
                                                                              })
 
 def account_transaction_delete_view(request):
-    return render(request, 'app_admin/account-transaction/delete.html')
+    return render(request, 'admin/account-transaction/delete.html')
 
 
 def invoice_view(request):
-    return render(request, 'app_admin/invoice/index.html')
+    return render(request, 'admin/invoice/index.html')
 
 
 def invoice_create_view(request):
-    return render(request, 'app_admin/invoice/create.html')
+    return render(request, 'admin/invoice/create.html')
 
 
 def invoice_copy_view(request):
-    return render(request, 'app_admin/invoice/copy.html')
+    return render(request, 'admin/invoice/copy.html')
 
 
 def invoice_change_view(request):
-    return render(request, 'app_admin/invoice/change.html')
+    return render(request, 'admin/invoice/change.html')
 
 
 def invoice_delete_view(request):
-    return render(request, 'app_admin/invoice/delete.html')
+    return render(request, 'admin/invoice/delete.html')
 
 
 def account_view(request):
     account = models.Account.objects.all()
-    return render(request, 'app_admin/account/index.html', {'account': account})
+    return render(request, 'admin/account/index.html', {'account': account})
 
 
 def account_detail(request, pk):
     account = models.Account.objects.filter(id=pk)
     print(account)
-    return render(request, 'app_admin/account/detail.html', {'account': account})
+    return render(request, 'admin/account/detail.html', {'account': account})
 
 
 def account_create_view(request):
@@ -125,7 +125,7 @@ def account_create_view(request):
         form.save()
         alerts.append('Запись была успешно добавлена!')
 
-    return render(request, 'app_admin/account/create.html', {'form': form,
+    return render(request, 'admin/account/create.html', {'form': form,
                                                          'alerts': alerts
                                                          })
 
@@ -139,17 +139,17 @@ def account_change_view(request, pk):
             alerts.append('Запись была успешно редактирована!')
     else:
         form = forms.AccountForm(instance=get_object_or_404(models.Account, id=pk))
-    return render(request, 'app_admin/account/create.html', {'form': form,
+    return render(request, 'admin/account/create.html', {'form': form,
                                                          'alerts': alerts})
 
 
 def account_delete_view(request):
-    return render(request, 'app_admin/account/delete.html')
+    return render(request, 'admin/account/delete.html')
 
 
 def apartment_view(request):
     apartment = models.Apartment.objects.all()
-    return render(request, 'app_admin/apartment/index.html',{'apartment': apartment})
+    return render(request, 'admin/apartment/index.html',{'apartment': apartment})
 
 
 def apartment_create_view(request):
@@ -159,7 +159,7 @@ def apartment_create_view(request):
         form.save()
         alerts.append('Запись была успешно добавлена!')
 
-    return render(request, 'app_admin/apartment/create.html', {'form': form,
+    return render(request, 'admin/apartment/create.html', {'form': form,
                                                            'alerts': alerts})
 
 
@@ -172,7 +172,7 @@ def apartment_change_view(request, pk):
             alerts.append('Запись была успешно редактирована!')
     else:
         form = forms.ApartmentForm(instance=get_object_or_404(models.Apartment, id=pk))
-    return render(request, 'app_admin/apartment/create.html', {'form': form,
+    return render(request, 'admin/apartment/create.html', {'form': form,
                                                            'alerts': alerts,})
 
 
@@ -181,87 +181,87 @@ def apartment_delete_view(request, pk):
     apartment = get_object_or_404(models.Apartment, id=pk)
     apartment.delete()
     alert.append('Запись успешно удалена')
-    return render(request, 'app_admin/apartment/delete.html',)
+    return render(request, 'admin/apartment/delete.html',)
 
 
 def user_view(request):
-    return render(request, 'app_admin/user/index.html')
+    return render(request, 'admin/user/index.html')
 
 
 def user_create_view(request):
-    return render(request, 'app_admin/user/create.html')
+    return render(request, 'admin/user/create.html')
 
 
 def user_change_view(request):
-    return render(request, 'app_admin/user/change.html')
+    return render(request, 'admin/user/change.html')
 
 
 def user_delete_view(request):
-    return render(request, 'app_admin/user/delete.html')
+    return render(request, 'admin/user/delete.html')
 
 
 def house_view(request):
-    return render(request, 'app_admin/house/index.html')
+    return render(request, 'admin/house/index.html')
 
 
 def house_create_view(request):
-    return render(request, 'app_admin/house/create.html')
+    return render(request, 'admin/house/create.html')
 
 
 def house_change_view(request):
-    return render(request, 'app_admin/house/change.html')
+    return render(request, 'admin/house/change.html')
 
 
 def house_delete_view(request):
-    return render(request, 'app_admin/house/delete.html')
+    return render(request, 'admin/house/delete.html')
 
 
 def message_view(request):
-    return render(request, 'app_admin/message/index.html')
+    return render(request, 'admin/message/index.html')
 
 
 def message_create_view(request):
-    return render(request, 'app_admin/message/create.html')
+    return render(request, 'admin/message/create.html')
 
 
 def message_change_view(request):
-    return render(request, 'app_admin/message/change.html')
+    return render(request, 'admin/message/change.html')
 
 
 def message_delete_view(request):
-    return render(request, 'app_admin/message/delete.html')
+    return render(request, 'admin/message/delete.html')
 
 
 def master_request_view(request):
-    return render(request, 'app_admin/master-request/index.html')
+    return render(request, 'admin/master-request/index.html')
 
 
 def master_request_create_view(request):
-    return render(request, 'app_admin/master-request/create.html')
+    return render(request, 'admin/master-request/create.html')
 
 
 def master_request_change_view(request):
-    return render(request, 'app_admin/master-request/change.html')
+    return render(request, 'admin/master-request/change.html')
 
 
 def master_request_delete_view(request):
-    return render(request, 'app_admin/master-request/delete.html')
+    return render(request, 'admin/master-request/delete.html')
 
 
 def meter_data_view(request):
-    return render(request, 'app_admin/meter-data/index.html')
+    return render(request, 'admin/meter-data/index.html')
 
 
 def meter_data_create_view(request):
-    return render(request, 'app_admin/meter-data/create.html')
+    return render(request, 'admin/meter-data/create.html')
 
 
 def meter_data_change_view(request):
-    return render(request, 'app_admin/meter-data/change.html')
+    return render(request, 'admin/meter-data/change.html')
 
 
 def meter_data_delete_view(request):
-    return render(request, 'app_admin/meter-data/delete.html')
+    return render(request, 'admin/meter-data/delete.html')
 
 
 def website_main_page_view(request):
@@ -322,7 +322,7 @@ def website_main_page_view(request):
         'main_page_block_formset': main_page_block_formset,
         'main_page_seo_form': main_page_seo_form,
     }
-    return render(request, 'app_admin/website/main-page.html', context)
+    return render(request, 'admin/website/main-page.html', context)
 
 
 def website_about_view(request):
@@ -383,7 +383,7 @@ def website_about_view(request):
         'about_gallery_formset': about_gallery_formset,
         'about_seo_form': about_seo_form,
     }
-    return render(request, 'app_admin/website/about.html', context)
+    return render(request, 'admin/website/about.html', context)
 
 
 def website_services_view(request):
@@ -418,7 +418,7 @@ def website_services_view(request):
         'alerts': alerts,
     }
     return render(
-        request, 'app_admin/website/services.html', context)
+        request, 'admin/website/services.html', context)
 
 
 def website_tariffs_view(request):
@@ -479,7 +479,7 @@ def website_tariffs_view(request):
         'tariffs_block_formset': tariffs_block_formset,
         'tariffs_seo_form': tariffs_seo_form,
     }
-    return render(request, 'app_admin/website/tariffs.html', context)
+    return render(request, 'admin/website/tariffs.html', context)
 
 
 def website_contact_view(request):
@@ -512,76 +512,76 @@ def website_contact_view(request):
         'contact_seo_form': contact_seo_form,
         'alerts': alerts,
     }
-    return render(request, 'app_admin/website/contact.html', context)
+    return render(request, 'admin/website/contact.html', context)
 
 
 def services_view(request):
-    return render(request, 'app_admin/services/index.html')
+    return render(request, 'admin/services/index.html')
 
 
 def services_add_view(request):
-    return render(request, 'app_admin/services/add.html')
+    return render(request, 'admin/services/add.html')
 
 
 def services_delete_view(request):
-    return render(request, 'app_admin/services/delete.html')
+    return render(request, 'admin/services/delete.html')
 
 
 def tariffs_view(request):
-    return render(request, 'app_admin/tariffs/index.html')
+    return render(request, 'admin/tariffs/index.html')
 
 
 def tariffs_create_view(request):
-    return render(request, 'app_admin/tariffs/create.html')
+    return render(request, 'admin/tariffs/create.html')
 
 
 def tariffs_change_view(request):
-    return render(request, 'app_admin/tariffs/change.html')
+    return render(request, 'admin/tariffs/change.html')
 
 
 def tariffs_copy_view(request):
-    return render(request, 'app_admin/tariffs/copy.html')
+    return render(request, 'admin/tariffs/copy.html')
 
 
 def tariffs_delete_view(request):
-    return render(request, 'app_admin/tariffs/delete.html')
+    return render(request, 'admin/tariffs/delete.html')
 
 
 def user_admin_role_view(request):
-    return render(request, 'app_admin/user-app_admin/role.html')
+    return render(request, 'admin/user-admin/role.html')
 
 
 def user_admin_users_list(request):
-    return render(request, 'app_admin/user-app_admin/list.html')
+    return render(request, 'admin/user-admin/list.html')
 
 
 def user_admin_create_view(request):
-    return render(request, 'app_admin/user-app_admin/create.html')
+    return render(request, 'admin/user-admin/create.html')
 
 
 def user_admin_change_view(request):
-    return render(request, 'app_admin/user-app_admin/change.html')
+    return render(request, 'admin/user-admin/change.html')
 
 
 def user_admin_delete_view(request):
-    return render(request, 'app_admin/user-app_admin/delete.html')
+    return render(request, 'admin/user-admin/delete.html')
 
 
 def pay_company_view(request):
-    return render(request, 'app_admin/pay-company.html')
+    return render(request, 'admin/pay-company.html')
 
 
 def transaction_purpose_view(request):
-    return render(request, 'app_admin/transaction-purpose/index.html')
+    return render(request, 'admin/transaction-purpose/index.html')
 
 
 def transaction_purpose_create_view(request):
-    return render(request, 'app_admin/transaction-purpose/create.html')
+    return render(request, 'admin/transaction-purpose/create.html')
 
 
 def transaction_purpose_change_view(request):
-    return render(request, 'app_admin/transaction-purpose/change.html')
+    return render(request, 'admin/transaction-purpose/change.html')
 
 
 def transaction_purpose_delete_view(request):
-    return render(request, 'app_admin/transaction-purpose/delete.html')
+    return render(request, 'admin/transaction-purpose/delete.html')

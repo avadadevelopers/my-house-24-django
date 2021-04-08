@@ -3,7 +3,7 @@ from _db import models
 
 
 def index_view(request):
-    return render(request, 'app_public/index.html',
+    return render(request, 'public/index.html',
                   context={
                       'page': models.WebsiteMainPage.get_solo(),
                       'page_blocks': models.WebsiteMainPageBlocks.objects.all(),
@@ -12,7 +12,7 @@ def index_view(request):
 
 
 def about_view(request):
-    return render(request, 'app_public/about.html',
+    return render(request, 'public/about.html',
                   context={
                       'page': models.WebsiteAbout.get_solo(),
                       'page_blocks': models.WebsiteAboutGallery.objects.all(),
@@ -20,7 +20,7 @@ def about_view(request):
 
 
 def services_view(request):
-    return render(request, 'app_public/services.html',
+    return render(request, 'public/services.html',
                   context={
                       'page': models.WebsiteService.get_solo(),
                       'page_blocks': models.WebsiteServiceBlocks.objects.all(),
@@ -28,11 +28,11 @@ def services_view(request):
 
 
 def contact_view(request):
-    return render(request, 'app_public/contact.html',
+    return render(request, 'public/contact.html',
                   context={
                       'page': models.WebsiteContacts.get_solo(),
                   })
 
 
 def error_view(request):
-    return render(request, 'app_public/error.html')
+    return render(request, 'public/error.html')

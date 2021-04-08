@@ -19,6 +19,6 @@ from .settings import MEDIA_ROOT, MEDIA_URL
 
 urlpatterns = [
     path('', include('app_public.urls')),
-    path('app_admin/', include('app_admin.urls')),
-    path('app_cabinet/', include('app_cabinet.urls')),
+    path('admin/', include('app_admin.urls')),
+    path('cabinet/', include('app_cabinet.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
