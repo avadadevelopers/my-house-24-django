@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from _db import models, utils
 from . import forms
 from django.forms import modelformset_factory
-from _db import managers
-from .utils import serial_number_account, serial_number_transfer
+from .utils import serial_number_transfer
 
 
 def index_view(request):

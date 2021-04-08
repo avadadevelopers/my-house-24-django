@@ -2,21 +2,14 @@ import os
 import sys
 from pathlib import Path
 
-
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = Path(__file__).resolve(strict=True).parent
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'MyHome24/apps'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'n+3wtig^!b(&ytgzr7f5wvs-_g*_&@@84kn5+u3ygjzv3+8kp^'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     '_db.apps.DbConfig',
@@ -47,12 +40,12 @@ MIDDLEWARE = [
     # 'admin.middleware.AccessCheckMiddleware',
 ]
 
-ROOT_URLCONF = 'MyHome24.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'MyHome24/templates')],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,19 +58,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'MyHome24.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 AUTHENTICATION_BACKENDS = [
     '_db.auth.EmailAuthBackend'
 ]
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': PROJECT_ROOT / 'db.sqlite3',
 
         #############################################################################
         # Make sure postgres is installed on your local machine before uncommenting #
@@ -90,10 +80,6 @@ DATABASES = {
         # 'PORT': '5432',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -110,10 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -124,17 +106,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 
 MEDIA_ROOT = PROJECT_ROOT / 'media'
 MEDIA_URL = '/media/'
-
-
-# Google API
 
 EASY_MAPS_GOOGLE_KEY = 'AIzaSyAMPq6gbs7dfX-AMgFtCvTpjK8ltHErwcY'

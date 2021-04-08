@@ -1,18 +1,13 @@
 from django.db import models
-from django.dispatch import receiver
-from django.contrib.auth.models import PermissionsMixin, AbstractUser
+from django.contrib.auth.models import PermissionsMixin
 from solo.models import SingletonModel
 # from embed_video.fields import EmbedVideoField
-import os
-from . import services, managers
+from . import managers
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.utils.timezone import datetime
-from datetime import datetime
-from abc import ABC, abstractmethod
 
 
 class Model(models.Model):

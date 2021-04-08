@@ -1,8 +1,7 @@
 from django import forms
-from django.db.models import Q
 from _db import models
 from datetime import datetime
-from .utils import serial_number_account, serial_number_transfer
+from .utils import serial_number_transfer
 
 
 class SEOForm(forms.ModelForm):
