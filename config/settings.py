@@ -2,10 +2,8 @@ import os
 import sys
 from pathlib import Path
 
-# BASE_DIR = Path(__file__).resolve().parent.parent
-PROJECT_ROOT = Path(__file__).resolve(strict=True).parent
-
-print(PROJECT_ROOT)
+BASE_DIR = Path(__file__).resolve().parent.parent
+CONFIG_ROOT = Path(__file__).resolve(strict=True).parent
 
 SECRET_KEY = 'n+3wtig^!b(&ytgzr7f5wvs-_g*_&@@84kn5+u3ygjzv3+8kp^'
 
@@ -47,7 +45,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, '../templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +67,7 @@ AUTHENTICATION_BACKENDS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': PROJECT_ROOT / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
 
         #############################################################################
         # Make sure postgres is installed on your local machine before uncommenting #
@@ -109,9 +107,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_ROOT = PROJECT_ROOT / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 EASY_MAPS_GOOGLE_KEY = 'AIzaSyAMPq6gbs7dfX-AMgFtCvTpjK8ltHErwcY'
