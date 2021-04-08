@@ -18,7 +18,7 @@ class Model(models.Model):
 class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     """
     An abstract base class implementing a fully featured User model with
-    admin-compliant permissions.
+    app_admin-compliant permissions.
 
     Username and password are required. Other fields are optional.
     """
@@ -39,7 +39,7 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text=_('Designates whether the user can log into this app_admin site.'),
     )
     is_active = models.BooleanField(
         _('active'),

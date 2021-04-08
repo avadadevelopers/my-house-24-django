@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from .settings import MEDIA_ROOT, MEDIA_URL
 
 urlpatterns = [
-    path('', include('public.urls')),
-    path('admin/', include('admin.urls')),
-    path('cabinet/', include('cabinet.urls')),
+    path('', include('app_public.urls')),
+    path('app_admin/', include('app_admin.urls')),
+    path('app_cabinet/', include('app_cabinet.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

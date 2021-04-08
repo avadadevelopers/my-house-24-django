@@ -15,9 +15,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     '_db.apps.DbConfig',
-    'public.apps.PublicConfig',
-    'admin.apps.AdminConfig',
-    'cabinet.apps.CabinetConfig',
+    'app_public.apps.PublicConfig',
+    'app_admin.apps.AdminConfig',
+    'app_cabinet.apps.CabinetConfig',
     'crispy_forms',
     'easy_maps',
     'django.contrib.auth',
@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'admin.middleware.AccessCheckMiddleware',
+    # 'app_admin.middleware.AccessCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
