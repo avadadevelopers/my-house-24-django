@@ -1,0 +1,85 @@
+{% extends 'admin/base.html' %}
+{% block page_title %}
+    <h1 class="m-0">Лицевой счёт</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fa fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_account' %}">
+            Лицевые счета
+        </a>
+    </li>
+    <li class="breadcrumb-item active">{% for el in account %} Лицевой счёт {{ el.wallet }}{% endfor %}</li>
+{% endblock %}
+{% block main_content %}
+{% for el in account %}
+<section class="content input-form">
+    <div class="row">
+        <div class="col-md-6 d-flex justify-content-center">
+            <div class="col-md-6">
+                {{ el.wallet }}
+            </div>
+            <div class="col-md-6">
+                {{ el.created_date}}
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <section>
+                <div class="col">
+                    <h4>Просмотр лицевого чёта</h4>
+                </div>
+                <div class="default-area">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <td>Статус</td>
+                            {% if el.status == 'Active' %}
+                                <td><small class="label label-success">Активен</small></td>
+                            {% else %}
+                                <td><small class="label label-danger">Неактивен</small></td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Дом</td>
+                            <td>{{ el.house.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Секция</td>
+                            <td>{{ el.section.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Квартира</td>
+                            <td>{{ el.floor.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Владелец</td>
+                            <td>{{ el.house.user.first_name }}{{ el.house.user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Остаток грн.</td>
+                            <td>{{ el.manager.first_name}} {{ el.manager.last_name }}</td>
+                        </tr>
+                    </table>
+                    <div class="col">
+                        <a href="#">Посмотреть показания счётчиков</a>
+                    </div>
+                    <div class="col">
+                        <a href="#">Посмотреть приходы</a>
+                    </div>
+                    <div class="col">
+                        <a href="#">Посмотреть квитанции</a>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock %}

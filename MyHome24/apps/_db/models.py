@@ -87,6 +87,9 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(CustomAbstractUser):
+    middle_name = models.CharField('Отчество', max_length=150, null=True)
+    date_of_birth = models.DateField(null=True) #убрать перед деплоем!1
+    viber = models.CharField('Вайбер', max_length=150, null=True)
     about = models.TextField()
 
     def __str__(self):
@@ -123,10 +126,16 @@ class Section(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 
 class Floor(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 
 class Measure(models.Model):
@@ -179,6 +188,21 @@ class Account(models.Model):
         return self.wallet
 
 
+
+class Apartment(models.Model):
+    floor = models.ForeignKey(Floor, on_delete=models.CASCADE, blank=True, verbose_name='')
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, blank=True, verbose_name='')
+    house = models.ForeignKey(House, on_delete=models.CASCADE, blank=True, verbose_name='')
+    name = models.CharField('Номер квартиры', max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, verbose_name='')
+    apartment_area = models.FloatField('Площадь квартиры', max_length=255)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, verbose_name='', null=True)
+    self_account = models.CharField('собственный аккаунт', max_length=255, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class TransferType(models.Model):
 
     status = models.BooleanField(default=0)
@@ -202,7 +226,6 @@ class Transfer(models.Model):
     payment_made = models.BooleanField(verbose_name='', null=True)
     #
     created_date = models.DateField(default=timezone.now, null=True)
-
 
 
 class Invoice(models.Model):

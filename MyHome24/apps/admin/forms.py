@@ -3,7 +3,7 @@ from django.db.models import Q
 from _db import models
 from datetime import datetime
 from .utils import serial_number_account, serial_number_transfer
-from easy_maps.widgets import AddressWithMapWidget
+
 
 class SEOForm(forms.ModelForm):
     class Meta:
@@ -173,7 +173,7 @@ class WebsiteServiceBlocksForm(forms.ModelForm):
 class WebsiteContactsForm(forms.ModelForm):
     class Meta:
         model = models.WebsiteContacts
-        fields = ['title', 'description', 'site', 'name', 'address', 'tel', 'email', 'map']
+        fields = ['title', 'description', 'site', 'name', 'address', 'tel', 'email', ]
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -204,10 +204,6 @@ class WebsiteContactsForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Введите электронную почту',
             }),
-            'map': AddressWithMapWidget(attrs={
-                'class': 'form-control',
-                'placeholder': 'Введите координаты местности',
-            }),
         }
 
 
@@ -229,7 +225,8 @@ class AccountTransactionForm(forms.ModelForm):
             to_field_name="account",
             empty_label=None,
         )
-        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date', 'number']
+        fields = ['user', 'manager', 'account', 'transfer_type', 'amount', 'comment', 'payment_made', 'created_date',
+                  'number']
         widgets = {
             'amount': forms.NumberInput(attrs={
                 'id': 'AmountInput',
@@ -248,17 +245,18 @@ class AccountTransactionForm(forms.ModelForm):
             }),
             'created_date': forms.DateInput(format=('%Y-%m-%d'), attrs={
                 'type': "date",
-                # 'value': datetime.now().strftime('%Y-%m-%d'),
+                'value': datetime.now().strftime('%Y-%m-%d'),
                 'class': "form-control",
             }),
             'number': forms.TextInput(attrs={
                 'input_type': 'text',
+                'value': serial_number_transfer(),
                 'class': 'form-control',
-                # 'value': serial_number_transfer(),
-                'aria-required': 'true'
+                'required': 'false'
             }),
         }
 
+        
 class AccountForm(forms.ModelForm):
 
     class Meta:
@@ -278,7 +276,6 @@ class AccountForm(forms.ModelForm):
             empty_label=None,
         )
 
-
         fields = ['status', 'section', 'house', 'floor', 'wallet']
         widgets = {
             'wallet': forms.TextInput(attrs={
@@ -287,6 +284,29 @@ class AccountForm(forms.ModelForm):
                 # 'value': serial_number_account(),
                 'aria-required': 'true'
             })
+        }
+
+
+class ApartmentForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Apartment
+        fields = ['apartment_area', 'name', 'house', 'floor', 'section', 'user', 'account', 'self_account']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'apartment_area': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+            'self_account': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
         }
     pass
 

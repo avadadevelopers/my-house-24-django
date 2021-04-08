@@ -11,4 +11,59 @@
     <li class="breadcrumb-item active">Квартиры</li>
 {% endblock %}
 {% block main_content %}
+    <section class="content" style="min-height: 60px">
+        <a href="{% url 'admin_apart-create' %}" class=" btn btn-success pull-right">Добавить квартиру</a>
+    </section>
+    <section class="content input-form">
+    {% if apartment.count > 0 %}
+         <div class="container-fluid">
+            <div class="card card-secondary card-outline">
+                <section>
+                    <table class="table table-bordered table-hover table-striped linkedRow">
+                        <thead>
+                            <tr>
+                                <th style="width: 125px; min-width: 125px">№ квартиры</th>
+                                <th style="width: 300px; min-width: auto">Дом</th>
+                                <th style="width: 120px; min-width: 120px">Секция</th>
+                                <th style="width:auto">Этаж</th>
+                                <th style="min-width: 200px">Владелец</th>
+                                <th style="min-width: 160px">Остаток (грн)</th>
+                                <th style="width: 80px; min-width: 80px">&nbsp;</th></tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in apartment %}
+                        <tr data-href="{% url 'admin_apart-change'  pk=el.pk %}">
+                            <td>{{ el.name }}</td>
+                            <td>{{ el.house.name }}</td>
+                            <td>{{ el.section.name }}</td>
+                            <td>{{ el.floor }}</td>
+                            <td>{{ el.user.first_name }} {{ el.user.last_name }}</td>
+                            <td></td>
+                            <td>
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_apart-change' pk=el.pk %}" title="Редактировать" data-toggle="tooltip">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_apart-delete' pk=el.pk %}" title="Удалить" data-toggle="tooltip">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+         </div>
+    {% endif %}
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script>
+    $('tr[data-href]').on("click", function() {
+    document.location = $(this).data('href');
+    });
+    </script>
 {% endblock %}

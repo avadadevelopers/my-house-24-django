@@ -1,3 +1,79 @@
 {% extends 'admin/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% block page_title %}
+    <h1 class="m-0">Новая квартира</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fa fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_apart' %}">
+            Квартиры
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Новая квартира</li>
+{% endblock %}
 {% block main_content %}
+<section class="content input-form">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="card card-secondary card-outline">
+                <section>
+                    <div class="default-area d-flex justify-content-center">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Номер квартиры</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="form-group">
+                                <label>Площадь (кв.м)</label>
+                                {{ form.apartment_area }}
+                            </div>
+                            <div class="form-group">
+                                <label>Дом</label>
+                                {{ form.house|as_crispy_field }}
+                            </div>
+                            <div class="form-group">
+                                <label>Секция</label>
+                                {{ form.section|as_crispy_field }}
+                            </div>
+                            <div class="form-group">
+                                <label>Этаж</label>
+                                {{ form.floor|as_crispy_field }}
+                            </div>
+                            <div class="form-group">
+                                <label>Владелец</label>
+                                {{ form.user|as_crispy_field }}
+                            </div>
+                            <div class="form-group">
+                                <label>Тариф</label>
+                                <p>место для тарифа</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Лицевой счёт</label>
+                                {{ form.self_account }}
+                                {{ form.account|as_crispy_field }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 text-right">
+                        <div class="form-group">
+                            <a href="{% url 'admin_apart' %}" class="btn btn-default margin-bottom-15">Отменить</a>
+                            <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
+                            <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить и добавить новую">
+                        </div>
+                    </div>
+                    </section>
+                </div>
+            </div><!-- /.container-fluid -->
+    </form>
+</section>
 {% endblock %}

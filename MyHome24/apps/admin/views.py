@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from _db import models, utils
 from . import forms
 from django.forms import modelformset_factory
 from _db import managers
+from .utils import serial_number_account, serial_number_transfer
 
 
 def index_view(request):
@@ -26,8 +27,15 @@ def account_transaction_view(request):
     return render(request, 'admin/account-transaction/index.html', {'accounts':accounts})
 
 
+def account_transaction_detail_view(request, pk):
+    transaction = models.Transfer.objects.filter(id=pk)
+    return render(request, 'admin/account-transaction/detail.html', {'transaction':transaction})
+
+
 def account_transaction_create_in_view(request):
     form = forms.AccountTransactionForm(request.POST)
+    serial_number = serial_number_transfer()
+    print(serial_number)
     alerts = []
     if request.method == 'POST' and form.is_valid():
         form.transfer_type = 1
@@ -35,6 +43,7 @@ def account_transaction_create_in_view(request):
         alerts.append('Запись была успешно добавлена!')
 
     return render(request, 'admin/account-transaction/create_in.html', {'form': form,
+                                                                        'serial_number': serial_number,
                                                                         'alerts': alerts,
                                                                         })
 
@@ -52,14 +61,28 @@ def account_transaction_create_out_view(request):
         alerts.append('Запись была успешно добавлена!')
 
     return render(request, 'admin/account-transaction/create_out.html', {'form': form,
-                                                                        'alerts': alerts,
-                                                                        })
+                                                                         'alerts': alerts,
+                                                                          })
 
 
-def account_transaction_change_view(request):
-    # форма уже существует - forms.AccountTransactionForm
-    return render(request, 'admin/account-transaction/update.html')
-
+def account_transaction_in_change_view(request, pk):
+    alerts = []
+    if request.method == 'POST':
+        form = forms.AccountTransactionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно редактирована!')
+    else:
+        form = forms.AccountTransactionForm(instance=get_object_or_404(models.Transfer, id=pk))
+    transfer = get_object_or_404(models.Transfer, id=pk)
+    if transfer.transfer_type.status == 0:
+        return render(request, 'admin/account-transaction/create_in.html', {'form': form,
+                                                                            'alerts': alerts,
+                                                                            })
+    else:
+        return render(request, 'admin/account-transaction/create_out.html', {'form': form,
+                                                                             'alerts': alerts,
+                                                                             })
 
 def account_transaction_delete_view(request):
     return render(request, 'admin/account-transaction/delete.html')
@@ -86,7 +109,14 @@ def invoice_delete_view(request):
 
 
 def account_view(request):
-    return render(request, 'admin/account/index.html')
+    account = models.Account.objects.all()
+    return render(request, 'admin/account/index.html', {'account': account})
+
+
+def account_detail(request, pk):
+    account = models.Account.objects.filter(id=pk)
+    print(account)
+    return render(request, 'admin/account/detail.html', {'account': account})
 
 
 def account_create_view(request):
@@ -101,8 +131,17 @@ def account_create_view(request):
                                                          })
 
 
-def account_change_view(request):
-    return render(request, 'admin/account/change.html')
+def account_change_view(request, pk):
+    alerts = []
+    if request.method == 'POST':
+        form = forms.AccountForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно редактирована!')
+    else:
+        form = forms.AccountForm(instance=get_object_or_404(models.Account, id=pk))
+    return render(request, 'admin/account/create.html', {'form': form,
+                                                         'alerts': alerts})
 
 
 def account_delete_view(request):
@@ -110,19 +149,40 @@ def account_delete_view(request):
 
 
 def apartment_view(request):
-    return render(request, 'admin/apartment/index.html')
+    apartment = models.Apartment.objects.all()
+    return render(request, 'admin/apartment/index.html',{'apartment': apartment})
 
 
 def apartment_create_view(request):
-    return render(request, 'admin/apartment/create.html')
+    form = forms.ApartmentForm(request.POST)
+    alerts = []
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        alerts.append('Запись была успешно добавлена!')
+
+    return render(request, 'admin/apartment/create.html', {'form': form,
+                                                           'alerts': alerts})
 
 
-def apartment_change_view(request):
-    return render(request, 'admin/apartment/change.html')
+def apartment_change_view(request, pk):
+    alerts = []
+    if request.method == 'POST':
+        form = forms.ApartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно редактирована!')
+    else:
+        form = forms.ApartmentForm(instance=get_object_or_404(models.Apartment, id=pk))
+    return render(request, 'admin/apartment/create.html', {'form': form,
+                                                           'alerts': alerts,})
 
 
-def apartment_delete_view(request):
-    return render(request, 'admin/apartment/delete.html')
+def apartment_delete_view(request, pk):
+    alert = []
+    apartment = get_object_or_404(models.Apartment, id=pk)
+    apartment.delete()
+    alert.append('Запись успешно удалена')
+    return render(request, 'admin/apartment/delete.html',)
 
 
 def user_view(request):
