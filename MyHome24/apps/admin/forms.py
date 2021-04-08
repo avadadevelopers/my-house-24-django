@@ -284,7 +284,7 @@ class AccountForm(forms.ModelForm):
             'wallet': forms.TextInput(attrs={
                 'input_type': 'text',
                 'class': 'form-control',
-                'value': serial_number_account(),
+                # 'value': serial_number_account(),
                 'aria-required': 'true'
             })
         }

@@ -5,7 +5,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = Path(__file__).resolve(strict=True).parent
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'MyHome24/apps'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'n+3wtig^!b(&ytgzr7f5wvs-_g*_&@@84kn5+u3ygjzv3+8kp^'
@@ -52,7 +52,7 @@ ROOT_URLCONF = 'MyHome24.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'MyHome24/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
