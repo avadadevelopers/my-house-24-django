@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.conf.urls.static import static
-from .settings import MEDIA_ROOT, MEDIA_URL
+from settings import MEDIA_ROOT, MEDIA_URL
 
 urlpatterns = [
     path('', include('app_public.urls')),

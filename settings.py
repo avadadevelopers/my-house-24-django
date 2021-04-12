@@ -40,7 +40,7 @@ MIDDLEWARE = [
     # 'app_admin.middleware.AccessCheckMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 AUTHENTICATION_BACKENDS = [
     '_db.auth.EmailAuthBackend'
