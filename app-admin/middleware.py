@@ -10,7 +10,7 @@ class AccessCheckMiddleware:
         user = request.user
         path = request.path
 
-        if 'app_admin' in path:
+        if 'app-admin' in path:
             if user.is_authenticated:
                 if not user.is_superuser:
                     return redirect('admin_login')

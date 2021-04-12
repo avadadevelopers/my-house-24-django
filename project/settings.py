@@ -5,17 +5,17 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 CONFIG_ROOT = Path(__file__).resolve(strict=True).parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "floo")
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
 
 INSTALLED_APPS = [
     '_db.apps.DbConfig',
-    'app_public.apps.PublicConfig',
-    'app_admin.apps.AdminConfig',
-    'app_cabinet.apps.CabinetConfig',
+    'app-public.apps.PublicConfig',
+    'app-admin.apps.AdminConfig',
+    'app-cabinet.apps.CabinetConfig',
     'crispy_forms',
     'easy_maps',
     'django.contrib.auth',
@@ -37,10 +37,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'app_admin.middleware.AccessCheckMiddleware',
+    # 'app-admin.middleware.AccessCheckMiddleware',
 ]
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 AUTHENTICATION_BACKENDS = [
     '_db.auth.EmailAuthBackend'
@@ -66,12 +66,12 @@ AUTHENTICATION_BACKENDS = [
 
 DATABASES = {
     'default': {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": os.environ.get("POSTGRES_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("POSTGRES_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("POSTGRES_USER", "user"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 

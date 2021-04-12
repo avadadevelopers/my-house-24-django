@@ -5,3 +5,4 @@ Pillow >= 8.0
 django-solo == 1.1.5
 django-crispy-forms == 1.11.1
 django-easy-maps == 1.1.2
+python-dotenv == 1.4.2
