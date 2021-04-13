@@ -528,7 +528,10 @@ def services_delete_view(request):
 
 
 def tariffs_view(request):
-    return render(request, 'admin/tariffs/index.html')
+    context = {
+        'rates': models.Rate.objects.all(),
+    }
+    return render(request, 'admin/tariffs/index.html', context)
 
 
 def tariffs_create_view(request):

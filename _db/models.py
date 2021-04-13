@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from solo.models import SingletonModel
@@ -158,6 +160,7 @@ class Currency(models.Model):
 class Rate(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    edit_date = models.DateField(default=datetime.date.today(), blank=True)
 
 
 class RateService(models.Model):
