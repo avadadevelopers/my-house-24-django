@@ -536,7 +536,12 @@ def tariffs_view(request):
 
 def tariffs_change_view(request, pk):
     alerts = []
+
+    # Форма тарифа
+    # Формсет услуги
+
     if request.method == "POST":
+
         contact_form = forms.WebsiteContactsForm(request.POST, prefix='contacts')
         contact_seo_form = forms.SEOForm(request.POST, prefix='SEO')
         if utils.forms_save([
