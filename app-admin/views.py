@@ -534,12 +534,40 @@ def tariffs_view(request):
     return render(request, 'admin/tariffs/index.html', context)
 
 
+def tariffs_change_view(request, pk):
+    alerts = []
+    if request.method == "POST":
+        contact_form = forms.WebsiteContactsForm(request.POST, prefix='contacts')
+        contact_seo_form = forms.SEOForm(request.POST, prefix='SEO')
+        if utils.forms_save([
+            contact_form,
+            contact_seo_form,
+        ]):
+            alerts.append('Данные сохранены успешно!')
+
+    else:
+        contacts: models.WebsiteContacts = models.WebsiteContacts.get_solo()
+        if not contacts.seo:
+            contacts.seo = models.SEO.objects.create()
+            contacts.save()
+        contact_form = forms.WebsiteContactsForm(
+            instance=contacts,
+            prefix='contacts',
+        )
+        contact_seo_form = forms.SEOForm(
+            instance=contacts.seo,
+            prefix='SEO',
+        )
+    context = {
+        'contact_form': contact_form,
+        'contact_seo_form': contact_seo_form,
+        'alerts': alerts,
+    }
+    return render(request, 'admin/tariffs/change.html', context)
+
+
 def tariffs_create_view(request):
-    return render(request, 'admin/tariffs/create.html')
-
-
-def tariffs_change_view(request):
-    return render(request, 'admin/tariffs/change.html')
+    return tariffs_change_view(request, pk=None)
 
 
 def tariffs_copy_view(request):
