@@ -156,7 +156,7 @@ class Currency(models.Model):
 class Rate(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    edit_date = models.DateField(default=datetime.date.today(), blank=True)
+    edit_date = models.DateField(default=timezone.now(), blank=True)
 
 
 class RateService(models.Model):

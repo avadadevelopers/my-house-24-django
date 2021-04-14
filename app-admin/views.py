@@ -551,30 +551,19 @@ def tariffs_change_view(request, pk):
 
     if request.method == "POST":
 
-        contact_form = forms.WebsiteContactsForm(request.POST, prefix='contacts')
-        contact_seo_form = forms.SEOForm(request.POST, prefix='SEO')
+        form = forms.RateForm(request.POST, prefix='tariffs')
         if utils.forms_save([
-            contact_form,
-            contact_seo_form,
+            form,
         ]):
             alerts.append('Данные сохранены успешно!')
 
     else:
-        contacts: models.WebsiteContacts = models.WebsiteContacts.get_solo()
-        if not contacts.seo:
-            contacts.seo = models.SEO.objects.create()
-            contacts.save()
-        contact_form = forms.WebsiteContactsForm(
-            instance=contacts,
-            prefix='contacts',
-        )
-        contact_seo_form = forms.SEOForm(
-            instance=contacts.seo,
-            prefix='SEO',
+        form = forms.RateForm(
+            instance=get_object_or_404(models.Rate, pk) if pk else None,
+            prefix='tariffs',
         )
     context = {
-        'contact_form': contact_form,
-        'contact_seo_form': contact_seo_form,
+        'form': form,
         'alerts': alerts,
     }
     return render(request, 'admin/tariffs/change.html', context)
