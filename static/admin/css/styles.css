@@ -259,3 +259,6 @@ input#PaymentMadeInput{
 .label-danger{
     background-color: #ff0c0c!important;
 }
+th{
+    font-size: 14px;
+}
