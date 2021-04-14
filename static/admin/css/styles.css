@@ -262,3 +262,8 @@ input#PaymentMadeInput{
 th{
     font-size: 14px;
 }
+.table-responsive {
+    overflow: hidden;
+    min-height: .01%;
+    overflow-x: auto;
+}

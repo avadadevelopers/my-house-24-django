@@ -84,24 +84,20 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(CustomAbstractUser):
+    avatar = models.FileField('Аватар', upload_to='images/user/', null=True)
     middle_name = models.CharField('Отчество', max_length=150, null=True)
-    date_of_birth = models.DateField(null=True) #убрать перед деплоем!1
-    viber = models.CharField('Вайбер', max_length=150, null=True)
-    about = models.TextField()
+    date_of_birth = models.DateField(null=True)
+    number = models.CharField(max_length=255, null=True)
+    viber = models.CharField(max_length=255, null=True)
+    whatsapp = models.CharField(max_length=255, null=True)
+    telegram = models.CharField(max_length=255, null=True)
+    about = models.TextField(null=True)
 
     def __str__(self):
         return self.first_name + self.last_name
 
     class Meta:
         app_label = '_db'
-
-
-class Telephone(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    number = models.IntegerField()
-    viber = models.BooleanField(default=False)
-    whatsapp = models.BooleanField(default=False)
-    telegram = models.BooleanField(default=False)
 
 
 class House(models.Model):

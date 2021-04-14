@@ -11,4 +11,46 @@
     <li class="breadcrumb-item active">Владельцы квартир</li>
 {% endblock %}
 {% block main_content %}
+    <section class="content" style="min-height: 60px">
+        <a href="{% url 'admin_user-create' %}" class=" btn btn-success pull-right">Добавить владельца</a>
+    </section>
+    <section class="content input-form">
+         <div class="container-fluid">
+            <div class="card card-secondary card-outline table-responsive">
+                    <table class="table table-bordered table-hover table-striped linkedRow">
+                        <thead>
+                            <tr>
+                                <th style="width: 125px; min-width: 125px">ID</th>
+                                <th style="width: 125px; min-width: 150px">
+                                    <a>ФИО</a>
+                                </th>
+                                <th style="width: 120px; min-width: 120px">Телефон</th>
+                                <th style="width:auto">Email</th>
+                                <th style="min-width: 200px">Дом</th>
+                                <th style="min-width: 160px">Квартира</th>
+                                <th>Добавлен</th>
+                                <th style="width: 110px; min-width: 110px">Статус</th>
+                                <th style="width: 110px; min-width: 110px">Есть долг</th>
+                                <th style="width: 80px; min-width: 80px">&nbsp;</th></tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in users %}
+                        <tr>
+                            <td>{{ el.id }}</td>
+                            <td>{{ el.first_name }} {{ el.middle_name }} {{ el.last_name }}</td>
+                            <td>{{ el.number }}</td>
+                            <td>{{ el.email }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ el.status }}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+         </div>
+    </section>
 {% endblock %}

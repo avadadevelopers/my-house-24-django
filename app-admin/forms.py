@@ -307,6 +307,70 @@ class ApartmentForm(forms.ModelForm):
                 'area_required': 'false',
             }),
         }
+
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = models.User
+        fields = ['avatar', 'last_name', 'first_name', 'middle_name', 'date_of_birth', 'email', 'number', 'viber', 'whatsapp',
+                  'telegram', 'is_active', 'about', 'password']
+        widgets = {
+            'last_name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'first_name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'middle_name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'date_of_birth': forms.DateInput(attrs={
+                'type': "date",
+                'class': "form-control",
+            }),
+            'about': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '10',
+                'placeholder': 'Введите комментарий',
+            }),
+            'password': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+
+            'viber': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+            'whatsapp': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+            'telegram': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+            'number': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+        }
     pass
 
 

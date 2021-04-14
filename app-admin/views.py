@@ -47,7 +47,6 @@ def account_transaction_create_in_view(request):
                                                                         })
 
 
-
 def account_transaction_create_out_view(request):
     form = forms.AccountTransactionForm(request.POST)
     form.transfer_type = 0
@@ -124,6 +123,8 @@ def account_create_view(request):
     if request.method == 'POST' and form.is_valid():
         form.save()
         alerts.append('Запись была успешно добавлена!')
+    else:
+        alerts.append('Неуспешно')
 
     return render(request, 'admin/account/create.html', {'form': form,
                                                          'alerts': alerts
@@ -173,7 +174,7 @@ def apartment_change_view(request, pk):
     else:
         form = forms.ApartmentForm(instance=get_object_or_404(models.Apartment, id=pk))
     return render(request, 'admin/apartment/create.html', {'form': form,
-                                                           'alerts': alerts,})
+                                                           'alerts': alerts})
 
 
 def apartment_delete_view(request, pk):
@@ -185,11 +186,19 @@ def apartment_delete_view(request, pk):
 
 
 def user_view(request):
-    return render(request, 'admin/user/index.html')
+    users = models.User.objects.all()
+    return render(request, 'admin/user/index.html', {'users': users})
 
 
 def user_create_view(request):
-    return render(request, 'admin/user/create.html')
+    form = forms.UserForm(request.POST, request.FILES)
+    alerts = []
+    print(form.is_valid())
+    if request.method == 'POST':
+        print(form.is_valid())
+        alerts.append('Запись была успешно добавлена!')
+    return render(request, 'admin/user/create.html', {'form': form,
+                                                      'alerts': alerts})
 
 
 def user_change_view(request):
