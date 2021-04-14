@@ -206,6 +206,25 @@ class WebsiteContactsForm(forms.ModelForm):
         }
 
 
+class RateForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Rate
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'description': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'false',
+            }),
+        }
+
+
 class AccountTransactionForm(forms.ModelForm):
     class Meta:
         model = models.Transfer
@@ -307,7 +326,6 @@ class ApartmentForm(forms.ModelForm):
                 'area_required': 'false',
             }),
         }
-    pass
 
 
 class InvoiceIDCreateForm(forms.ModelForm):
