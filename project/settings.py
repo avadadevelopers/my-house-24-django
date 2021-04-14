@@ -7,9 +7,10 @@ CONFIG_ROOT = Path(__file__).resolve(strict=True).parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "floo")
 
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", None)
+ALLOWED_HOSTS = ALLOWED_HOSTS.split(" ") if ALLOWED_HOSTS else ["*"]
 
 INSTALLED_APPS = [
     '_db.apps.DbConfig',
