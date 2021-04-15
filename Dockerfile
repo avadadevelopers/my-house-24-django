@@ -4,6 +4,13 @@ FROM python:3.8.3-alpine
 # set work directory
 WORKDIR /usr/src/my-house-24
 
+# set staticfiles directory
+ENV HOME=/home
+ENV APP_HOME=/home/web
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
+WORKDIR $APP_HOME
+
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
