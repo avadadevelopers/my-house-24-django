@@ -14,9 +14,24 @@
 <section class="content">
     <div class="container-fluid">
         <div class="card card-secondary card-outline">
-            <div class="default-area">
-            {{ form.as_p }}
-            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="default-area">
+                    <h4>Информация</h4>
+                    <hr/>
+                    <div class="default-half">
+                        Название
+                        {{ form.name }}
+                    </div>
+                    <div class="default-half">
+                        Краткий текст
+                        {{ form.description }}
+                    </div>
+                </div>
+                <div class="default-area default-half text-center">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                </div>
+            </form>
         </div>
     </div><!-- /.container-fluid -->
 </section>

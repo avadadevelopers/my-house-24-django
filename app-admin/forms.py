@@ -286,6 +286,25 @@ class AccountForm(forms.ModelForm):
         }
 
 
+class RateForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Rate
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+            'description': forms.TextInput(attrs={
+                'input_type': 'text',
+                'class': 'form-control',
+                'area_required': 'true',
+            }),
+        }
+
+
 class ApartmentForm(forms.ModelForm):
 
     class Meta:
