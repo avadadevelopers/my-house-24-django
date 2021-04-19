@@ -525,15 +525,19 @@ def website_contact_view(request):
 
 
 def services_view(request):
-    return render(request, 'admin/services/index.html')
+    return render(request, 'admin/services/services.html')
 
 
-def services_add_view(request):
-    return render(request, 'admin/services/add.html')
+def services_del_view(request):
+    return render(request, 'admin/services/services.html')
 
 
-def services_delete_view(request):
-    return render(request, 'admin/services/delete.html')
+def services_measurement_view(request):
+    return render(request, 'admin/services/measurement.html')
+
+
+def services_measurement_del_view(request):
+    return render(request, 'admin/services/measurement.html')
 
 
 def tariffs_view(request):
