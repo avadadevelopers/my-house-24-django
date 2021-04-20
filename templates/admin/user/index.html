@@ -12,7 +12,16 @@
 {% endblock %}
 {% block main_content %}
     <section class="content" style="min-height: 60px">
-        <a href="{% url 'admin_user-create' %}" class=" btn btn-success pull-right">Добавить владельца</a>
+        <div class="dropdown pull-right">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Выберите действие
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="{% url 'admin_user-create' %}">Добавить владельца квартиры</a></li>
+                        <li><a class="dropdown-item" href="{% url 'admin_account-transaction-create_out' %}">Отправить сообщение должникам</a></li>
+                        <li><a class="dropdown-item" href="#">Отправить приглашение</a></li>
+                    </ul>
+                </div>
     </section>
     <section class="content input-form">
          <div class="container-fluid">
@@ -43,8 +52,8 @@
                             <td>{{ el.email }}</td>
                             <td></td>
                             <td></td>
+                            <td>{{ el.date_joined }}</td>
                             <td>{{ el.status }}</td>
-                            <td></td>
                             <td></td>
                         </tr>
                         {% endfor %}

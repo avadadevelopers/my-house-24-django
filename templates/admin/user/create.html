@@ -30,8 +30,8 @@
                                 {{ form.avatar }}
                             </div>
                             <div class="col-xs-12 col-sm-6">
-                                {{ form.id }}
-                                {{ form.status }}
+                                <label>Статус</label>
+                                {{ form.status|as_crispy_field }}
                             </div>
                         </div>
                         <div class="row">
@@ -46,6 +46,7 @@
                                 {{ form.date_of_birth }}
                             </div>
                             <div class="col-xs-6 col-sm-6">
+                                <label>Статус</label>
                                 <label>О владельце (заметки)</label>
                                 {{ form.about }}
                             </div>
@@ -56,9 +57,9 @@
                                 <label>Телефон</label>
                                 {{ form.number }}
                                 <label>Viber</label>
-                                {{ form.viber }}
+                                {{ form.viber|as_crispy_field }}
                                 <label>Telegram</label>
-                                {{ form.telegram }}
+                                {{ form.telegram|as_crispy_field }}
                                 <label>Email</label>
                                 {{ form.email }}
                             </div>

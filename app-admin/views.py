@@ -193,12 +193,17 @@ def user_view(request):
 def user_create_view(request):
     form = forms.UserForm(request.POST, request.FILES)
     alerts = []
-    print(form.is_valid())
     if request.method == 'POST':
-        print(form.is_valid())
-        alerts.append('Запись была успешно добавлена!')
+        print(form.data)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно добавлена!')
+        else:
+            alerts.append('Неуспешно')
+
     return render(request, 'admin/user/create.html', {'form': form,
-                                                      'alerts': alerts})
+                                                      'alerts': alerts
+                                                      })
 
 
 def user_change_view(request):

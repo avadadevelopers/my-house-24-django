@@ -310,68 +310,44 @@ class ApartmentForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
-
     class Meta:
         model = models.User
-        fields = ['avatar', 'last_name', 'first_name', 'middle_name', 'date_of_birth', 'email', 'number', 'viber', 'whatsapp',
-                  'telegram', 'is_active', 'about', 'password']
+        fields = ['status', 'avatar', 'first_name', 'middle_name', 'last_name', 'date_of_birth', 'about', 'number', 'viber',
+                  'telegram', 'email', 'password']
         widgets = {
-            'last_name': forms.TextInput(attrs={
-                'input_type': 'text',
-                'class': 'form-control',
-                'area_required': 'true',
-            }),
+            'avatar': forms.FileInput(),
             'first_name': forms.TextInput(attrs={
-                'input_type': 'text',
                 'class': 'form-control',
-                'area_required': 'true',
             }),
             'middle_name': forms.TextInput(attrs={
-                'input_type': 'text',
                 'class': 'form-control',
-                'area_required': 'true',
             }),
-            'date_of_birth': forms.DateInput(attrs={
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'date_of_birth': forms.DateInput(format=('%Y-%m-%d'), attrs={
                 'type': "date",
+                'placeholder': 'Введите дату рождения',
                 'class': "form-control",
             }),
             'about': forms.Textarea(attrs={
                 'class': 'form-control',
-                'rows': '10',
-                'placeholder': 'Введите комментарий',
-            }),
-            'password': forms.TextInput(attrs={
-                'input_type': 'text',
-                'class': 'form-control',
-                'area_required': 'false',
-            }),
-
-            'viber': forms.TextInput(attrs={
-                'input_type': 'text',
-                'class': 'form-control',
-                'area_required': 'false',
-            }),
-            'whatsapp': forms.TextInput(attrs={
-                'input_type': 'text',
-                'class': 'form-control',
-                'area_required': 'false',
-            }),
-            'telegram': forms.TextInput(attrs={
-                'input_type': 'text',
-                'class': 'form-control',
-                'area_required': 'false',
+                'rows': '11',
+                'placeholder': 'Введите описание',
             }),
             'number': forms.TextInput(attrs={
                 'input_type': 'text',
                 'class': 'form-control',
-                'area_required': 'false',
             }),
-            'email': forms.EmailInput(attrs={
+            'email': forms.TextInput(attrs={
+                'type': 'email',
                 'class': 'form-control',
-                'area_required': 'false',
             }),
-        }
-    pass
+            'password': forms.PasswordInput(attrs={
+                'type': 'Password',
+                'class': 'form-control',
+            }),
+            }
 
 
 class InvoiceIDCreateForm(forms.ModelForm):

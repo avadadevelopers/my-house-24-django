@@ -84,14 +84,20 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(CustomAbstractUser):
+    STATUS = (
+        ('Активен', 'Активен'),
+        ('Новый', 'Новый'),
+        ('Отключен', 'Отключен')
+    )
+
+    status = models.CharField('', choices=STATUS, max_length=55, blank=True)
     avatar = models.FileField('Аватар', upload_to='images/user/', null=True)
     middle_name = models.CharField('Отчество', max_length=150, null=True)
-    date_of_birth = models.DateField(null=True)
-    number = models.CharField(max_length=255, null=True)
-    viber = models.CharField(max_length=255, null=True)
-    whatsapp = models.CharField(max_length=255, null=True)
-    telegram = models.CharField(max_length=255, null=True)
-    about = models.TextField(null=True)
+    date_of_birth = models.DateField('дата рождения', null=True)
+    number = models.CharField(max_length=255)
+    viber = models.CharField('', max_length=255, null=True, blank=True)
+    telegram = models.CharField('', max_length=255, null=True, blank=True)
+    about = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.first_name + self.last_name
