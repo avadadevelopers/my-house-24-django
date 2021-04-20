@@ -1,5 +1,5 @@
 update: down build db up
-up: docker-up
+up: build docker-up
 down: docker-down
 restart: down up
 db: docker-db-make docker-db-migrate
