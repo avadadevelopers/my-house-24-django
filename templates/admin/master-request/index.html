@@ -5,10 +5,60 @@
 {% block pagination_link %}
     <li class="breadcrumb-item">
         <a href="{% url 'admin_index' %}">
-            <i class="fa fa-home"></i>
+            <i class="fas fa-home"></i>
             Главная</a>
     </li>
     <li class="breadcrumb-item active">Заявки вызова мастера</li>
 {% endblock %}
 {% block main_content %}
+    <section class="content" style="min-height: 60px">
+       <a href="{% url 'admin_master-request-create' %}" class=" btn btn-success pull-right">Добавить заявку</a>
+    </section>
+    <section class="content input-form">
+         <div class="container-fluid">
+            <div class="card card-secondary card-outline table-responsive">
+                <table class="table table-bordered table-hover table-striped linkedRow">
+                    <thead>
+                    <tr>
+                        <th style="width: 40px; min-width: 40px">№ Заявки</th>
+                        <th>Удобное время</th>
+                        <th>Тип мастера</th>
+                        <th>Описание</th>
+                        <th>Квартира</th>
+                        <th>Владелец</th>
+                        <th>Телефон</th>
+                        <th>Мастер</th>
+                        <th>Статус</th>
+                        <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for el in requests %}
+                        <tr>
+                            <td>{{ el.id }}</td>
+                            <td>{{ el.date }} - {{ el.time }}</td>
+                            <td>{{ el.master_type }}</td>
+                            <td>{{ el.description }}</td>
+                            <td>{{ el.apartment }}</td>
+                            <td>{{ el.apartment.user }}</td>
+                            <td>{{ el.apartment.user.number }}</td>
+                            <td>{{ el.master }}</td>
+                            <td>{{ el.status }}</td>
+                            <td>
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_account-transaction-in-change' pk=el.pk %}" title="Редактировать" data-toggle="tooltip">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="/admin/account-transaction/delete/110" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+         </div>
+    </section>
 {% endblock %}

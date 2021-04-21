@@ -1,0 +1,80 @@
+{% extends 'admin/base.html' %}
+{% block page_title %}
+    <h1 class="m-0">Квартира №{{ apartment.id }}, {{ apartment.house.name }}</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fas fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_user' %}">
+            Владельцы квартиры
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Профиль владельца</li>
+{% endblock %}
+{% block main_content %}
+<section class="content input-form">
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <section>
+            <div class="d-flex justify-content-between" style="padding: 0 10px">
+                <h4>Просмотр квартиры</h4>
+                <a href="{% url 'admin_user-change' pk=user.id %}" class="btn btn-success">Редактировать профиль</a>
+            </div>
+                <div class="default-area">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{ user.status }}</td>
+                        </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>{{ user.id }}</td>
+                        </tr>
+                        <tr>
+                            <td>Фамилия</td>
+                            <td>{{ user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Имя</td>
+                            <td>{{ user.first_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Отчество</td>
+                            <td>{{ user.middle_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Дата рождения</td>
+                            <td>{{ user.date_of_birth }}</td>
+                        </tr>
+                        <tr>
+                            <td>О владельце (заметки)</td>
+                            <td>{{ user.about }}</td>
+                        </tr>
+                        <tr>
+                            <td>Телефон</td>
+                            <td>{{ user.number }}</td>
+                        </tr>
+                        <tr>
+                            <td>Вайбер</td>
+                            <td>{{ user.viber }}</td>
+                        </tr>
+                        <tr>
+                            <td>Телеграм</td>
+                            <td>{{ user.telegram }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{% endblock %}

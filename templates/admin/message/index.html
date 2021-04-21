@@ -5,10 +5,50 @@
 {% block pagination_link %}
     <li class="breadcrumb-item">
         <a href="{% url 'admin_index' %}">
-            <i class="fa fa-home"></i>
+            <i class="fas fa-home"></i>
             Главная</a>
     </li>
     <li class="breadcrumb-item active">Сообщения</li>
 {% endblock %}
 {% block main_content %}
+    <section class="content" style="min-height: 60px">
+       <a href="{% url 'admin_message-create' %}" class=" btn btn-success pull-right">Написать сообщение</a>
+    </section>
+    <section class="content input-form">
+         <div class="container-fluid">
+            <div class="card card-secondary card-outline table-responsive">
+                <table class="table table-bordered table-hover table-striped linkedRow">
+                    <thead>
+                    <tr>
+                        <th style="width: 40px; min-width: 40px"></th>
+                        <th>Получатели</th>
+                        <th>Текст</th>
+                        <th>Дата</th>
+                        <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for el in messages %}
+                        <tr>
+                            <td></td>
+                            <td>{{ el.destination }}</td>
+                            <td>{{ el.text }}</td>
+                            <td>{{ el.created_date }}</td>
+                            <td>
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_account-transaction-in-change' pk=el.pk %}" title="Редактировать" data-toggle="tooltip">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="/admin/account-transaction/delete/110" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+         </div>
+    </section>
 {% endblock %}

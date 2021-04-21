@@ -123,8 +123,6 @@ def account_create_view(request):
     if request.method == 'POST' and form.is_valid():
         form.save()
         alerts.append('Запись была успешно добавлена!')
-    else:
-        alerts.append('Неуспешно')
 
     return render(request, 'admin/account/create.html', {'form': form,
                                                          'alerts': alerts
@@ -144,13 +142,20 @@ def account_change_view(request, pk):
                                                          'alerts': alerts})
 
 
-def account_delete_view(request):
+def account_delete_view(request, pk):
+    account = get_object_or_404(models.Account, id=pk)
+    account.delete()
     return render(request, 'admin/account/delete.html')
 
 
 def apartment_view(request):
     apartment = models.Apartment.objects.all()
     return render(request, 'admin/apartment/index.html',{'apartment': apartment})
+
+
+def apartment_detail_view(request, pk):
+    apartment = get_object_or_404(models.Apartment, id=pk)
+    return render(request, 'admin/apartment/detail.html', {'apartment': apartment})
 
 
 def apartment_create_view(request):
@@ -206,8 +211,22 @@ def user_create_view(request):
                                                       })
 
 
-def user_change_view(request):
-    return render(request, 'admin/user/change.html')
+def user_detail_view(request, pk):
+    user = get_object_or_404(models.User, id=pk)
+    return render(request, 'admin/user/detail.html', {'user': user})
+
+
+def user_change_view(request, pk):
+    form = forms.UserForm(instance=get_object_or_404(models.User, id=pk))
+    alerts = []
+    if request.method == 'POST':
+        print(form.data)
+        if form.is_valid():
+            form.save()
+            alerts.append('Запись была успешно добавлена!')
+        else:
+            alerts.append('Неуспешно')
+    return render(request, 'admin/user/create.html', {'form': form})
 
 
 def user_delete_view(request):
@@ -215,11 +234,22 @@ def user_delete_view(request):
 
 
 def house_view(request):
-    return render(request, 'admin/house/index.html')
+    houses = models.House.objects.all()
+    return render(request, 'admin/house/index.html', {'houses': houses})
 
 
 def house_create_view(request):
-    return render(request, 'admin/house/create.html')
+    form = forms.HouseForm(request.POST, request.FILES)
+    alerts = []
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            alerts.append('Форма сохранена успешно')
+        else:
+            alerts.append('Произошла ошибка')
+
+    return render(request, 'admin/house/create.html', {'form': form,
+                                                       'alerts': alerts})
 
 
 def house_change_view(request):
@@ -231,11 +261,21 @@ def house_delete_view(request):
 
 
 def message_view(request):
-    return render(request, 'admin/message/index.html')
+    messages = models.Message.objects.all()
+    return render(request, 'admin/message/index.html', {'messages': messages})
 
 
 def message_create_view(request):
-    return render(request, 'admin/message/create.html')
+    form = forms.MessageCreateForm(request.POST)
+    alerts = []
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            alerts.append('Сообщение отправлено')
+        else:
+            alerts.append('Произошла ошибка')
+    return render(request, 'admin/message/create.html', {'form': form,
+                                                         'alerts': alerts})
 
 
 def message_change_view(request):
@@ -247,11 +287,21 @@ def message_delete_view(request):
 
 
 def master_request_view(request):
-    return render(request, 'admin/master-request/index.html')
+    requests = models.MasterRequest.objects.all()
+    return render(request, 'admin/master-request/index.html', {'requests': requests})
 
 
 def master_request_create_view(request):
-    return render(request, 'admin/master-request/create.html')
+    form = forms.MasterRequestForm(request.POST)
+    alerts = []
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            alerts.append('Сообщение отправлено')
+        else:
+            alerts.append('Произошла ошибка')
+    return render(request, 'admin/master-request/create.html', {'form': form,
+                                                                'alerts': alerts})
 
 
 def master_request_change_view(request):

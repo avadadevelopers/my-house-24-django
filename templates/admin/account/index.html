@@ -5,7 +5,7 @@
 {% block pagination_link %}
     <li class="breadcrumb-item">
         <a href="{% url 'admin_index' %}">
-            <i class="fa fa-home"></i>
+            <i class="fas fa-home"></i>
             Главная</a>
     </li>
     <li class="breadcrumb-item active">Лицевые счета</li>
@@ -22,7 +22,7 @@
                                 <p>Состояние кассы</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-dollar"></i>
+                                <i class="fas fa-dollar"></i>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                                 <p>Баланс по счетам</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-dollar"></i>
+                                <i class="fas fa-dollar"></i>
                             </div>
                             <!--<span class="small-box-footer">&nbsp;</span>-->
                         </div>
@@ -45,7 +45,7 @@
                                 <p>Задолженность по счетам</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-dollar"></i>
+                                <i class="fas fa-dollar"></i>
                             </div>
                             <!--<span class="small-box-footer">&nbsp;</span>-->
                         </div>
@@ -67,7 +67,7 @@
     </section>
     <section class="content input-form">
          <div class="container-fluid">
-            <div class="card card-secondary card-outline">
+            <div class="card card-secondary card-outline table-responsive">
                 <section>
                     <table class="table table-bordered table-hover table-striped linkedRow">
                         <thead>
@@ -87,9 +87,9 @@
                         <tr data-href="{% url 'admin_account-detail'  pk=el.pk %}">
                             <td>{{ el.wallet }}</td>
                             {% if el.status == 'Active' %}
-                                <td style="color: #00ba13">Активен</td>
+                                <td style="color: #00ba13"><small class="label label-success">Активен</small></td>
                              {% else %}
-                                <td style="color: #c62232">Неактивен</td>
+                                <td style="color: #c62232"><small class="label label-danger">Неактивен</small></td>
                             {% endif %}
                             <td>{{ el.floor.name }}</td>
                             <td>{{ el.house.name }}</td>
@@ -101,7 +101,7 @@
                                     <a class="btn btn-default btn-sm" href="{% url 'admin_account-change' pk=el.pk %}" title="Редактировать" data-toggle="tooltip">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a class="btn btn-default btn-sm" href="/admin/account-transaction/delete/110" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
+                                    <a class="btn btn-default btn-sm" href="{% url 'admin_account-delete' pk=el.pk %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>

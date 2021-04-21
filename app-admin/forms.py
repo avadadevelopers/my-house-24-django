@@ -369,6 +369,101 @@ class UserForm(forms.ModelForm):
             }
 
 
+class HouseForm(forms.ModelForm):
+    class Meta:
+        model = models.House
+        fields = ['user', 'name', 'address', 'image1', 'image2', 'image3', 'image4', 'image5']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'image1': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'image2': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'image3': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'image4': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+            'image5': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
+
+        }
+
+
+class MessageCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.Message
+        destination = forms.ModelChoiceField(
+            queryset=models.User.objects.all(),
+            empty_label=None,
+        )
+        fields = ['title', 'destination', 'text', 'indebtedness']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'placeholder': 'Введите тему сообщения',
+                'type': 'text',
+                'class': 'form-control',
+            }),
+            'text': forms.Textarea(attrs={
+                'placeholder': 'Введите текст сообщения...',
+                'class': 'form-control',
+                'rows': '11',
+            }),
+            'indebtedness': forms.CheckboxInput(attrs={
+                'id': 'PaymentMadeInput',
+                'class': 'form-control',
+            }),
+        }
+
+
+class MasterRequestForm(forms.ModelForm):
+    class Meta:
+        model = models.MasterRequest
+        fields = ['date', 'time', 'owner', 'apartment', 'master_type', 'master', 'status', 'description', 'comment']
+        owner = forms.ModelChoiceField(
+            queryset=models.User.objects.all(),
+            empty_label=None,
+        )
+        apartment = forms.ModelChoiceField(
+            queryset=models.Apartment.objects.all(),
+            empty_label=None
+        )
+        master = forms.ModelChoiceField(
+            queryset=models.User.objects.filter(user_type='Обслуживающий персонал'),
+            empty_label=None
+        )
+        widgets = {
+            'date': forms.DateInput(format=('%Y-%m-%d'), attrs={
+                'type': "date",
+                'value': datetime.now().strftime('%Y-%m-%d'),
+                'class': "form-control",
+            }),
+            'time': forms.TimeInput(format=('%H:%M'), attrs={
+                'type': "time",
+                'class': "form-control",
+            }),
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Введите текст.',
+                'class': 'form-control',
+                'rows': '11',
+            }),
+            'comment': forms.Textarea(attrs={
+                'placeholder': 'Введите текст.',
+                'class': 'form-control',
+                'rows': '6',
+            })
+        }
+
+
 class InvoiceIDCreateForm(forms.ModelForm):
 
     pass

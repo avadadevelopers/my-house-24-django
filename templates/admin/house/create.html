@@ -1,3 +1,72 @@
 {% extends 'admin/base.html' %}
+{% block page_title %}
+    <h1 class="m-0">Новый дом</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fas fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            Дома
+        </a>
+    </li>
+    <li class="breadcrumb-item">Новый дом</li>
+{% endblock %}
 {% block main_content %}
+    <section class="content input-form">
+        <div class="container-fluid">
+            <div class="card card-secondary card-outline">
+                <div class="default-area">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-4">
+                            <label>Название</label>
+                            {{ form.name }}
+                            <label>Адрес</label>
+                            {{ form.address }}
+                            <label>Изображение #1. Размер: (522x350)</label>
+                            {{ form.image1 }}
+                            <label>Изображение #2. Размер: (248x160)</label>
+                            {{ form.image2 }}
+                            <label>Изображение #3. Размер: (248x160)</label>
+                            {{ form.image3 }}
+                            <label>Изображение #4. Размер: (248x160)</label>
+                            {{ form.image4 }}
+                            <label>Изображение #5. Размер: (248x160)</label>
+                            {{ form.image5   }}
+                        </div>
+                        <div class="col-xs-12 col-lg-8">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <img src="http://myhouse24.avada-media.ua/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=522&amp;h=350&amp;fit=crop" class="img-responsive largeImg margin-bottom-30" alt="Изображение #1. Размер: (522x350)">
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <img src="http://myhouse24.avada-media.ua/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop" class="img-responsive smallImg margin-bottom-30" alt="Изображение #2. Размер: (248x160)">
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <img src="http://myhouse24.avada-media.ua/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop" class="img-responsive smallImg margin-bottom-30" alt="Изображение #3. Размер: (248x160)">
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <img src="http://myhouse24.avada-media.ua/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop" class="img-responsive smallImg margin-bottom-30" alt="Изображение #4. Размер: (248x160)">
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <img src="http://myhouse24.avada-media.ua/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop" class="img-responsive smallImg margin-bottom-30" alt="Изображение #5. Размер: (248x160)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                        <a href="{% url 'admin_house' %}" type="button" class="btn btn-default margin-bottom-15">Отмена</a>
+                        <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </section>
 {% endblock %}

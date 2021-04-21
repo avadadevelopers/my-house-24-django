@@ -89,6 +89,11 @@ class User(CustomAbstractUser):
         ('Новый', 'Новый'),
         ('Отключен', 'Отключен')
     )
+    TYPE = (
+        ('Администратор', 'Администратор'),
+        ('Обслуживающий персонал', 'Обслуживающий персонал'),
+        ('Управляющий домом', 'Управляющий домом')
+    )
 
     status = models.CharField('', choices=STATUS, max_length=55, blank=True)
     avatar = models.FileField('Аватар', upload_to='images/user/', null=True)
@@ -98,6 +103,7 @@ class User(CustomAbstractUser):
     viber = models.CharField('', max_length=255, null=True, blank=True)
     telegram = models.CharField('', max_length=255, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
+    user_type = models.CharField(choices=TYPE, default='Управляющий домом', max_length=155, null=True, blank=True)
 
     def __str__(self):
         return self.first_name + self.last_name
@@ -107,7 +113,7 @@ class User(CustomAbstractUser):
 
 
 class House(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     number = models.IntegerField('', null=True)
@@ -118,7 +124,7 @@ class House(models.Model):
     image5 = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return f'ул. {self.address}, дом {self.number}'
+        return f'ул. {self.address}'
 
 
 class Section(models.Model):
@@ -162,7 +168,7 @@ class Currency(models.Model):
 class Rate(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    edit_date = models.DateField(default=timezone.now(), blank=True)
+    edit_date = models.DateField(default=timezone.now, blank=True)
 
 
 class RateService(models.Model):
@@ -186,7 +192,6 @@ class Account(models.Model):
 
     def __str__(self):
         return self.wallet
-
 
 
 class Apartment(models.Model):
@@ -317,3 +322,36 @@ class WebsiteContacts(SingletonModel):
     tel = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     map = models.CharField(max_length=255)
+
+
+class Message(models.Model):
+    destination = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, verbose_name='')
+    addressee = models.CharField(max_length=255, null=True, blank=True)
+    title = models.CharField(max_length=255)
+    text = models.TextField()
+    indebtedness = models.BooleanField('', default=False)
+    created_date = models.DateField(default=timezone.now)
+
+
+class MasterRequest(models.Model):
+    TYPE = (
+        ('Сантехник','Сантехник'),
+        ('Электрик','Электрик'),
+        ('Слесарь','Слесарь'),
+        ('Любой специалист', 'Любой специалист'),
+    )
+    STATUS = (
+        ('Новое', 'Новое'),
+        ('В работе', 'В работе'),
+        ('Выполнено', 'Выполнено'),
+    )
+    date = models.DateField(blank=True, verbose_name='')
+    time = models.TimeField(blank=True, verbose_name='')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner', blank=True, verbose_name='')
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, blank=True, verbose_name='')
+    master_type = models.CharField(choices=TYPE, max_length=155, blank=True, verbose_name='')
+    status = models.CharField(choices=STATUS, max_length=155, blank=True, verbose_name='')
+    master = models.ForeignKey(User, on_delete=models.CASCADE, related_name='master', blank=True, verbose_name='')
+    description = models.TextField(blank=True, verbose_name='')
+    comment = models.TextField(blank=True, verbose_name='')
+

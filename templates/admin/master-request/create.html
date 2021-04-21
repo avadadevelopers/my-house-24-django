@@ -1,3 +1,73 @@
 {% extends 'admin/base.html' %}
+{% load crispy_forms_tags %}
+{% block page_title %}
+    <h1 class="m-0">Новая заявка</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fas fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_master-request' %}">
+            Вызов мастера
+        </a>
+    </li>
+    <li class="breadcrumb-item">Новая заявка</li>
+{% endblock %}
 {% block main_content %}
+    <section class="content input-form">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="col-md-6">
+                    {{ form.date }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.time }}
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="card card-secondary card-outline">
+                    <div class="default-area">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="col">
+                                        <label>Владелец Квартиры</label>
+                                        {{ form.owner|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Описание</label>
+                                    {{ form.description|as_crispy_field  }}
+                                </div>
+                                <div class="col">
+                                    <label>Квартира</label>
+                                    {{ form.apartment|as_crispy_field }}
+                                    <label>Тип мастера</label>
+                                    {{ form.master_type|as_crispy_field }}
+                                    <label>Статус</label>
+                                    {{ form.status|as_crispy_field }}
+                                    <label>Мастер</label>
+                                    {{ form.master|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                {{ form.comment }}
+                            </div>
+                            <div class="row d-flex justify-content-end">
+                                <a href="{% url 'admin_account-transaction' %}" type="button" class="btn btn-default margin-bottom-15">Отмена</a>
+                                <input type="submit" class="btn btn-success margin-bottom-15" value="Сохранить">
+                            </div>
+                        </div>
+                </div>
+            </div><!-- /.container-fluid -->
+    </form>
+</section>
 {% endblock %}

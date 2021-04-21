@@ -1,0 +1,79 @@
+{% extends 'admin/base.html' %}
+{% block page_title %}
+    <h1 class="m-0">Квартира №{{ apartment.id }}, {{ apartment.house.name }}</h1>
+{% endblock %}
+{% block pagination_link %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_index' %}">
+            <i class="fas fa-home"></i>
+            Главная
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'admin_apart' %}">
+            Квартиры
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Квартира №{{ apartment.id }}, {{ apartment.house.name }}</li>
+{% endblock %}
+{% block main_content %}
+<section class="content input-form">
+    <div class="container-fluid">
+        <div class="card card-secondary card-outline">
+            <section>
+            <div class="d-flex justify-content-between" style="padding: 0 10px">
+                <h4>Просмотр квартиры</h4>
+                <a href="{% url 'admin_apart-change' pk=apartment.id %}" class="btn btn-success">Редактировать квартиру</a>
+            </div>
+                <div class="default-area">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <td>Лицевой счёт</td>
+                            <td>{% if apartment.self_account != 'None' %}{{ apartment.self_account }}{% else %}
+                                {{ apartment.account }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Номер квартиры</td>
+                            <td>{{ apartment.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Площадь</td>
+                            <td>{{ apartment.apartment_area }}м2</td>
+                        </tr>
+                        <tr>
+                            <td>Дом</td>
+                            <td>{{ apartment.house.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Секция</td>
+                            <td>Секция {{ apartment.section }}</td>
+                        </tr>
+                        <tr>
+                            <td>Этаж</td>
+                            <td>Этаж {{ apartment.floor }}</td>
+                        </tr>
+                        <tr>
+                            <td>Владелец</td>
+                            <td>{{ apartment.user }}</td>
+                        </tr>
+                        <tr>
+                            <td>Тариф</td>
+                            <td>не указано</td>
+                        </tr>
+                    </table>
+                    <div class="col">
+                        <a href="#">Посмотреть показания счётчиков</a>
+                    </div>
+                    <div class="col">
+                        <a href="#">Посмотреть приходы</a>
+                    </div>
+                    <div class="col">
+                        <a href="#">Посмотреть квитанции</a>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{% endblock %}
